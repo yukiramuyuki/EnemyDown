@@ -4,6 +4,7 @@ package plugin.enemydown;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import plugin.enemydown.command.EnemydowmCommand;
 
 public final class Main extends JavaPlugin implements Listener {
 
@@ -11,12 +12,10 @@ public final class Main extends JavaPlugin implements Listener {
     public void onEnable() {
 
       Bukkit.getPluginManager().registerEvents(this, this);
-      getCommand("enemyDownStart").setExecutor(new SetLevelCommand());
-//コピーしてくる。それをしないと時間かかる
-//      コマンドまだない。名前もコピーからのものを使いたいわけじゃない
-//      今回回復するコマンドではなく、ゲームをしたい
-//      ゲームの実行コマンド
-//      ゲームスタートだと、何をスタートするのか分からない。
-//      今回はenemydownスタート
+      getCommand("enemyDown").setExecutor(new EnemydowmCommand());
+//plugin.ymlのcommandsを変える必要がある。
+//      setExecutorあかもじになる→Commandクラスの作成を。
+//      今回はパッケージ先を変える（plugin.enemydown.command)
+//      自動でcommandExecutorが作成されている。
     }
 }
