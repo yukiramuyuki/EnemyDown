@@ -12,5 +12,7 @@ public final class Main extends JavaPlugin implements Listener {
 
       Bukkit.getPluginManager().registerEvents(this, this);
 
+//この状態でgradleタスクの実行でサーバー
+//      EnablingがEnemyDownになっていることを確認。
     }
 }
