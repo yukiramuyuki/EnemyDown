@@ -13,9 +13,6 @@ public final class Main extends JavaPlugin implements Listener {
 
       Bukkit.getPluginManager().registerEvents(this, this);
       getCommand("enemyDown").setExecutor(new EnemydowmCommand());
-//plugin.ymlのcommandsを変える必要がある。
-//      setExecutorあかもじになる→Commandクラスの作成を。
-//      今回はパッケージ先を変える（plugin.enemydown.command)
-//      自動でcommandExecutorが作成されている。
+
     }
 }
