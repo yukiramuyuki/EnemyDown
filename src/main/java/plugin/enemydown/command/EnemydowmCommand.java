@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class EnemydowmCommand implements CommandExecutor {
@@ -26,11 +27,15 @@ public class EnemydowmCommand implements CommandExecutor {
       Location playerLocation = player.getLocation();
 
       PlayerInventory inventory = player.getInventory();
-//      変数導入
+      ItemStack helmet = inventory.getHelmet();
+//      gethelmet情報とってくる。
       inventory.setHelmet();
-//      sethelmetで上書きできる。
+//      ゲーム終了
+      inventory.setHelmet(helmet);
+//      情報のhelmet戻る。元に戻すのはそんなに難しくない。時間制限のあとにでも・・・。
 
-//
+
+
 
 //      double x = playerLocation.getX();
 //      double y = playerLocation.getY();
