@@ -26,14 +26,16 @@ public class EnemydowmCommand implements CommandExecutor {
       double z = playerLocation.getZ();
       //      ランダムを生成する
 
-      int randam=new SplittableRandom().nextInt(100);
-//         spilittablerandamをintに
-//      splittablerandamのままの場合"new SplittableRandom();Int random.nextInt(100);"
-//      でもいいけど、する理由がないから短く。
+      int random=new SplittableRandom().nextInt(10) + 1;
+//（100)ならintの中のrandomが０～９９に。100個100までではない。0スタートだから。
+//      0なら自分と同じ場所。少なくとも1離れていたい。+1
+//      -出したいとき（後ろ）－20。0が出たら、最低値が－20。全部マイナスになる。（20）－10くらい。に
 
 
-      world.spawnEntity(new Location(world, x, y, z), EntityType.ZOMBIE);
-
+      world.spawnEntity(new Location(world,(x + random)  , y,(z + random) ), EntityType.ZOMBIE);
+//randomをｘにつける
+//      作法的にクセ付けしておく。
+//      yにすると頭上から出たり地下に埋まったりするからしない
 
 
 
