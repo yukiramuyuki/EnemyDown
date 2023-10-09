@@ -17,15 +17,16 @@ public class EnemydowmCommand implements CommandExecutor {
     if(sender instanceof  Player player) {
       player.setHealth(20);
       player.setFoodLevel(20);
-//      プレイヤーの周囲（例30マス）の中の範囲に敵が発生する
       World world = player.getWorld();
-//      自分の情報取得
       Location playerLocation = player.getLocation();
+//      ランダムを生成する
+//      playerLocationよく使う？かもだから取得しておく.変数として導入。
+      double x = playerLocation.getX();
+      double y = playerLocation.getY();
+      double z = playerLocation.getZ();
 
-//      player.getLocationで変数導入
-//     Location playerLocationにする
-
-      world.spawnEntity(new Location(world, 10, 10, 10), EntityType.ZOMBIE);
+      world.spawnEntity(new Location(world, x, y, z), EntityType.ZOMBIE);
+//      プレイヤーと同じところ（重なってゾンビが発生する）
 
 
 
