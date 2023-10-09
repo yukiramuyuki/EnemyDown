@@ -17,19 +17,19 @@ public class EnemydowmCommand implements CommandExecutor {
     if(sender instanceof  Player player) {
       player.setHealth(20);
       player.setFoodLevel(20);
-
+//      プレイヤーの周囲（例30マス）の中の範囲に敵が発生する
       World world = player.getWorld();
+//      自分の情報取得
+      Location playerLocation = player.getLocation();
+
+//      player.getLocationで変数導入
+//     Location playerLocationにする
 
       world.spawnEntity(new Location(world, 10, 10, 10), EntityType.ZOMBIE);
-///new Location(world,距離),EntityType.種類)
-//      ゾンビが発生するでも、固定値なら困る
-//      サーバーごとに座標が異なるのが厄介！！
-//      非機能のspigotを使っていればどのサーバーでも導入できる
-//      今回は自前でエリアを作っている。が、プラグインが勝手にエリアを作っているわけではないから、
-//      エリアがあることを前提にしていない
-//      敵の出現をあるていど、しぼめたら・・・。
-    }
 
+
+
+    }
     return false;
   }
 
