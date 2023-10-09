@@ -1,5 +1,6 @@
 package plugin.enemydown.command;
 
+import java.util.SplittableRandom;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -19,14 +20,18 @@ public class EnemydowmCommand implements CommandExecutor {
       player.setFoodLevel(20);
       World world = player.getWorld();
       Location playerLocation = player.getLocation();
-//      ランダムを生成する
-//      playerLocationよく使う？かもだから取得しておく.変数として導入。
+
       double x = playerLocation.getX();
       double y = playerLocation.getY();
       double z = playerLocation.getZ();
+      //      ランダムを生成する
+//      ランダムの仕組みSplittableRAandam
+      SplittableRandom randam=new SplittableRandom().nextInt();
+//          nextIntで値の範囲を制限
+
 
       world.spawnEntity(new Location(world, x, y, z), EntityType.ZOMBIE);
-//      プレイヤーと同じところ（重なってゾンビが発生する）
+
 
 
 
