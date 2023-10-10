@@ -16,7 +16,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class EnemydowmCommand implements CommandExecutor {
 //  dowm nと間違えてる
-  private  int score;
+
 //
 
   @Override
@@ -63,14 +63,7 @@ public class EnemydowmCommand implements CommandExecutor {
     }
     return false;
   }
-  @EventHandler
 
-  public void onEnemyDeath(EntityDeathEvent e){
- score += 10;
-// カウント処理で"private int"で
-//    +＝で加算される（足しこむ）10点足す。
-//    他のものが倒されても足される
-  }
 
 }
 
