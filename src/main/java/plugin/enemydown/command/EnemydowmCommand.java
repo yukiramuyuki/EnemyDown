@@ -15,7 +15,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class EnemydowmCommand implements CommandExecutor {
 
   @Override
-//武装や武器はプレイする度に同じになること
+//敵を倒すと点数が手に入ること
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if(sender instanceof  Player player) {
