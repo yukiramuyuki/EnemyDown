@@ -16,7 +16,9 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class EnemydowmCommand implements CommandExecutor {
 //  dowm nと間違えてる
-  private  int score;
+
+
+//  イメージではprivate  int score;をここに持ってきたい！
 //
 
   @Override
@@ -63,21 +65,7 @@ public class EnemydowmCommand implements CommandExecutor {
     }
     return false;
   }
-  @EventHandler
 
-  public void onEnemyDeath(EntityDeathEvent e){
- score += 10;
- e.getEntity().getKiller().sendMessage("敵を倒した！");
-//     entityの情報をとる。
-//    getkiller倒したentity。プレイヤーの情報
-//    敵を倒した時メッセージを。（敵を倒した時だけメッセージ）
-//    コマンド実行したか関係ない。
-
-//    killerがコマンドを実行したプレイヤーかどうか判別できていない。
-//    マルチプレーのとき自分ではなくても加算される。
-
-//    点数の加算は誰がした時にするか。で少しややこしい（難しい）
-  }
 
 }
 
