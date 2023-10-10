@@ -2,6 +2,7 @@ package plugin.enemydown.command;
 
 import java.util.SplittableRandom;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,12 +28,18 @@ public class EnemydowmCommand implements CommandExecutor {
       Location playerLocation = player.getLocation();
 
       PlayerInventory inventory = player.getInventory();
-      ItemStack helmet = inventory.getHelmet();
-//      gethelmet情報とってくる。
-      inventory.setHelmet();
-//      ゲーム終了
-      inventory.setHelmet(helmet);
-//      情報のhelmet戻る。元に戻すのはそんなに難しくない。時間制限のあとにでも・・・。
+      inventory.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+//      itemstackでmaterialを指定。
+      inventory.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+//      コピーして種類を変えるだけ。
+      inventory.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+      inventory.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+
+      inventory.setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+//      武器はinmainhand（使い方注意）下のバーのところ。
+//      持っているものを上書きする
+
+
 
 
 
