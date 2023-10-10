@@ -17,7 +17,9 @@ import org.bukkit.inventory.PlayerInventory;
 public class EnemydowmCommand implements CommandExecutor {
 //  dowm nと間違えてる
 
-//
+//player情報とれているから、ここでイベントハンドラしたい。
+//  private int score;
+//をここに書きたい！！
 
   @Override
 //敵を倒すと点数が手に入ること
@@ -61,6 +63,7 @@ public class EnemydowmCommand implements CommandExecutor {
 
 
     }
+//    他のものが倒されても足される
     return false;
   }
 
