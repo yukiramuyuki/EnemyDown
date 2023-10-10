@@ -17,6 +17,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class EnemydowmCommand implements CommandExecutor , Listener {
 
+private Player player;
 
 //  dowm nと間違えてる
 
@@ -27,6 +28,9 @@ public class EnemydowmCommand implements CommandExecutor , Listener {
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if(sender instanceof  Player player) {
+      this.player=player;
+//        this.は  privateのところ
+//      コマンド実行のPlayerの情報はprivateのところにはいっている。
       World world = player.getWorld();
       Location playerLocation = player.getLocation();
 
@@ -70,10 +74,8 @@ public class EnemydowmCommand implements CommandExecutor , Listener {
 @EventHandler
 public void onEnemyDeath(EntityDeathEvent e){
   Player player = e.getEntity().getKiller();
-//       e.getEntity().getKiller();を変数で
-//  ここのプレイヤーはコマンドを実行したものかわからない（player.getworldのものかは）
-//  コマンドの中に実装しただけでoncommand実行したものかは関係なし
-//（全てのイベントから）
+//  プレイヤー情報を保存する
+
 
 }
 
