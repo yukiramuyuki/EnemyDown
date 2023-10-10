@@ -16,6 +16,8 @@ public class EnemydowmCommand implements CommandExecutor {
 
   @Override
 //敵を倒すと点数が手に入ること
+//種類によって点数が違うは後でする。
+//  敵を倒した状態を取得する
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if(sender instanceof  Player player) {
