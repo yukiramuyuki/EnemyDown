@@ -10,16 +10,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class EnemydowmCommand implements CommandExecutor {
+public class EnemydowmCommand implements CommandExecutor , Listener {
+//  implementsに追加する！！
+//  MainのBukkit.・・・regiterEventsに登録できる
+
 //  dowm nと間違えてる
 
-//player情報とれているから、ここでイベントハンドラしたい。
-//  private int score;
-//をここに書きたい！！
+
 
   @Override
 //敵を倒すと点数が手に入ること

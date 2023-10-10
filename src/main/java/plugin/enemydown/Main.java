@@ -8,15 +8,16 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import plugin.enemydown.command.EnemydowmCommand;
 
-public final class Main extends JavaPlugin implements Listener {
-
+public final class Main extends JavaPlugin  {
+//implementsListenerいらない
 
     @Override
     public void onEnable() {
 
-      Bukkit.getPluginManager().registerEvents(this, this);
+      Bukkit.getPluginManager().registerEvents(new EnemydowmCommand(), this);
+//      ここの行いらない。なぜならイベントをここでは受け取っていないから！！
       getCommand("enemyDown").setExecutor(new EnemydowmCommand());
-
+//enemydowncommandをthisに
     }
 
 }
