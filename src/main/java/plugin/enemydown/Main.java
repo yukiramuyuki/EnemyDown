@@ -13,17 +13,14 @@ public final class Main extends JavaPlugin  {
 
     @Override
     public void onEnable() {
+      EnemydowmCommand enemydowmCommand = new EnemydowmCommand();
+//      これをするとnewは1か所。newしたやつを使う。（両方同じものを使う）
+
+
 
       Bukkit.getPluginManager().registerEvents(new EnemydowmCommand(), this);
-
       getCommand("enemyDown").setExecutor(new EnemydowmCommand());
-//newが二つあると、登録されたもの、実際に動くものべつもの
-//      インスタンスという考え方
-
-//      enemydownに基づいてインスタンス（設計書のような）が作られる。
-//      newしたら別々になるそれぞれA,B EnemydownCommand
-//      実際登録されても、違うものが動いてしまうことも
-//      →一時変数で受け取るを実行
+//Listener情報として登録されたから、EnemyDownでイベントハンドラ使える
     }
 
 }
