@@ -16,8 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class EnemydowmCommand implements CommandExecutor , Listener {
-//  implementsに追加する！！
-//  MainのBukkit.・・・regiterEventsに登録できる
+
 
 //  dowm nと間違えてる
 
@@ -65,10 +64,18 @@ public class EnemydowmCommand implements CommandExecutor , Listener {
 
 
     }
-//    他のものが倒されても足される
+
     return false;
   }
+@EventHandler
+public void onEnemyDeath(EntityDeathEvent e){
+  Player player = e.getEntity().getKiller();
+//       e.getEntity().getKiller();を変数で
+//  ここのプレイヤーはコマンドを実行したものかわからない（player.getworldのものかは）
+//  コマンドの中に実装しただけでoncommand実行したものかは関係なし
+//（全てのイベントから）
 
+}
 
 }
 
