@@ -18,6 +18,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class EnemydowmCommand implements CommandExecutor , Listener {
 
 private Player player;
+private int score;
 
 //  dowm nと間違えてる
 
@@ -29,8 +30,7 @@ private Player player;
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if(sender instanceof  Player player) {
       this.player=player;
-//        this.は  privateのところ
-//      コマンド実行のPlayerの情報はprivateのところにはいっている。
+
       World world = player.getWorld();
       Location playerLocation = player.getLocation();
 
@@ -74,9 +74,17 @@ private Player player;
 @EventHandler
 public void onEnemyDeath(EntityDeathEvent e){
   Player player = e.getEntity().getKiller();
-//  プレイヤー情報を保存する
+  if(this.player.getName().equals(player)) {
+  }
+//  this.の情報と一致したら
+  score += 10;
+//  スコアを加算
+ player.sendMessage("てきをたおした！現在のスコアは" + score + "点！");
 
-
+// コマンドを実行したプレイヤーの情報がthisに上書きされて、
+// 敵が出現したのをプレイヤーが倒した時、killerの情報をとってきて（getkiller)、
+// killerの情報がコマンドを実行したプレイヤーと同じ名前だったら、
+// 加算＆メッセージを
 }
 
 }
