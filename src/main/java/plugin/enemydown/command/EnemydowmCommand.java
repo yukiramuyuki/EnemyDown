@@ -15,6 +15,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class EnemydowmCommand implements CommandExecutor {
+//  dowm nと間違えてる
+  private  int score;
+//
 
   @Override
 //敵を倒すと点数が手に入ること
@@ -61,15 +64,12 @@ public class EnemydowmCommand implements CommandExecutor {
     return false;
   }
   @EventHandler
-//  機能設計
-//  Entityが死亡する際のイベントを取得しえ、その時に点を加算する
-//  その際に、プレイヤーが倒したEntityであるという条件を付け加えて加算する。
 
-
-//  entityが死亡する＝ここで指定しているイベントだけではない。全てのイベントで加算される。
-//  事故で発生しても点数入る。
   public void onEnemyDeath(EntityDeathEvent e){
-
+ score += 10;
+// カウント処理で"private int"で
+//    +＝で加算される（足しこむ）10点足す。
+//    他のものが倒されても足される
   }
 
 }
