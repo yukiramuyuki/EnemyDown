@@ -32,7 +32,7 @@ private int score;
       this.player=player;
 
       World world = player.getWorld();
-      Location playerLocation = player.getLocation();
+
 
 //     プレイヤーの状態を初期化。（体力と空腹値を最大に）
       player.setHealth(20);
@@ -40,7 +40,8 @@ private int score;
 
 
       //ゾンビ出現させる
-
+      Location playerLocation = player.getLocation();
+//      player.getworldのしたにおくとだめ。
       double x = playerLocation.getX();
       double y = playerLocation.getY();
       double z = playerLocation.getZ();
@@ -74,17 +75,25 @@ private int score;
 @EventHandler
 public void onEnemyDeath(EntityDeathEvent e){
   Player player = e.getEntity().getKiller();
-  if(this.player.getName().equals(player)) {
+  if(this.player.getName().equals(player.getName())) {
+//  playe.getName
   }
-//  this.の情報と一致したら
+
   score += 10;
-//  スコアを加算
+
  player.sendMessage("てきをたおした！現在のスコアは" + score + "点！");
 
-// コマンドを実行したプレイヤーの情報がthisに上書きされて、
-// 敵が出現したのをプレイヤーが倒した時、killerの情報をとってきて（getkiller)、
-// killerの情報がコマンドを実行したプレイヤーと同じ名前だったら、
-// 加算＆メッセージを
+// kit.event.EventException: null
+//  どこで発生か？
+//  → because "this.player" is null
+//     at plugin.enemydown.command.EnemydowmCommand.onEnemyDeath(EnemydowmCommand.java:78) ~[?:?]
+//78行目は"  if(this.player.getName().equals(player.getName())) {"
+//  nullの理由は値が入っていないから。コマンドを実行していないから
+//  playerの中身がnullの可能性も
+//  プレイヤーが倒していない場合null
+
+
+
 }
 
 }
