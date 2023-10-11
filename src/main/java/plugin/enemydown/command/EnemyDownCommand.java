@@ -1,5 +1,6 @@
 package plugin.enemydown.command;
 
+import java.util.Objects;
 import java.util.SplittableRandom;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,12 +16,12 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class EnemydowmCommand implements CommandExecutor , Listener {
+public class EnemyDownCommand implements CommandExecutor , Listener {
 
 private Player player;
 private int score;
 
-//  dowm nと間違えてる
+
 
 
 
@@ -41,15 +42,12 @@ private int score;
 
       //ゾンビ出現させる
       Location playerLocation = player.getLocation();
-//      player.getworldのしたにおくとだめ。
+
       double x = playerLocation.getX();
       double y = playerLocation.getY();
       double z = playerLocation.getZ();
 
-
       int random=new SplittableRandom().nextInt(10) + 1;
-
-
 
       world.spawnEntity(new Location(world,(x + random)  , y,(z + random) ), EntityType.ZOMBIE);
 
@@ -57,32 +55,26 @@ private int score;
 
 //プレイヤーの武装
       PlayerInventory inventory = player.getInventory();
+
       inventory.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-
       inventory.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-
       inventory.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
       inventory.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-
       inventory.setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
-
-
 
     }
 
     return false;
   }
 @EventHandler
-public void onEnemyDeath(EntityDeathEvent e){
+public void onEnemyDeath(EntityDeathEvent e) {
   Player player = e.getEntity().getKiller();
-  if(this.player.getName().equals(player.getName())) {
+  if (this.player.getName().equals(player.getName())) {
 //  player.getNameに変更する
+    score += 10;
+
+    player.sendMessage("てきをたおした！現在のスコアは" + score + "点！");
   }
-
-  score += 10;
-
- player.sendMessage("てきをたおした！現在のスコアは" + score + "点！");
-
 // すでにバグおきている
   //メッセージ出るはずが出ない！！
 //  エラーもでない！！
@@ -91,8 +83,6 @@ public void onEnemyDeath(EntityDeathEvent e){
 //  null表示！？
 //  this.playerがnullと分かった
 //  →＝getNameができない。につなげれたら解決へ繋がる
-
-
 
 }
 
