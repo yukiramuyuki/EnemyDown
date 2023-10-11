@@ -76,21 +76,21 @@ private int score;
 public void onEnemyDeath(EntityDeathEvent e){
   Player player = e.getEntity().getKiller();
   if(this.player.getName().equals(player.getName())) {
-//  playe.getName
+//  player.getNameに変更する
   }
 
   score += 10;
 
  player.sendMessage("てきをたおした！現在のスコアは" + score + "点！");
 
-// kit.event.EventException: null
-//  どこで発生か？
-//  → because "this.player" is null
-//     at plugin.enemydown.command.EnemydowmCommand.onEnemyDeath(EnemydowmCommand.java:78) ~[?:?]
-//78行目は"  if(this.player.getName().equals(player.getName())) {"
-//  nullの理由は値が入っていないから。コマンドを実行していないから
-//  playerの中身がnullの可能性も
-//  プレイヤーが倒していない場合null
+// すでにバグおきている
+  //メッセージ出るはずが出ない！！
+//  エラーもでない！！
+//  理由はplayer.getName
+
+//  null表示！？
+//  this.playerがnullと分かった
+//  →＝getNameができない。につなげれたら解決へ繋がる
 
 
 
