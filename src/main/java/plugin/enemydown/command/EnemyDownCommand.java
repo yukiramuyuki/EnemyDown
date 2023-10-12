@@ -1,6 +1,6 @@
 package plugin.enemydown.command;
 
-import java.util.Objects;
+
 import java.util.SplittableRandom;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,7 +26,7 @@ private int score;
 
 
   @Override
-//敵を倒すと点数が手に入ること
+
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if(sender instanceof  Player player) {
@@ -67,22 +67,13 @@ private int score;
     return false;
   }
 @EventHandler
+//敵を倒すと点数が手に入ること
 public void onEnemyDeath(EntityDeathEvent e) {
   Player player = e.getEntity().getKiller();
-  if (this.player.getName().equals(player.getName())) {
-//  player.getNameに変更する
+  if(this.player.getName().equals(player.getName())) {
     score += 10;
-
     player.sendMessage("てきをたおした！現在のスコアは" + score + "点！");
   }
-// すでにバグおきている
-  //メッセージ出るはずが出ない！！
-//  エラーもでない！！
-//  理由はplayer.getName
-
-//  null表示！？
-//  this.playerがnullと分かった
-//  →＝getNameができない。につなげれたら解決へ繋がる
 
 }
 
