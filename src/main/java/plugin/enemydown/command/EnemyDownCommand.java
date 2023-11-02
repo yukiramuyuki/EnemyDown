@@ -1,6 +1,7 @@
 package plugin.enemydown.command;
 
 
+import java.util.Objects;
 import java.util.SplittableRandom;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,29 +17,25 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class EnemyDownCommand implements CommandExecutor , Listener {
-
-private Player player;
-private int score;
+public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
-
+  private Player player;
+  private int score;
 
 
   @Override
 
-
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-    if(sender instanceof  Player player) {
-      this.player=player;
+    if (sender instanceof Player player) {
+
+      this.player = player;
 
       World world = player.getWorld();
-
 
 //     プレイヤーの状態を初期化。（体力と空腹値を最大に）
       player.setHealth(20);
       player.setFoodLevel(20);
-
 
       //ゾンビ出現させる
       Location playerLocation = player.getLocation();
@@ -47,11 +44,9 @@ private int score;
       double y = playerLocation.getY();
       double z = playerLocation.getZ();
 
-      int random=new SplittableRandom().nextInt(10) + 1;
+      int random = new SplittableRandom().nextInt(10) + 1;
 
-      world.spawnEntity(new Location(world,(x + random)  , y,(z + random) ), EntityType.ZOMBIE);
-
-
+      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
 
 //プレイヤーの武装
       PlayerInventory inventory = player.getInventory();
@@ -66,16 +61,28 @@ private int score;
 
     return false;
   }
-@EventHandler
-//敵を倒すと点数が手に入ること
-public void onEnemyDeath(EntityDeathEvent e) {
-  Player player = e.getEntity().getKiller();
-  if(this.player.getName().equals(player.getName())) {
-    score += 10;
-    player.sendMessage("てきをたおした！現在のスコアは" + score + "点！");
-  }
 
-}
+  @EventHandler
+//敵を倒すと点数が手に入ること
+
+  public void onEnemyDeath(EntityDeathEvent e) {
+    Player player = e.getEntity().getKiller();
+
+    if (Objects.isNull(player)) {
+      return;
+    }
+
+    if (Objects.isNull(this.player)) {
+      return;
+    }
+
+    if (this.player.getName().equals(player.getName())) {
+      score += 10;
+      player.sendMessage("敵をたおした！現在のスコアは" + score + "点！");
+    }
+
+
+  }
 
 }
 
