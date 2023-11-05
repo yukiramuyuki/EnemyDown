@@ -25,14 +25,20 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
 private List<PlayerScore>playerScoreList=new ArrayList<>();
-//いたるところがエラー（player.scoreないから）
-//  それを解消する
+//空のなかにコマンド実行した人の情報を入れたい
 
 
   @Override
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
+PlayerScore playerScore=new PlayerScore();
+playerScore.set
+
+//オブジェクト自体を作るリストに入れるオブジェクトを作る
+// プレイヤー名を設定したい
+// playerScore.setをしたいがset赤でできない（ない）
+
 
       this.player = player;
 
