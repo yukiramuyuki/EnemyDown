@@ -23,11 +23,14 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   private Player player;
   private int score;
-//  player/scoreがセット
-//  キーとバリューのような
-//  マップとして持つことも可能↓
-  private Map<Player,Integer>
-//ただしこれは二つだからできること
+//  日時情報などもセットで持ちたい
+//  項目が増えるのはわかっている
+
+//  複数の項目をワンセットに
+//  名前、住所、電話番号を1つの情報としてなど
+
+//  データオブジェクトを使う
+
 
 
   @Override
