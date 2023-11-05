@@ -9,10 +9,7 @@ import org.bukkit.entity.Player;
 public class PlayerScore {
 
   private String playerName;
-//  enemydownでplayerを使いたいわけではなくplayernameを使いたい
-//  playerをStringにしてplayernameでも
-//  playerたくさん情報持っていて便利だが、必要なものに絞る
-//  ここのクラスでもっておきたいもの。項目は絞る
+
   private int score;
 
 }

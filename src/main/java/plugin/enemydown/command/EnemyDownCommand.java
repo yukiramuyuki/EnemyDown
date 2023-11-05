@@ -1,6 +1,8 @@
 package plugin.enemydown.command;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SplittableRandom;
@@ -17,12 +19,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
+//player.scoreリストで持ちたい→リストに
+private List<PlayerScore>playerScoreList=new ArrayList<>();
+//今まではprivate List<PlayerScore>playerScoreListとしていた。
+//  nullになるから、new ArrayList
 
-  private Player player;
-  private int score;
+//  playerScoreListが空の状態nullにならないようにしておく
 
 
   @Override
