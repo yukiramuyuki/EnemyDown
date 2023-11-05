@@ -1,6 +1,7 @@
 package plugin.enemydown.command;
 
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.SplittableRandom;
 import org.bukkit.Location;
@@ -18,10 +19,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
-
+//マルチプレイ
 
   private Player player;
   private int score;
+//  player/scoreがセット
+//  キーとバリューのような
+//  マップとして持つことも可能↓
+  private Map<Player,Integer>
+//ただしこれは二つだからできること
 
 
   @Override
