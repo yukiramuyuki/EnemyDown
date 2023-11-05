@@ -14,7 +14,7 @@ public final class Main extends JavaPlugin {
 
     Bukkit.getPluginManager().registerEvents(enemydownCommand, this);
     getCommand("enemyDown").setExecutor(enemydownCommand);
-
+//b
 
   }
 }
