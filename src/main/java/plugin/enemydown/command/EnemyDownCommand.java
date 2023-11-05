@@ -34,7 +34,7 @@ private List<PlayerScore>playerScoreList=new ArrayList<>();
     if (sender instanceof Player player) {
 PlayerScore playerScore=new PlayerScore();
 
-playerScore.playerName=player.getName();
+
 
 
 //    できない理由はplayerscoreに移動した二つがpribateだから

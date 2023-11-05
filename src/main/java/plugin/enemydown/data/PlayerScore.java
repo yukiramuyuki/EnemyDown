@@ -8,8 +8,33 @@ import org.bukkit.entity.Player;
 
 public class PlayerScore {
 
-  public String playerName;
+  private String playerName;
 
- public int score;
-//enemydownで使うためにpublicに変更
+ private int score;
+//現場でよくする方法を今回はするため
+//  privateからする
+
+//  右クリック生成
+//  getteとsetter
+//  ふたつクリックOK
+
+//  ↓したのものが作成される
+
+
+
+  public String getPlayerName() {
+    return playerName;
+  }
+
+  public void setPlayerName(String playerName) {
+    this.playerName = playerName;
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
 }
