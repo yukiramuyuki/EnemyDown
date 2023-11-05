@@ -22,5 +22,8 @@ public final class Main extends JavaPlugin {
 //    イベント登録されているものが別々に動いてしまう
 //    →一時変数にする！！
   }
-  
+
+//  ctrl + alt + l
+//  フォーマットで整える
+//習慣にする！！
 }
