@@ -24,7 +24,7 @@ import plugin.enemydown.data.PlayerScore;
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
-private List<PlayerScore>playerScoreList=new ArrayList<>();
+  private List<PlayerScore> playerScoreList = new ArrayList<>();
 //空のなかにコマンド実行した人の情報を入れたい
 
 
@@ -32,14 +32,7 @@ private List<PlayerScore>playerScoreList=new ArrayList<>();
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
-PlayerScore playerScore=new PlayerScore();
-
-
-
-
-//    できない理由はplayerscoreに移動した二つがpribateだから
-//      playerscoreのクラスの中でしかいじることできない。
-//      →publicにする！！
+      PlayerScore playerScore = new PlayerScore();
 
 
       this.player = player;

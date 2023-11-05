@@ -2,6 +2,8 @@ package plugin.enemydown.data;
 
 import org.bukkit.entity.Player;
 
+
+
 /**
  * EnemyDownのゲームを実行する際のスコア情報を扱うオブジェクト。 プレイヤー名、合計点数、日時などの情報をもつ。
  */
@@ -9,26 +11,23 @@ import org.bukkit.entity.Player;
 public class PlayerScore {
 
   private String playerName;
+//  publicに変更でも可能。
+//  publicにすると弊害が起きることもある。
 
- private int score;
-//現場でよくする方法を今回はするため
-//  privateからする
+  private int score;
 
-//  右クリック生成
-//  getteとsetter
-//  ふたつクリックOK
-
-//  ↓したのものが作成される
-
+//  getter/setterはpublicなのでどこからでもしゅとくできる
 
 
   public String getPlayerName() {
     return playerName;
   }
+//  しゅとくする
 
   public void setPlayerName(String playerName) {
     this.playerName = playerName;
   }
+//  引数のplayerNameを自分のところにセットする
 
   public int getScore() {
     return score;
