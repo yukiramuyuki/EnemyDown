@@ -1,5 +1,6 @@
 package plugin.enemydown;
 
+    
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -13,7 +14,7 @@ public final class Main extends JavaPlugin implements Listener {
 
       Bukkit.getPluginManager().registerEvents(this, this);
       getCommand("enemyDown").setExecutor(new EnemydowmCommand());
-
+//a
     }
     
 }
