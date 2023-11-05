@@ -15,15 +15,6 @@ public final class Main extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(enemydownCommand, this);
     getCommand("enemyDown").setExecutor(enemydownCommand);
 
-//    変数のenemydownCommand
-//    newではなく、
 
-//    new２つだと別に二つ別々に管理されてしまう
-//    イベント登録されているものが別々に動いてしまう
-//    →一時変数にする！！
   }
-
-//  ctrl + alt + l
-//  フォーマットで整える
-//習慣にする！！
 }
