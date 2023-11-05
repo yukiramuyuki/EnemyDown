@@ -1,5 +1,6 @@
 package plugin.enemydown.data;
-//新しくクラスやパッケージをつくるとき、何か分かりやすくするためにjavaドックを作成しておく
+
+import org.bukkit.entity.Player;
 
 /**
  * EnemyDownのゲームを実行する際のスコア情報を扱うオブジェクト。
@@ -7,5 +8,8 @@ package plugin.enemydown.data;
  */
 
 public class PlayerScore {
+  //フィールドの情報を持ってくる（enemydowncommandからコピーで）
+  private Player player;
+  private int score;
 
 }
