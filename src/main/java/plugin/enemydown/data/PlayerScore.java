@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 
 public class PlayerScore {
 
-  private String playerName;
+  public String playerName;
 
-  private int score;
-
+ public int score;
+//enemydown‚Åg‚¤‚½‚ß‚Épublic‚É•ÏX
 }

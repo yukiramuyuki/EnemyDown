@@ -33,11 +33,13 @@ private List<PlayerScore>playerScoreList=new ArrayList<>();
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
 PlayerScore playerScore=new PlayerScore();
-playerScore.set
 
-//オブジェクト自体を作るリストに入れるオブジェクトを作る
-// プレイヤー名を設定したい
-// playerScore.setをしたいがset赤でできない（ない）
+playerScore.playerName=player.getName();
+
+
+//    できない理由はplayerscoreに移動した二つがpribateだから
+//      playerscoreのクラスの中でしかいじることできない。
+//      →publicにする！！
 
 
       this.player = player;
