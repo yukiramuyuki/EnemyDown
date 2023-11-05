@@ -30,6 +30,8 @@ private List<PlayerScore>playerScoreList=new ArrayList<>();
 
 //  playerScoreListが空の状態nullにならないようにしておく
 
+//  mainのnewenemydownが作られたときにListも作られる
+
 
   @Override
 
