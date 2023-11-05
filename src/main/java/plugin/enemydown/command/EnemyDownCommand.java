@@ -25,7 +25,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
-//空のなかにコマンド実行した人の情報を入れたい
 
 
   @Override
@@ -33,7 +32,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
       PlayerScore playerScore = new PlayerScore();
-
 
       this.player = player;
 
