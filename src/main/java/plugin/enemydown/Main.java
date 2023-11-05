@@ -1,20 +1,20 @@
 package plugin.enemydown;
 
-    
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import plugin.enemydown.command.EnemydowmCommand;
+import plugin.enemydown.command.EnemyDownCommand;
 
-public final class Main extends JavaPlugin implements Listener {
+public final class Main extends JavaPlugin {
 
-    @Override
-    public void onEnable() {
 
-      Bukkit.getPluginManager().registerEvents(this, this);
-      getCommand("enemyDown").setExecutor(new EnemydowmCommand());
-//a
-    }
-    
+  @Override
+  public void onEnable() {
+    EnemyDownCommand enemydownCommand = new EnemyDownCommand();
+
+    Bukkit.getPluginManager().registerEvents(enemydownCommand, this);
+    getCommand("enemyDown").setExecutor(enemydownCommand);
+//b
+
+  }
 }
