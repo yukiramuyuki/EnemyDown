@@ -23,14 +23,10 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
-//player.scoreリストで持ちたい→リストに
+
 private List<PlayerScore>playerScoreList=new ArrayList<>();
-//今まではprivate List<PlayerScore>playerScoreListとしていた。
-//  nullになるから、new ArrayList
-
-//  playerScoreListが空の状態nullにならないようにしておく
-
-//  mainのnewenemydownが作られたときにListも作られる
+//いたるところがエラー（player.scoreないから）
+//  それを解消する
 
 
   @Override
