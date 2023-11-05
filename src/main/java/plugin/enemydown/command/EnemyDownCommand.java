@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
-//マルチプレイ
+
 
   private Player player;
   private int score;
