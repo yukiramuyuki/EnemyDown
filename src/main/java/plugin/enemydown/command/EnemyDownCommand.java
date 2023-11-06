@@ -34,9 +34,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 //メゾット名をaddNewPlayerに
       if (playerScoreList.isEmpty()) {
         addNewPlayer(player);
-
       } else {
-
         for (PlayerScore playerScore : playerScoreList) {
           if (!playerScore.getPlayerName().equals(player.getName())) {
             addNewPlayer(player);
@@ -93,34 +91,31 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   public void onEnemyDeath(EntityDeathEvent e) {
     Player player = e.getEntity().getKiller();
 
-    if (Objects.isNull(player)) {
+    if (Objects.isNull(player) || playerScoreList.isEmpty()) {
+//      ||または
+//      killerがいなかったら・リストがからだったら何もしない
       return;
     }
 
-    if (playerScoreList.isEmpty()) {
-//      this.player現在なくなっている
-//      フィールドに持っていたプレイやーplayerscorelistに変わっている
-//      これがヌルなら何もしないという意味
-//      リストの中身が空なら何もしない
+    for (PlayerScore playerScore : playerScoreList) {
+//      上からコピーしてくる
+      if (playerScore.getPlayerName().equals(player.getName())) {
+        //        中の名前がプレイヤーと一致したら
+        playerScore.setScore(playerScore.getScore() + 10);
+//        コマンドを実行したプレイヤー(playerscore)のスコアを新しく設定（setscore)
+//        それはいま設定されているスコアに対して+１０
+        player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
 
-//      ifが続いてreturnをするだけ
-//      ifで連続ステートントのマージをする
-      return;
-    }
-
-    if (this.player.getName().equals(player.getName())) {
-      score += 10;
-      player.sendMessage("敵をたおした！現在のスコアは" + score + "点！");
+      }
     }
 
 
   }
-//privateを下におく
-//  呼び出された順など趣味の範囲になる
-//  よく見られるものを上に
+
   /**
    * 新規のプレイヤー情報をリストに追加します
-   * @param player　コマンドを実行したプレイヤー
+   *
+   * @param player 　コマンドを実行したプレイヤー
    */
 
   private void addNewPlayer(Player player) {
