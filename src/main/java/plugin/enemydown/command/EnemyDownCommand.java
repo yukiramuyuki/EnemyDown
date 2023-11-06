@@ -31,6 +31,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
+//      ifの中の内容二つ同じ
+//      リファクタリング→メゾット抽出
 
       if (playerScoreList.isEmpty()) {
         PlayerScore newPlayer = new PlayerScore();
@@ -40,11 +42,13 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         playerScoreList.add(newPlayer);
 
       } else {
+//        新規のリストしか  private List<PlayerScore> playerScoreList = new ArrayList<>();
+//        の中に入らない
 
         for (PlayerScore playerScore : playerScoreList) {
 
           if (!playerScore.getPlayerName().equals(player.getName())) {
-//名前含まれていなかったら追加する
+
             PlayerScore newPlayer = new PlayerScore();
 
             newPlayer.setPlayerName(player.getName());
