@@ -23,7 +23,8 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
-
+//確認してもマルチプレイのため変化はない
+//  エラーがないかの確認を
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
