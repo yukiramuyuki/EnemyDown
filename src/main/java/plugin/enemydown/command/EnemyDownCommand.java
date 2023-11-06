@@ -23,6 +23,21 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
+//今はすべて上から実行している
+//  それを一定周期で実装するには
+//  ループ処理で何度も実行する
+//  sledsleep?で実行したら●秒まって停止するをすることは可能
+//  全ての処理が停止してしまう
+//  場合によってはマイクラ全てが止まるかも！
+//  カウントではなく時間停止になる
+
+//  javaだけで時間の管理をするのはめちゃ難しい！！
+//  ウェブアプリではフレームワークやマイクラのspigotが仕組みを提供してくれている
+
+//機能設計
+//  時間制限を設定できること
+//  スケジューラ―をつかって、一定周期で敵を出現させる。
+//  一定時間が経過したらその敵を出現させる処理を停止する。
 
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
