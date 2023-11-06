@@ -31,29 +31,15 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
-//      ifの中の内容二つ同じ
-//      リファクタリング→メゾット抽出
-
+//メゾット名をaddNewPlayerに
       if (playerScoreList.isEmpty()) {
-        PlayerScore newPlayer = new PlayerScore();
-
-        newPlayer.setPlayerName(player.getName());
-
-        playerScoreList.add(newPlayer);
+        addNewPlayer(player);
 
       } else {
-//        新規のリストしか  private List<PlayerScore> playerScoreList = new ArrayList<>();
-//        の中に入らない
 
         for (PlayerScore playerScore : playerScoreList) {
-
           if (!playerScore.getPlayerName().equals(player.getName())) {
-
-            PlayerScore newPlayer = new PlayerScore();
-
-            newPlayer.setPlayerName(player.getName());
-
-            playerScoreList.add(newPlayer);
+            addNewPlayer(player);
           }
 
         }
@@ -96,6 +82,17 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     }
 
     return false;
+  }
+//さっきのメゾットについて説明を入れておく
+  /**
+   * 新規のプレイヤー情報をリストに追加します
+   * @param player　コマンドを実行したプレイヤー
+   */
+
+  private void addNewPlayer(Player player) {
+    PlayerScore newPlayer = new PlayerScore();
+    newPlayer.setPlayerName(player.getName());
+    playerScoreList.add(newPlayer);
   }
 
   @EventHandler
