@@ -83,17 +83,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     return false;
   }
-//さっきのメゾットについて説明を入れておく
-  /**
-   * 新規のプレイヤー情報をリストに追加します
-   * @param player　コマンドを実行したプレイヤー
-   */
 
-  private void addNewPlayer(Player player) {
-    PlayerScore newPlayer = new PlayerScore();
-    newPlayer.setPlayerName(player.getName());
-    playerScoreList.add(newPlayer);
-  }
 
   @EventHandler
 /**
@@ -107,7 +97,14 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       return;
     }
 
-    if (Objects.isNull(this.player)) {
+    if (playerScoreList.isEmpty()) {
+//      this.player現在なくなっている
+//      フィールドに持っていたプレイやーplayerscorelistに変わっている
+//      これがヌルなら何もしないという意味
+//      リストの中身が空なら何もしない
+
+//      ifが続いてreturnをするだけ
+//      ifで連続ステートントのマージをする
       return;
     }
 
@@ -118,7 +115,19 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
   }
+//privateを下におく
+//  呼び出された順など趣味の範囲になる
+//  よく見られるものを上に
+  /**
+   * 新規のプレイヤー情報をリストに追加します
+   * @param player　コマンドを実行したプレイヤー
+   */
 
+  private void addNewPlayer(Player player) {
+    PlayerScore newPlayer = new PlayerScore();
+    newPlayer.setPlayerName(player.getName());
+    playerScoreList.add(newPlayer);
+  }
 }
 
 
