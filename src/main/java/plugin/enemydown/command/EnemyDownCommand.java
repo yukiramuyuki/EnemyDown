@@ -32,16 +32,28 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
       PlayerScore playerScore = new PlayerScore();
+      playerScore.setPlayerName(player.getName());
+      //      this.player = player;をけす
 
-      this.player = player;
+      playerScoreList.add(playerScore);
+
+//      コマンドを実行したプレイヤーのNameをもった（playerscore)をリストに追加できた
+//      現在は常に追加のため自分の名前が常にリストがふえていく
+      
 
       World world = player.getWorld();
 
-//     プレイヤーの状態を初期化。（体力と空腹値を最大に）
+/**
+ *  プレイヤーの状態を初期化。（体力と空腹値を最大に）
+ */
+
       player.setHealth(20);
       player.setFoodLevel(20);
 
-      //ゾンビ出現させる
+      /**
+       * ゾンビ出現させる
+       */
+
       Location playerLocation = player.getLocation();
 
       double x = playerLocation.getX();
@@ -52,7 +64,9 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
 
-//プレイヤーの武装
+/**
+ *       プレイヤーの武装
+ */
       PlayerInventory inventory = player.getInventory();
 
       inventory.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
@@ -67,7 +81,9 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   }
 
   @EventHandler
-//敵を倒すと点数が手に入ること
+/**
+ * 敵を倒すと点数が手に入ること
+ */
 
   public void onEnemyDeath(EntityDeathEvent e) {
     Player player = e.getEntity().getKiller();
