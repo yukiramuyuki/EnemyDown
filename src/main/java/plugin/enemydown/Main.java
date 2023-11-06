@@ -7,7 +7,7 @@ import plugin.enemydown.command.EnemyDownCommand;
 
 public final class Main extends JavaPlugin {
 
-//マルチプレイ
+
   @Override
   public void onEnable() {
     EnemyDownCommand enemydownCommand = new EnemyDownCommand();
