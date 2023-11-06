@@ -24,6 +24,7 @@ import plugin.enemydown.data.PlayerScore;
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
+
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
 
@@ -98,7 +99,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       if (playerScore.getPlayerName().equals(player.getName())) {
         playerScore.setScore(playerScore.getScore() + 10);
         player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
-//        複雑な処理がでてきたときはコードを見直すタイミング！！
 
       }
     }

@@ -4,11 +4,9 @@ import org.bukkit.entity.Player;
 
 
 /**
- * EnemyDown‚ÌƒQ[ƒ€‚ðŽÀs‚·‚éÛ‚ÌƒXƒRƒAî•ñ‚ðˆµ‚¤ƒIƒuƒWƒFƒNƒgB ƒvƒŒƒCƒ„[–¼A‡Œv“_”A“úŽž‚È‚Ç‚Ìî•ñ‚ð‚à‚ÂB
+ * EnemyDownã®ã‚²ãƒ¼ãƒ ã‚’å®Ÿè¡Œã™ã‚‹éš›ã®ã‚¹ã‚³ã‚¢æƒ…å ±ã‚’æ‰±ã†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚ ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åã€åˆè¨ˆç‚¹æ•°ã€æ—¥æ™‚ãªã©ã®æƒ…å ±ã‚’ã‚‚ã¤ã€‚
  */
-//lombok‚ð‚µ‚È‚¢•û–@‚ÅŽÀs‚·‚é
-//  s‚Í’·‚­‚È‚é‚ª‚±‚ÌƒvƒŒƒWƒFƒNƒg‚Åis‚µ‚½‚¢‚½‚ß
-//  ‰EƒNƒŠƒbƒNisƒQƒbƒ^[ƒZƒbƒ^[‚Åì¬
+
 
 public class PlayerScore {
 
