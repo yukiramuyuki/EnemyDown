@@ -31,36 +31,29 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
-      //        プレイヤーリストが空か(isempty)
-      if (playerScoreList.isEmpty()){
+
+      if (playerScoreList.isEmpty()) {
         PlayerScore newPlayer = new PlayerScore();
-//        forと名前重なるからnewに変更する
-        newPlayer.setPl
-      ayerName(player.getName());
+
+        newPlayer.setPlayerName(player.getName());
 
         playerScoreList.add(newPlayer);
-//        空ならリストの中をnew
-//        1件追加される
-      }else {
-//        空ではないのであれば＝ユーザーがリストにある
-        for (PlayerScore playerScore:playerScoreList){
-//          AさんBさんプレイヤーの数だけ作成され、ループする
-          if (!playerScore.getPlayerName().equals(player.getName())){
-//           equalsは等しい
-//            ループの中で1件の名前と   if (sender instanceof Player player) {が一致するか
-//            しなければ次
-//            今回はもし一致しなかったらなので！を最初に付ける
-//            ！を付けると反転
 
-//            今までの実行した人の中にプレイヤーが含まれていなかったら
+      } else {
 
-            
+        for (PlayerScore playerScore : playerScoreList) {
+
+          if (!playerScore.getPlayerName().equals(player.getName())) {
+//名前含まれていなかったら追加する
+            PlayerScore newPlayer = new PlayerScore();
+
+            newPlayer.setPlayerName(player.getName());
+
+            playerScoreList.add(newPlayer);
           }
 
         }
       }
-
-
 
       World world = player.getWorld();
 
