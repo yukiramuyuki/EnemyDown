@@ -92,19 +92,13 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     Player player = e.getEntity().getKiller();
 
     if (Objects.isNull(player) || playerScoreList.isEmpty()) {
-//      ||または
-//      killerがいなかったら・リストがからだったら何もしない
       return;
     }
-
     for (PlayerScore playerScore : playerScoreList) {
-//      上からコピーしてくる
       if (playerScore.getPlayerName().equals(player.getName())) {
-        //        中の名前がプレイヤーと一致したら
         playerScore.setScore(playerScore.getScore() + 10);
-//        コマンドを実行したプレイヤー(playerscore)のスコアを新しく設定（setscore)
-//        それはいま設定されているスコアに対して+１０
         player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
+//        複雑な処理がでてきたときはコードを見直すタイミング！！
 
       }
     }
