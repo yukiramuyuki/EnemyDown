@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,8 +24,7 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
-//エリア内でしか発生しないこと
-//  リファクタリング
+
 
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -61,6 +61,19 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
        * ゾンビ出現させる
        */
 
+
+
+      //敵をランダムに
+//  そのためにはリストを使う
+
+      //      entityListというのを作る
+//      List<Entity> entityList=List.of(EntityType.ZOMBIE,EntityType.SKELETON);
+      List<EntityType> entityList=List.of(EntityType.ZOMBIE,EntityType.SKELETON);
+//  ランダムなのでとりあえず2つでOK
+//      赤の波線でEntityTypeにしろと指示が。
+//      リストの中でEntityTypeというものを持つ
+
+
       world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
 
 
@@ -85,13 +98,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     return false;
   }
-//  一度動作を確認して↑
-//  そのあとに動作のふるまいをそのまま↓
-//  することをリファクタリング
 
-//  今の現状は正確にはリファクタリングになっていない。
-//  randomzなどideの昨日を使わずに変更を加えた
-//　その場合バグることがあるためもう一度起動する
 
 
 
