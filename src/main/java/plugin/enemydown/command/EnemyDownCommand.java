@@ -71,21 +71,16 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       /**
        * ゾンビ出現させる
        */
-
-      Location playerLocation = player.getLocation();
-
-      double x = playerLocation.getX();
-      double y = playerLocation.getY();
-      double z = playerLocation.getZ();
-
-      int random = new SplittableRandom().nextInt(10) + 1;
-      
       //Day13の敵の種類をランダムのところができていない！！
-      Location enemySpanLocation = new Location(world, (x + random), y, (z + random));
-      world.spawnEntity(enemySpanLocation, EntityType.ZOMBIE);
-//new Location(world, (x + random), y, (z + random))リファクタリング変数の導入
 
-      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
+      //ここから
+      Location enemySpanLocation = getEnemySpanLocation(player, world);
+//     ここまでが敵が出現するエリアを設定、判定するかたまり
+//      リファクタリングでメゾット抽出
+
+      world.spawnEntity(enemySpanLocation, EntityType.ZOMBIE);
+//
+//      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
 
 /**
  *       プレイヤーの武装
@@ -101,6 +96,21 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     }
 
     return false;
+  }
+//メゾット抽出のもの
+//  private staticのstaticいらない
+//  staticはクラスのインスタンス？特殊な使い方する。newしなくても使えるもの。
+//  便利だけどstaticの中で使えるもの、使えないものと分けられていて、
+//  値の管理がややこしい。使わないで済むならできるだけ使わないほうがいい
+//  抽出するとメインの方がキレイに整う
+  private  Location getEnemySpanLocation(Player player, World world) {
+    Location playerLocation = player.getLocation();
+    double x = playerLocation.getX();
+    double y = playerLocation.getY();
+    double z = playerLocation.getZ();
+    int random = new SplittableRandom().nextInt(10) + 1;
+    Location enemySpanLocation = new Location(world, (x + random), y, (z + random));
+    return enemySpanLocation;
   }
 
 
