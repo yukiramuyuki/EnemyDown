@@ -59,30 +59,21 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       //敵をランダムに
 
-      List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
-      int random = new SplittableRandom().nextInt(2) ;
-//      ここをメゾット抽出しようとすると怒られる！！
-//      ランダムを2つ使っている
-//      メゾットは1つの値しか返せない
-//      2つ必要と言われると無理！
-
-//      ①enemyList.get(random);
-//      をしてentitytypeがとれる
-      EntityType enemy= enemyList.get(random);
-
-      //      ③３つでメゾット抽出できる
-
-
-
-//      world.spawnEntity(getEnemySpanLocation(player, world), enemyList.get(random));
-
+      EntityType enemy = getEnemy();
+      //      ほしいのはgetentityではなくgetenemy
       world.spawnEntity(getEnemySpanLocation(player, world), enemy);
-//      ②
 
 
-
-
+      
+      
+      
+      
+      
 //      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
+
+
+
+
 
 /**
  *       プレイヤーの武装
@@ -98,6 +89,50 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     }
 
     return false;
+  }
+
+  /**
+   * ランダムで敵を抽出して、その結果の敵を取得します
+   * @return 敵
+   */
+
+  //      メゾットは真下に作られる
+//      順番は出現順に
+
+
+
+//    前
+
+  private  EntityType getEnemy() {
+//    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
+//    int random=new SplittableRandom().nextInt(2);
+//    EntityType enemy=enemyList.get(random);
+//    return enemy;
+
+
+
+
+
+
+
+
+//    staticいらない
+//    getEnemyは引数なくてもリスト作ってやっている
+    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
+    return enemyList.get(new SplittableRandom().nextInt(2));
+
+    // ②   int random = new SplittableRandom().nextInt(2);のインライン化で（random)をインライン化
+//    インライン化しすぎると見通しが悪くなるから注意！
+//    何しているか分からなくなる！
+//    あえて名前（変数名）をつけることで分かりやすくするのはよくあること！
+
+//  ①EntityType enemy=enemyList.get(random);
+//    return enemy;
+
+//    enemyList.get(random);をインライン化するために
+//    enemy;
+//    インライン化する
+
   }
 
 
