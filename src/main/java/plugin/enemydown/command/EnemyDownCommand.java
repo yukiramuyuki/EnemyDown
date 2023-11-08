@@ -60,13 +60,17 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       //敵をランダムに
 
       List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
-      enemyList.get()
-//          インデックス０ならゾンビ、１ならスケルトンになる。
-//      そこをランダムにする
+//      int randomX = new SplittableRandom().nextInt(20) - 10;
+      int random = new SplittableRandom().nextInt(2) ;
+//      ランダムのところからコピーしてくる
+//      名前、数値を変える
+//      値は０か１がでれば良いので２
 
 
 
-      world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
+//      world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
+      world.spawnEntity(getEnemySpanLocation(player, world), enemyList.get(random));
+//      ランダムに出るように
 
 
 //
