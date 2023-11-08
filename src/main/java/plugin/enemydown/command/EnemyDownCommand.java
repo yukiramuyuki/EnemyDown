@@ -23,7 +23,8 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
-
+//エリア内でしか発生しないこと
+//  リファクタリング
 
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -84,6 +85,16 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     return false;
   }
+//  一度動作を確認して↑
+//  そのあとに動作のふるまいをそのまま↓
+//  することをリファクタリング
+
+//  今の現状は正確にはリファクタリングになっていない。
+//  randomzなどideの昨日を使わずに変更を加えた
+//　その場合バグることがあるためもう一度起動する
+
+
+
 
   /**
    * 敵の出現場所を取得します
@@ -91,7 +102,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
    * Y軸はプレイヤーと同じ位置になります。
    *
    * @param player　コマンドを実行したプレイヤー
-   *           ＊プレイヤーだけだと複数ユーザーが実行することを考えるとコマンドを実行したプレイヤーと書く。
    * @param world　コマンドを実行したプレイヤーが所属するワールド　　　　
    * @return 敵の出現場所
    */
@@ -100,8 +110,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     Location playerLocation = player.getLocation();
     int randomX = new SplittableRandom().nextInt(20) -10;
     int randomZ = new SplittableRandom().nextInt(20) - 10;
-//    0~19生成される
-//    0なら－10、19なら９
+
 
     double x = playerLocation.getX() + randomX;
     double y = playerLocation.getY();
