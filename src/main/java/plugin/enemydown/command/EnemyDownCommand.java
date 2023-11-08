@@ -24,7 +24,6 @@ import plugin.enemydown.data.PlayerScore;
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
-
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
 
@@ -56,18 +55,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       /**
        * ゾンビ出現させる
        */
-      //Day13の敵の種類をランダムのところができていない！！
 
-      //      Location enemySpanLocation = getEnemySpanLocation(player, world);
-//      enemyspanlocationをインライン化
-//↓これがでる
       world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
-//      getEnemySpanLocation(player, worldを引数に指定して
-//      中でメゾットを呼んでいる
-//      privateLocation getEnemySpanLocation…を呼んでいるのと同じ
-
-
-
 
 //
 //      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
@@ -88,14 +77,35 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     return false;
   }
 
-  private  Location getEnemySpanLocation(Player player, World world) {
+  //キレイにする
+  private Location getEnemySpanLocation(Player player, World world) {
     Location playerLocation = player.getLocation();
-    double x = playerLocation.getX();
+    int randomX = new SplittableRandom().nextInt(10) + 1;
+    int randomZ = new SplittableRandom().nextInt(10) + 1;
+//  ②  最初にランダムを生成（移動してくる
+    // ④   random２つ作って名前を変える
+
+    double x = playerLocation.getX() + randomX;
+//    +randomを
     double y = playerLocation.getY();
-    double z = playerLocation.getZ();
-    int random = new SplittableRandom().nextInt(10) + 1;
-    Location enemySpanLocation = new Location(world, (x + random), y, (z + random));
-    return enemySpanLocation;
+    double z = playerLocation.getZ() + randomZ;
+//   ③ xとzでrandom使いまわしている。１なら両方に１になる
+
+
+//   ① 最初からxzにランダムを入れていたらOK
+//    int randomX = new SplittableRandom().nextInt(10) + 1;
+
+//    Location enemySpanLocation = new Location(world, (x + randomX), y, (z + randomX));
+//⑤先にランダムをしたのにここでもランダムだと変
+    //    ⑤ランダムを消してxyzに
+
+
+
+//    return enemySpanLocation;
+    //     ⑥enemySpanLocationを変数で受けて繰り返しているが受ける必要がない
+//    enemySpanLocationをリファクタリング変数のインライン化↓
+    return new Location(world, x, y, z);
+
   }
 
 
