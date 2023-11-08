@@ -59,10 +59,13 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       //敵をランダムに
 
-      EntityType enemy = getEnemy();
-      //      ほしいのはgetentityではなくgetenemy
-      world.spawnEntity(getEnemySpanLocation(player, world), enemy);
+      world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+//      EntityType enemy = getEnemy();
+//         world.spawnEntity(getEnemySpanLocation(player, world), enemy);
+//      ③ enemyをインライン化
 
+//      それによってメゾットの順番が変わる
+//      getenemyが後になる
 
       
       
@@ -91,49 +94,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     return false;
   }
 
-  /**
-   * ランダムで敵を抽出して、その結果の敵を取得します
-   * @return 敵
-   */
 
-  //      メゾットは真下に作られる
-//      順番は出現順に
-
-
-
-//    前
-
-  private  EntityType getEnemy() {
-//    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
-//    int random=new SplittableRandom().nextInt(2);
-//    EntityType enemy=enemyList.get(random);
-//    return enemy;
-
-
-
-
-
-
-
-
-//    staticいらない
-//    getEnemyは引数なくてもリスト作ってやっている
-    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
-    return enemyList.get(new SplittableRandom().nextInt(2));
-
-    // ②   int random = new SplittableRandom().nextInt(2);のインライン化で（random)をインライン化
-//    インライン化しすぎると見通しが悪くなるから注意！
-//    何しているか分からなくなる！
-//    あえて名前（変数名）をつけることで分かりやすくするのはよくあること！
-
-//  ①EntityType enemy=enemyList.get(random);
-//    return enemy;
-
-//    enemyList.get(random);をインライン化するために
-//    enemy;
-//    インライン化する
-
-  }
 
 
   /**
@@ -154,6 +115,20 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     double z = playerLocation.getZ() + randomZ;
 
     return new Location(world, x, y, z);
+
+  }
+
+  /**
+   * ランダムで敵を抽出して、その結果の敵を取得します
+   * @return 敵
+   */
+
+//      順番は出現順に
+
+  private  EntityType getEnemy() {
+
+    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
+    return enemyList.get(new SplittableRandom().nextInt(2));
 
   }
 
