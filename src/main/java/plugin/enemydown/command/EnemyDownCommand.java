@@ -79,6 +79,11 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       double z = playerLocation.getZ();
 
       int random = new SplittableRandom().nextInt(10) + 1;
+      
+      //Day13の敵の種類をランダムのところができていない！！
+      Location enemySpanLocation = new Location(world, (x + random), y, (z + random));
+      world.spawnEntity(enemySpanLocation, EntityType.ZOMBIE);
+//new Location(world, (x + random), y, (z + random))リファクタリング変数の導入
 
       world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
 
