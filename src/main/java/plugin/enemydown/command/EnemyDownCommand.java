@@ -25,8 +25,6 @@ import plugin.enemydown.data.PlayerScore;
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
-
-
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
 
@@ -48,8 +46,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       World world = player.getWorld();
 
-
-
 /**
  *  プレイヤーの状態を初期化。（体力と空腹値を最大に）
  */
@@ -61,23 +57,16 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
        * ゾンビ出現させる
        */
 
-
-
       //敵をランダムに
-//  そのためにはリストを使う
 
-      //      entityListというのを作る
-//      List<Entity> entityList=List.of(EntityType.ZOMBIE,EntityType.SKELETON);
-      List<EntityType> entityList=List.of(EntityType.ZOMBIE,EntityType.SKELETON);
-//  ランダムなのでとりあえず2つでOK
-//      赤の波線でEntityTypeにしろと指示が。
-//      リストの中でEntityTypeというものを持つ
+      List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
+      enemyList.get()
+//          インデックス０ならゾンビ、１ならスケルトンになる。
+//      そこをランダムにする
+
 
 
       world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
-
-
-
 
 
 //
@@ -100,24 +89,18 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   }
 
 
-
-
-
   /**
-   * 敵の出現場所を取得します
-   * 出現エリアにX軸とZ軸は自分の位置からプラスランダムで、－10～９の値が設定されます。
-   * Y軸はプレイヤーと同じ位置になります。
+   * 敵の出現場所を取得します 出現エリアにX軸とZ軸は自分の位置からプラスランダムで、－10～９の値が設定されます。 Y軸はプレイヤーと同じ位置になります。
    *
-   * @param player　コマンドを実行したプレイヤー
-   * @param world　コマンドを実行したプレイヤーが所属するワールド　　　　
+   * @param player 　コマンドを実行したプレイヤー
+   * @param world  　コマンドを実行したプレイヤーが所属するワールド
    * @return 敵の出現場所
    */
 
   private Location getEnemySpanLocation(Player player, World world) {
     Location playerLocation = player.getLocation();
-    int randomX = new SplittableRandom().nextInt(20) -10;
+    int randomX = new SplittableRandom().nextInt(20) - 10;
     int randomZ = new SplittableRandom().nextInt(20) - 10;
-
 
     double x = playerLocation.getX() + randomX;
     double y = playerLocation.getY();
