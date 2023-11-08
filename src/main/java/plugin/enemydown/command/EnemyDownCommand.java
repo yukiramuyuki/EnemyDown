@@ -46,7 +46,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       }
 
       World world = player.getWorld();
-//      実行したプレイヤーごとのワールド情報をとってきて→
+
 
 
 /**
@@ -61,7 +61,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
        */
 
       world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
-//     → ワールドの情報を渡すのが形として正しい。
+
 
 
 
@@ -85,11 +85,23 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     return false;
   }
 
+  /**
+   * 敵の出現場所を取得します
+   * 出現エリアにX軸とZ軸は自分の位置からプラスランダムで、－10～９の値が設定されます。
+   * Y軸はプレイヤーと同じ位置になります。
+   *
+   * @param player　コマンドを実行したプレイヤー
+   *           ＊プレイヤーだけだと複数ユーザーが実行することを考えるとコマンドを実行したプレイヤーと書く。
+   * @param world　コマンドを実行したプレイヤーが所属するワールド　　　　
+   * @return 敵の出現場所
+   */
 
   private Location getEnemySpanLocation(Player player, World world) {
     Location playerLocation = player.getLocation();
-    int randomX = new SplittableRandom().nextInt(10) + 1;
-    int randomZ = new SplittableRandom().nextInt(10) + 1;
+    int randomX = new SplittableRandom().nextInt(20) -10;
+    int randomZ = new SplittableRandom().nextInt(20) - 10;
+//    0~19生成される
+//    0なら－10、19なら９
 
     double x = playerLocation.getX() + randomX;
     double y = playerLocation.getY();
