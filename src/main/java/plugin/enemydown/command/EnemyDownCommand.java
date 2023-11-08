@@ -23,8 +23,7 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
-//  World world;
-//  ①
+
 
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -47,10 +46,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       }
 
       World world = player.getWorld();
-//     ① ワールドの情報をフィールドに持っておく
-//       world = player.getWorld();
-//      senderがプレイヤーだったらフィールどのところに格納しておく
-//      複数のプレイヤーが同時にするとバグが発生するので
+//      実行したプレイヤーごとのワールド情報をとってきて→
+
 
 /**
  *  プレイヤーの状態を初期化。（体力と空腹値を最大に）
@@ -64,6 +61,10 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
        */
 
       world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
+//     → ワールドの情報を渡すのが形として正しい。
+
+
+
 
 //
 //      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
