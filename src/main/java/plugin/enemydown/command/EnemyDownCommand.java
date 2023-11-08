@@ -23,21 +23,6 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
-//今はすべて上から実行している
-//  それを一定周期で実装するには
-//  ループ処理で何度も実行する
-//  sledsleep?で実行したら●秒まって停止するをすることは可能
-//  全ての処理が停止してしまう
-//  場合によってはマイクラ全てが止まるかも！
-//  カウントではなく時間停止になる
-
-//  javaだけで時間の管理をするのはめちゃ難しい！！
-//  ウェブアプリではフレームワークやマイクラのspigotが仕組みを提供してくれている
-
-//機能設計
-//  時間制限を設定できること
-//  スケジューラ―をつかって、一定周期で敵を出現させる。
-//  一定時間が経過したらその敵を出現させる処理を停止する。
 
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -73,12 +58,17 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
        */
       //Day13の敵の種類をランダムのところができていない！！
 
-      //ここから
-      Location enemySpanLocation = getEnemySpanLocation(player, world);
-//     ここまでが敵が出現するエリアを設定、判定するかたまり
-//      リファクタリングでメゾット抽出
+      //      Location enemySpanLocation = getEnemySpanLocation(player, world);
+//      enemyspanlocationをインライン化
+//↓これがでる
+      world.spawnEntity(getEnemySpanLocation(player, world), EntityType.ZOMBIE);
+//      getEnemySpanLocation(player, worldを引数に指定して
+//      中でメゾットを呼んでいる
+//      privateLocation getEnemySpanLocation…を呼んでいるのと同じ
 
-      world.spawnEntity(enemySpanLocation, EntityType.ZOMBIE);
+
+
+
 //
 //      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
 
@@ -97,12 +87,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     return false;
   }
-//メゾット抽出のもの
-//  private staticのstaticいらない
-//  staticはクラスのインスタンス？特殊な使い方する。newしなくても使えるもの。
-//  便利だけどstaticの中で使えるもの、使えないものと分けられていて、
-//  値の管理がややこしい。使わないで済むならできるだけ使わないほうがいい
-//  抽出するとメインの方がキレイに整う
+
   private  Location getEnemySpanLocation(Player player, World world) {
     Location playerLocation = player.getLocation();
     double x = playerLocation.getX();
