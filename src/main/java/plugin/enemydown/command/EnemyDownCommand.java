@@ -61,11 +61,24 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
       int random = new SplittableRandom().nextInt(2) ;
+//      ここをメゾット抽出しようとすると怒られる！！
+//      ランダムを2つ使っている
+//      メゾットは1つの値しか返せない
+//      2つ必要と言われると無理！
 
-      world.spawnEntity(getEnemySpanLocation(player, world), enemyList.get(random));
-//どういうふうにしようかなとイメージがあるからスムーズにできた
-//      やったことがないとイメージがわかない
-//      頭をひねるところは最初慣れないときは頑張る！！
+//      ①enemyList.get(random);
+//      をしてentitytypeがとれる
+      EntityType enemy= enemyList.get(random);
+
+      //      ③３つでメゾット抽出できる
+
+
+
+//      world.spawnEntity(getEnemySpanLocation(player, world), enemyList.get(random));
+
+      world.spawnEntity(getEnemySpanLocation(player, world), enemy);
+//      ②
+
 
 
 
