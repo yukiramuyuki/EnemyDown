@@ -23,6 +23,9 @@ import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
+//  World world;
+//  ①
+
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
@@ -44,6 +47,10 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       }
 
       World world = player.getWorld();
+//     ① ワールドの情報をフィールドに持っておく
+//       world = player.getWorld();
+//      senderがプレイヤーだったらフィールどのところに格納しておく
+//      複数のプレイヤーが同時にするとバグが発生するので
 
 /**
  *  プレイヤーの状態を初期化。（体力と空腹値を最大に）
@@ -77,33 +84,16 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     return false;
   }
 
-  //キレイにする
+
   private Location getEnemySpanLocation(Player player, World world) {
     Location playerLocation = player.getLocation();
     int randomX = new SplittableRandom().nextInt(10) + 1;
     int randomZ = new SplittableRandom().nextInt(10) + 1;
-//  ②  最初にランダムを生成（移動してくる
-    // ④   random２つ作って名前を変える
 
     double x = playerLocation.getX() + randomX;
-//    +randomを
     double y = playerLocation.getY();
     double z = playerLocation.getZ() + randomZ;
-//   ③ xとzでrandom使いまわしている。１なら両方に１になる
 
-
-//   ① 最初からxzにランダムを入れていたらOK
-//    int randomX = new SplittableRandom().nextInt(10) + 1;
-
-//    Location enemySpanLocation = new Location(world, (x + randomX), y, (z + randomX));
-//⑤先にランダムをしたのにここでもランダムだと変
-    //    ⑤ランダムを消してxyzに
-
-
-
-//    return enemySpanLocation;
-    //     ⑥enemySpanLocationを変数で受けて繰り返しているが受ける必要がない
-//    enemySpanLocationをリファクタリング変数のインライン化↓
     return new Location(world, x, y, z);
 
   }
