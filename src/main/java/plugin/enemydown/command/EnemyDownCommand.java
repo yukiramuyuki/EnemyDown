@@ -60,23 +60,13 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       //敵をランダムに
 
       world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-//      EntityType enemy = getEnemy();
-//         world.spawnEntity(getEnemySpanLocation(player, world), enemy);
-//      ③ enemyをインライン化
 
-//      それによってメゾットの順番が変わる
-//      getenemyが後になる
+
+
 
       
-      
-      
-      
-      
+
 //      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
-
-
-
-
 
 /**
  *       プレイヤーの武装
@@ -93,8 +83,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     return false;
   }
-
-
 
 
   /**
@@ -120,12 +108,11 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   /**
    * ランダムで敵を抽出して、その結果の敵を取得します
+   *
    * @return 敵
    */
 
-//      順番は出現順に
-
-  private  EntityType getEnemy() {
+  private EntityType getEnemy() {
 
     List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
     return enemyList.get(new SplittableRandom().nextInt(2));
