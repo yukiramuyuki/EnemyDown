@@ -29,7 +29,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
   private int gameTime = 20;
-//  フィールドに時間を持つ
 
 
   public EnemyDownCommand(Main main) {
@@ -62,10 +61,18 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 //ゾンビを出現させる
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-//時間を持つ。必ずフィールドに持つ
+        if (gameTime <= 0) {
+          //          0以下なら0の方が大きいなら０を含めて
+          Runnable.cancel();
+//          キャンセルでとまる
+          return;
+//          returnまで必要。returnしたら処理が止まる
+
+        }
 
         world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
       }, 0, 5 * 20);
+//      キャンセルしなければ動いたまま
 
 
     }
