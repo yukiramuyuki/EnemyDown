@@ -63,21 +63,9 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
       },0,5*20);
-//    ②  Runnnableをラムダ式
-
-//      ④}のあとに０（delay)一切ずらさない
-//      どれくらいの感覚で実行するか
-//      5秒ごと×２０
-//      ×はマイクラ特有チックでカウントする
-//      20チック1秒
-//      5秒にしたければ５×20チック
-//      マイクラは一秒未満のチックで動いているから５*２０チック
-//      ↓
-//      5秒おきに敵を出現させるのはできている。
-
-
-//      ↑中に入れる
-//      ③world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+//このままだと出現が止まらない！
+//      一定期間で終わらしたい。→止める必要がある
+//      Runnableにはキャンセルができる。キャンセルをする処理を
 
     }
 
