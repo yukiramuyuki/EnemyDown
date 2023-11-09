@@ -48,19 +48,16 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 /**
  *  プレイヤーの状態を初期化。（体力と空腹値を最大に）
+ *  装備もまとめて設定するためメゾット
  */
 
-      player.setHealth(20);
-      player.setFoodLevel(20);
+      initPlayerStatus(player);
 
-      /**
-       * ゾンビ出現させる
-       */
 
-      //敵をランダムに
 
+
+//ゾンビを出現させる
       world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-
 
 
 
@@ -68,20 +65,29 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
 
-/**
- *       プレイヤーの武装
- */
-      PlayerInventory inventory = player.getInventory();
 
-      inventory.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-      inventory.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-      inventory.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-      inventory.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-      inventory.setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
 
     }
 
     return false;
+  }
+
+
+  /**
+   * ゲームを始める前にプレイヤーの状態を設定する
+   * 体力と空腹度を最大にして、装備はネザライト一式になる
+   * @param player コマンドを実行したプレイヤー
+   */
+  private static void initPlayerStatus(Player player) {
+    player.setHealth(20);
+    player.setFoodLevel(20);
+
+    PlayerInventory inventory = player.getInventory();
+    inventory.setHelmet(new ItemStack(Material.NETHERITE_HELMET));
+    inventory.setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
+    inventory.setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+    inventory.setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+    inventory.setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
   }
 
 
