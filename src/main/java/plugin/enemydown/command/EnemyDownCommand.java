@@ -53,6 +53,18 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         }
       }
 
+//        コマンドを実行されるときに再代入されるようにしていないとゲームタイムが0のまま
+//      実行したら時間が必ず新しくなるように
+
+//      時間をプレイヤー単位にしないといけない
+//      同時にしたら崩れる
+//      →PlayerScoreにいれないといけない
+//      （プレイヤーごとに時間をもっていないといけない）
+
+//     考え： getNameのところにリストで入れる？
+
+
+
       World world = player.getWorld();
 
 //装備など設定
@@ -68,8 +80,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
         world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
         gameTime -= 5;
-//            5秒おき出現なので5秒減らす。
-//        →フィールドへ。→0までゾンビ→0ならキャンセル
+
 
 
 
