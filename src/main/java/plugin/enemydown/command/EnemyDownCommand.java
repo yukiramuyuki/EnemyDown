@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SplittableRandom;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -46,25 +47,18 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       World world = player.getWorld();
 
-/**
- *  プレイヤーの状態を初期化。（体力と空腹値を最大に）
- *  装備もまとめて設定するためメゾット
- */
-
-      initPlayerStatus(player);
-
-
-
+//装備など設定initPlayerStatus(player);
 
 //ゾンビを出現させる
+//      Bukkit.getScheduler().をする一定の時間や感覚で実行など複数ある
+      Bukkit.getScheduler().runTaskTimer()
+//          赤波での説明でプラグインを入れろの指示
+//      プラグイン→MainのJavaPluginのこと
+//      enemydowncommandには入っていない
+//      Listerのようにもってきたら、プラグインが２つになり、別のややこしいことになる
+
       world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-
-
-
-      
-
-//      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
-
+//      ここを一定周期にしたい
 
 
     }
@@ -74,8 +68,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
   /**
-   * ゲームを始める前にプレイヤーの状態を設定する
-   * 体力と空腹度を最大にして、装備はネザライト一式になる
+   * ゲームを始める前にプレイヤーの状態を設定する 体力と空腹度を最大にして、装備はネザライト一式になる
+   *
    * @param player コマンドを実行したプレイヤー
    */
   private static void initPlayerStatus(Player player) {
@@ -145,7 +139,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       }
     }
 
-    
 
   }
 
