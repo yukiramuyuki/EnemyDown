@@ -38,8 +38,13 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
   @Override
-
+//     考え： getNameのところにリストで入れる？
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+   gameTime=20;
+//   コマンド実行したらすぐに消化する。実行したら常に２０。上書き
+
+
+
     if (sender instanceof Player player) {
 //メゾット名をaddNewPlayerに
       if (playerScoreList.isEmpty()) {
@@ -53,15 +58,9 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         }
       }
 
-//        コマンドを実行されるときに再代入されるようにしていないとゲームタイムが0のまま
-//      実行したら時間が必ず新しくなるように
 
-//      時間をプレイヤー単位にしないといけない
-//      同時にしたら崩れる
-//      →PlayerScoreにいれないといけない
-//      （プレイヤーごとに時間をもっていないといけない）
 
-//     考え： getNameのところにリストで入れる？
+
 
 
 
