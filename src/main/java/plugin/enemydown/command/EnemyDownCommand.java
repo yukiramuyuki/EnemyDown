@@ -21,12 +21,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import plugin.enemydown.Main;
 import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
+  private Main main;
+
 
   private List<PlayerScore> playerScoreList = new ArrayList<>();
+
+  public EnemyDownCommand(Main main) {
+    this.main = main;
+
+  }
 
 
   @Override
@@ -47,19 +55,29 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       World world = player.getWorld();
 
-//装備など設定initPlayerStatus(player);
+//装備など設定
+      initPlayerStatus(player);
 
 //ゾンビを出現させる
-//      Bukkit.getScheduler().をする一定の時間や感覚で実行など複数ある
-      Bukkit.getScheduler().runTaskTimer()
-//          赤波での説明でプラグインを入れろの指示
-//      プラグイン→MainのJavaPluginのこと
-//      enemydowncommandには入っていない
-//      Listerのようにもってきたら、プラグインが２つになり、別のややこしいことになる
 
-      world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-//      ここを一定周期にしたい
+      Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
+        world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+      },0,5*20);
+//    ②  Runnnableをラムダ式
 
+//      ④}のあとに０（delay)一切ずらさない
+//      どれくらいの感覚で実行するか
+//      5秒ごと×２０
+//      ×はマイクラ特有チックでカウントする
+//      20チック1秒
+//      5秒にしたければ５×20チック
+//      マイクラは一秒未満のチックで動いているから５*２０チック
+//      ↓
+//      5秒おきに敵を出現させるのはできている。
+
+
+//      ↑中に入れる
+//      ③world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
 
     }
 
