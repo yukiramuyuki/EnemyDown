@@ -62,17 +62,20 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (gameTime <= 0) {
-          //          0以下なら0の方が大きいなら０を含めて
           Runnable.cancel();
-//          キャンセルでとまる
           return;
-//          returnまで必要。returnしたら処理が止まる
-
         }
 
         world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+        gameTime -= 5;
+//            5秒おき出現なので5秒減らす。
+//        →フィールドへ。→0までゾンビ→0ならキャンセル
+
+
+
+
       }, 0, 5 * 20);
-//      キャンセルしなければ動いたまま
+
 
 
     }
