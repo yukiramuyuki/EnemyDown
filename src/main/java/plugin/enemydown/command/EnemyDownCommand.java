@@ -40,8 +40,11 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   @Override
 //     考え： getNameのところにリストで入れる？
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-   gameTime=20;
-//   コマンド実行したらすぐに消化する。実行したら常に２０。上書き
+//   gameTime=20;
+//   プレイヤーだったら。にするから
+//    if(sender・・・の中に入れる
+//    ワールドの情報の前に
+
 
 
 
@@ -58,12 +61,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         }
       }
 
-
-
-
-
-
-
+      gameTime=20;
       World world = player.getWorld();
 
 //装備など設定
