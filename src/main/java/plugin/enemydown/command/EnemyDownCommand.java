@@ -64,7 +64,10 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         if (gameTime <= 0) {
           Runnable.cancel();
           player.sendMessage("ゲーム終了しました。");
+//          プレイヤー情報はとれるけどプレイヤースコアをこの中で持っていない
 
+//          リスト（playerScoreLis）からとってきて名前が一致するか毎回確認。
+//          そこにスコア足している状態
           return;
         }
 
