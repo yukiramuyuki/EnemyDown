@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SplittableRandom;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,20 +21,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import plugin.enemydown.Main;
 import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand implements CommandExecutor, Listener {
 
-
-
+  private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
+  private int gameTime = 20;
+
+
+  public EnemyDownCommand(Main main) {
+    this.main = main;
+
+  }
 
 
   @Override
-
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
     if (sender instanceof Player player) {
-//メゾット名をaddNewPlayerに
       if (playerScoreList.isEmpty()) {
         addNewPlayer(player);
       } else {
@@ -44,43 +52,85 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         }
       }
 
+      gameTime = 20;
       World world = player.getWorld();
 
-/**
- *  プレイヤーの状態を初期化。（体力と空腹値を最大に）
- */
+//装備など設定
+      initPlayerStatus(player);
 
-      player.setHealth(20);
-      player.setFoodLevel(20);
+//ゾンビを出現させる
 
-      /**
-       * ゾンビ出現させる
-       */
+      Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
+        if (gameTime <= 0) {
+          Runnable.cancel();
+          player.sendMessage("ゲーム終了しました。");
 
-      Location playerLocation = player.getLocation();
+          return;
+        }
 
-      double x = playerLocation.getX();
-      double y = playerLocation.getY();
-      double z = playerLocation.getZ();
+        world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+        gameTime -= 5;
 
-      int random = new SplittableRandom().nextInt(10) + 1;
 
-      world.spawnEntity(new Location(world, (x + random), y, (z + random)), EntityType.ZOMBIE);
+      }, 0, 5 * 20);
 
-/**
- *       プレイヤーの武装
- */
-      PlayerInventory inventory = player.getInventory();
-
-      inventory.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-      inventory.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-      inventory.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-      inventory.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-      inventory.setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
 
     }
 
     return false;
+  }
+
+
+  /**
+   * ゲームを始める前にプレイヤーの状態を設定する 体力と空腹度を最大にして、装備はネザライト一式になる
+   *
+   * @param player コマンドを実行したプレイヤー
+   */
+  private static void initPlayerStatus(Player player) {
+    player.setHealth(20);
+    player.setFoodLevel(20);
+
+    PlayerInventory inventory = player.getInventory();
+    inventory.setHelmet(new ItemStack(Material.NETHERITE_HELMET));
+    inventory.setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
+    inventory.setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+    inventory.setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+    inventory.setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+  }
+
+
+  /**
+   * 敵の出現場所を取得します 出現エリアにX軸とZ軸は自分の位置からプラスランダムで、－10～９の値が設定されます。 Y軸はプレイヤーと同じ位置になります。
+   *
+   * @param player 　コマンドを実行したプレイヤー
+   * @param world  　コマンドを実行したプレイヤーが所属するワールド
+   * @return 敵の出現場所
+   */
+
+  private Location getEnemySpanLocation(Player player, World world) {
+    Location playerLocation = player.getLocation();
+    int randomX = new SplittableRandom().nextInt(20) - 10;
+    int randomZ = new SplittableRandom().nextInt(20) - 10;
+
+    double x = playerLocation.getX() + randomX;
+    double y = playerLocation.getY();
+    double z = playerLocation.getZ() + randomZ;
+
+    return new Location(world, x, y, z);
+
+  }
+
+  /**
+   * ランダムで敵を抽出して、その結果の敵を取得します
+   *
+   * @return 敵
+   */
+
+  private EntityType getEnemy() {
+
+    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
+    return enemyList.get(new SplittableRandom().nextInt(2));
+
   }
 
 
