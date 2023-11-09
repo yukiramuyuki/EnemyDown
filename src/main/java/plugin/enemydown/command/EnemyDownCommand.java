@@ -40,12 +40,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-
-
-
-
     if (sender instanceof Player player) {
-//メゾット名をaddNewPlayerに
       if (playerScoreList.isEmpty()) {
         addNewPlayer(player);
       } else {
@@ -56,24 +51,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
         }
       }
-//          ふぃーるどのgametime消して
-//      int gameTime=20にすると
-//      ほかのgametimeでエラーになる
 
-//      今回ラムダ式で中の数値が変更される可能性があるもの
-//      フィールドで２０の設定はコマンドが実行されたら20ということ
-//      絶対に20
-//      int gameの20はラムダ式のなかでつかうとき値がよくわからない
-//      から処理に使えないという意味の赤波のエラーになる
-
-//      finalという固定などやり方はあるが
-//      よくわからないことになる
-//      正しく使うという意味で固定値をフィールドで設定して、それを使うようにする。
-
-
-
-
-      gameTime=20;
+      gameTime = 20;
       World world = player.getWorld();
 
 //装備など設定
@@ -84,14 +63,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (gameTime <= 0) {
           Runnable.cancel();
-//          終わったか分からないからメッセージを
           player.sendMessage("ゲーム終了しました。");
-//          メッセージが出ても点数は加算される
-//          初期化されていないから
-          
-
-
-          
 
           return;
         }
@@ -100,11 +72,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         gameTime -= 5;
 
 
-
-
-
       }, 0, 5 * 20);
-
 
 
     }
