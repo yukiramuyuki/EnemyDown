@@ -40,12 +40,10 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
     if (sender instanceof Player player) {
-//      getPlayerScore(player);
       PlayerScore nowPlayer = getPlayerScore(player);
-//     ① nowplayerの中にはゲームタイムがあるplayerscoreに項目がある
 
       nowPlayer.setGameTime(20);
-//     ↑② gameTime = 20;
+
       World world = player.getWorld();
 
 //装備など設定
@@ -54,23 +52,28 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 //ゾンビを出現させる
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-          if (nowPlayer.getGameTime() <= 0) {
-            //      ↑③ if (gameTime <= 0) {
+        if (nowPlayer.getGameTime() <= 0) {
           Runnable.cancel();
-          player.sendMessage("ゲーム終了しました。");
+//          player.sendMessage("ゲーム終了しました。");
+          player.sendTitle("ゲームが終了しました。",
+              nowPlayer.getPlayerName()+" 合計"+nowPlayer.getScore()+"点！",
+              0,30,0);
+//          ②.sendTitleを使う
+//          ,サブタイトルがだせる。ここにプレイヤーの名前とスコアを
+//         , ,フェードインフェードアウトを設定できる。どのくらい表示するか
+
+
+
+          nowPlayer.setScore(0);
+//          スコアをリセット
+//        ①  修了したときにスコアを０にする
 
           return;
+//          現状はスコア上書き。
         }
 
         world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-        nowPlayer.setGameTime(nowPlayer.getGameTime()-5);
-
-//        gameTime -= 5;
-//       ↑④ 設定しなければならない
-        //        (今の時間から5秒減らしたのが)再セットされる。
-
-//        プレイヤー単位で設定されるように。
-//        ここまでが前まで分のマルチプレイ対応
+        nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
 
 
       }, 0, 5 * 20);
