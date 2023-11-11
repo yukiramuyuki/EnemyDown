@@ -9,13 +9,33 @@ import org.bukkit.entity.Player;
 
 
 public class PlayerScore {
-  
 
 
   private String playerName;
-
-
   private int score;
+
+
+  private int gameTime;
+//  作成
+
+
+
+
+
+
+
+
+
+
+//
+
+  public int getGameTime() {
+    return gameTime;
+  }
+
+  public void setGameTime(int gameTime) {
+    this.gameTime = gameTime;
+  }
 
 
   public String getPlayerName() {

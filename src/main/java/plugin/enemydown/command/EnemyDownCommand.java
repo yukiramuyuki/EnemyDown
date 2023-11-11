@@ -29,6 +29,10 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
   private int gameTime = 20;
+//  playerscoreにgametimeをもたす。
+//  PlayerScoreにpriveta int gameTime;
+
+
 
 
   public EnemyDownCommand(Main main) {
@@ -48,9 +52,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
           if (!playerScore.getPlayerName().equals(player.getName())) {
             addNewPlayer(player);
           }
-//          今実行されているplayerScoreの内容がわかれば、ややこしいことしなくてもよくなる。
-//          今実行されているプレイヤースコアが何なのかをここで取り扱えればキレイに処理ができる
-
+  
         }
       }
 
