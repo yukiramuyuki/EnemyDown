@@ -90,39 +90,31 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
-    //    Player player=e.getEntity().getkiller();
-    //       ②分岐処理e.getEntity()の種類によって
-//        e.getEntity()が欲しい、よく使うから変数の導入を(enemy)
 
     if (Objects.isNull(player) || playerScoreList.isEmpty()) {
       return;
     }
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
-        int point = 0;
-        if (EntityType.ZOMBIE.equals(enemy.getType())) {
-          //        ③ifで分岐する。getTypeでタイプがわかる（zonbie,skeltonなど）コピーしてくるEntityType.ZOMBIE
-          point = 10;
-          //       ④ タイプが一致していれば、10
-        }else if(EntityType.SKELETON.equals(enemy.getType())){
-          //        elseでもいいが、当てはまらない全ての場合になってしまうのでスケルトンで明確に
-          point=20;
+        int point = switch (enemy.getType()) {
+          case ZOMBIE -> 10;
+          case SKELETON, WITCH -> 20;
+          default -> 0;
+        };
+//        ウィッチ20波あるスケルトンとマージできる。
 
-        }else if(EntityType.WITCH.equals(enemy.getType())){
-          point=20;
-        }
-//        else {
+
+//        if (EntityType.ZOMBIE.equals(enemy.getType())) {
+//          point = 10;
+//        } else if (EntityType.SKELETON.equals(enemy.getType())) {
+//          point = 20;
 //
+//        } else if (EntityType.WITCH.equals(enemy.getType())) {
+//          point = 20;
 //        }
-//         ⑥ 今の時点では何もしなくてもいいelse。他のが出たら点数足さない
+//        elseif多い！！ifをスイッチに置換
 
-
-        {
-          playerScore.setScore(playerScore.getScore() + point);
-        }
-//        10が変わる。変数にして変動させる
-//        ①１０でリファクタリング変数の導入（point)
-
+        playerScore.setScore(playerScore.getScore() + point);
         player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
 
       }
@@ -212,12 +204,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   private EntityType getEnemy() {
 
-    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON,EntityType.WITCH);
-//    return enemyList.get(new SplittableRandom().nextInt(3));
+    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
-//   ⑤ 種類増やしたら数字増やすのを忘れないように！
-//    リストの数enemyListをランダムにすると数をいれないですむ
-
   }
 }
 
