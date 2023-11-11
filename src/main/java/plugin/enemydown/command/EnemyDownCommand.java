@@ -96,23 +96,17 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     }
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
-        int point = switch (enemy.getType()) {
-          case ZOMBIE -> 10;
-          case SKELETON, WITCH -> 20;
-          default -> 0;
-        };
-//        ウィッチ20波あるスケルトンとマージできる。
+        int point = getPoint(enemy);
+//        int point = switch (enemy.getType()) {
+//          case ZOMBIE -> 10;
+//          case SKELETON, WITCH -> 20;
+//          default -> 0;
+//        };
+//        メゾットか
 
+//        敵の出現数をかえたり出る順番を固定してどれだけ早く倒せるか
+//        を変えるとゲーム性がでる
 
-//        if (EntityType.ZOMBIE.equals(enemy.getType())) {
-//          point = 10;
-//        } else if (EntityType.SKELETON.equals(enemy.getType())) {
-//          point = 20;
-//
-//        } else if (EntityType.WITCH.equals(enemy.getType())) {
-//          point = 20;
-//        }
-//        elseif多い！！ifをスイッチに置換
 
         playerScore.setScore(playerScore.getScore() + point);
         player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
@@ -121,6 +115,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     }
 
   }
+
+
 
   /**
    * 現在実行しているプレイヤーのスコア情報を取得する。
@@ -206,6 +202,19 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
+  }
+  /**
+   * 敵の種類ごとに取得するスコアを変える
+   * @param enemy
+   * @return
+   */
+  private static int getPoint(LivingEntity enemy) {
+    int point = switch (enemy.getType()) {
+      case ZOMBIE -> 10;
+      case SKELETON, WITCH -> 20;
+      default -> 0;
+    };
+    return point;
   }
 }
 
