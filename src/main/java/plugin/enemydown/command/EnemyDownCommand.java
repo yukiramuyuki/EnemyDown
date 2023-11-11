@@ -41,20 +41,9 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-//PlayerScoreとってこなくてはいけない！
-// ① →メゾット抽出する
+
     if (sender instanceof Player player) {
-//      if (playerScoreList.isEmpty()) {
-//        addNewPlayer(player);
-//      } else {
-//        for (PlayerScore playerScore : playerScoreList) {
-//          if (!playerScore.getPlayerName().equals(player.getName())) {
-//            addNewPlayer(player);
-//          }
-//
-//        }
-//      }
-//①↓
+
       getPlayerScore(player);
 
 
@@ -163,25 +152,41 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
   }
+
+//↓PlayerScoreではスコア情報となっているので一致させる。
+  /**
+   * 現在実行しているプレイヤーのスコア情報を取得する。
+   * @param player コマンドを実行したプレイヤー
+   * @return 現在進行しているプレイヤーのスコア情報
+   */
   private PlayerScore getPlayerScore(Player player) {
-//    private void getPlayerScore(Player player) {
-//    ②プレイヤースコアを返すように
+
     if (playerScoreList.isEmpty()) {
-//      addNewPlayer(player);
       return addNewPlayer(player);
-//     ⑤ return
     } else {
       for (PlayerScore playerScore : playerScoreList) {
         if (!playerScore.getPlayerName().equals(player.getName())) {
           return addNewPlayer(player);
-//          return
-//          新しく追加したプレイヤーを返す
 
 
+//          プレイヤーリスト空であれば新規を返す、
+//          そうではない場合は（新規の場合）存在していないばあい返す。
+
+
+//          ifに引っかからなかった場合=プレイヤー存在している
+//          getPlayerName&getNameが一致したとき
+
+
+
+        }else {
+          return playerScore;
+//          一致したら返すのはプレイヤーリストそのもの。
         }
 
       }
     }
+//    ループに何も引っかからなかった場合（基本はない）
+    return null;
   }
 
   /**
@@ -192,13 +197,10 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
    */
 
   private PlayerScore addNewPlayer(Player player) {
-//    private void addNewPlayer(Player player) {
-//   ③ addNewPlayerにもプレイヤースコアを返すように
     PlayerScore newPlayer = new PlayerScore();
     newPlayer.setPlayerName(player.getName());
     playerScoreList.add(newPlayer);
     return newPlayer;
-//    ④プレイヤースコアに足したうえで、足したプレイヤー情報をかえす。
   }
 }
 
