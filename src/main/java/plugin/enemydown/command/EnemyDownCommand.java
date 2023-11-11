@@ -28,10 +28,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
-//  private int gameTime = 20;
 
-//  フィールドがリストにできているのでけす
-//gametimeが赤波今はそのままに
 
 
 
@@ -44,18 +41,22 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
+//PlayerScoreとってこなくてはいけない！
+// ① →メゾット抽出する
     if (sender instanceof Player player) {
-      if (playerScoreList.isEmpty()) {
-        addNewPlayer(player);
-      } else {
-        for (PlayerScore playerScore : playerScoreList) {
-          if (!playerScore.getPlayerName().equals(player.getName())) {
-            addNewPlayer(player);
-          }
-  
-        }
-      }
+//      if (playerScoreList.isEmpty()) {
+//        addNewPlayer(player);
+//      } else {
+//        for (PlayerScore playerScore : playerScoreList) {
+//          if (!playerScore.getPlayerName().equals(player.getName())) {
+//            addNewPlayer(player);
+//          }
+//
+//        }
+//      }
+//①↓
+      getPlayerScore(player);
+
 
       gameTime = 20;
       World world = player.getWorld();
@@ -84,6 +85,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     return false;
   }
+
+
 
 
   /**
@@ -160,17 +163,42 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 
   }
+  private PlayerScore getPlayerScore(Player player) {
+//    private void getPlayerScore(Player player) {
+//    ②プレイヤースコアを返すように
+    if (playerScoreList.isEmpty()) {
+//      addNewPlayer(player);
+      return addNewPlayer(player);
+//     ⑤ return
+    } else {
+      for (PlayerScore playerScore : playerScoreList) {
+        if (!playerScore.getPlayerName().equals(player.getName())) {
+          return addNewPlayer(player);
+//          return
+//          新しく追加したプレイヤーを返す
+
+
+        }
+
+      }
+    }
+  }
 
   /**
    * 新規のプレイヤー情報をリストに追加します
    *
    * @param player 　コマンドを実行したプレイヤー
+   * @return  新規プレイヤー
    */
 
-  private void addNewPlayer(Player player) {
+  private PlayerScore addNewPlayer(Player player) {
+//    private void addNewPlayer(Player player) {
+//   ③ addNewPlayerにもプレイヤースコアを返すように
     PlayerScore newPlayer = new PlayerScore();
     newPlayer.setPlayerName(player.getName());
     playerScoreList.add(newPlayer);
+    return newPlayer;
+//    ④プレイヤースコアに足したうえで、足したプレイヤー情報をかえす。
   }
 }
 
