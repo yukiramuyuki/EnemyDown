@@ -51,25 +51,21 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //ゾンビを出現させる
 
+
+//      Day18スコア表示
+
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
           Runnable.cancel();
-//          player.sendMessage("ゲーム終了しました。");
           player.sendTitle("ゲームが終了しました。",
               nowPlayer.getPlayerName()+" 合計"+nowPlayer.getScore()+"点！",
               0,30,0);
-//          ②.sendTitleを使う
-//          ,サブタイトルがだせる。ここにプレイヤーの名前とスコアを
-//         , ,フェードインフェードアウトを設定できる。どのくらい表示するか
-
 
 
           nowPlayer.setScore(0);
-//          スコアをリセット
-//        ①  修了したときにスコアを０にする
 
           return;
-//          現状はスコア上書き。
+
         }
 
         world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
