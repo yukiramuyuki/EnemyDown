@@ -30,9 +30,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
 
-
-
-
   public EnemyDownCommand(Main main) {
     this.main = main;
 
@@ -43,11 +40,12 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
     if (sender instanceof Player player) {
+//      getPlayerScore(player);
+      PlayerScore nowPlayer = getPlayerScore(player);
+//     ① nowplayerの中にはゲームタイムがあるplayerscoreに項目がある
 
-      getPlayerScore(player);
-
-
-      gameTime = 20;
+      nowPlayer.setGameTime(20);
+//     ↑② gameTime = 20;
       World world = player.getWorld();
 
 //装備など設定
@@ -56,7 +54,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 //ゾンビを出現させる
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-        if (gameTime <= 0) {
+          if (nowPlayer.getGameTime() <= 0) {
+            //      ↑③ if (gameTime <= 0) {
           Runnable.cancel();
           player.sendMessage("ゲーム終了しました。");
 
@@ -64,7 +63,14 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
         }
 
         world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-        gameTime -= 5;
+        nowPlayer.setGameTime(nowPlayer.getGameTime()-5);
+
+//        gameTime -= 5;
+//       ↑④ 設定しなければならない
+        //        (今の時間から5秒減らしたのが)再セットされる。
+
+//        プレイヤー単位で設定されるように。
+//        ここまでが前まで分のマルチプレイ対応
 
 
       }, 0, 5 * 20);
@@ -74,8 +80,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     return false;
   }
-
-
 
 
   /**
@@ -153,9 +157,9 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   }
 
-//↓PlayerScoreではスコア情報となっているので一致させる。
   /**
    * 現在実行しているプレイヤーのスコア情報を取得する。
+   *
    * @param player コマンドを実行したプレイヤー
    * @return 現在進行しているプレイヤーのスコア情報
    */
@@ -167,25 +171,11 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
       for (PlayerScore playerScore : playerScoreList) {
         if (!playerScore.getPlayerName().equals(player.getName())) {
           return addNewPlayer(player);
-
-
-//          プレイヤーリスト空であれば新規を返す、
-//          そうではない場合は（新規の場合）存在していないばあい返す。
-
-
-//          ifに引っかからなかった場合=プレイヤー存在している
-//          getPlayerName&getNameが一致したとき
-
-
-
-        }else {
+        } else {
           return playerScore;
-//          一致したら返すのはプレイヤーリストそのもの。
         }
-
       }
     }
-//    ループに何も引っかからなかった場合（基本はない）
     return null;
   }
 
@@ -193,7 +183,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
    * 新規のプレイヤー情報をリストに追加します
    *
    * @param player 　コマンドを実行したプレイヤー
-   * @return  新規プレイヤー
+   * @return 新規プレイヤー
    */
 
   private PlayerScore addNewPlayer(Player player) {
