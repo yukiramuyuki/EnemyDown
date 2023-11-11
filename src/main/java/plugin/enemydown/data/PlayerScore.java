@@ -16,7 +16,7 @@ public class PlayerScore {
 
 
   private int gameTime;
-//  作成
+
 
 
 

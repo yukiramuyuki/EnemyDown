@@ -28,9 +28,10 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
-  private int gameTime = 20;
-//  playerscoreにgametimeをもたす。
-//  PlayerScoreにpriveta int gameTime;
+//  private int gameTime = 20;
+
+//  フィールドがリストにできているのでけす
+//gametimeが赤波今はそのままに
 
 
 
