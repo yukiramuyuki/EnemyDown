@@ -48,7 +48,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
           if (!playerScore.getPlayerName().equals(player.getName())) {
             addNewPlayer(player);
           }
-
         }
       }
 
