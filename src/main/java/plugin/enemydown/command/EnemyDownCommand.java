@@ -44,9 +44,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
       nowPlayer.setGameTime(20);
 
-
-
-
       World world = player.getWorld();
 
 //装備など設定
@@ -54,16 +51,12 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //ゾンビを出現させる
 
-
-//      Day18スコア表示
-
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
           Runnable.cancel();
           player.sendTitle("ゲームが終了しました。",
-              nowPlayer.getPlayerName()+" 合計"+nowPlayer.getScore()+"点！",
-              0,30,0);
-
+              nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
+              0, 30, 0);
 
           nowPlayer.setScore(0);
 
