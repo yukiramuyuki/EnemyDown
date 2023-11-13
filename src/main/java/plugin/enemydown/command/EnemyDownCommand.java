@@ -62,12 +62,35 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
               0, 30, 0);
           nowPlayer.setScore(0);
 
-          List<Entity> nearbyEntities = player.getNearbyEntities(50, 0, 50);
-//        ①  player.getNearbyEntities(50,0,50);
-//              ()座標をいれるテキストでは長さ100くらい。100とってもいい。
-//          高さはいらない。空に出現する場合指定しても
-//          ②getNearbyEntities変数の導入
-          
+          List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+//          entitiesをenemiesに名前変える
+          for (Entity enemy:nearbyEnemies){
+            switch (enemy.getType()) {
+              case ZOMBIE, SKELETON, WITCH -> enemy.remove();
+            }
+
+          }
+
+
+
+//          for (Entity enemy:nearbyEnemies){
+//            if (enemy.getType().equals(EntityType.ZOMBIE)){
+//              enemy.remove();
+//            } else if (enemy.getType().equals(EntityType.SKELETON)) {
+//              enemy.remove();
+//            }else if (enemy.getType().equals(EntityType.WITCH)){
+//              enemy.remove();
+//            }
+//
+//          }
+//          自分の周囲にいるentityをとってきてそれはenemyである
+//          実際にはすべてとってきてる
+
+//          ifではスイッチと同じようなことをする
+//          もしもゾンビならremove削除する。
+//         ifをマージする
+
+
 
           return;
 
