@@ -52,7 +52,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //ゾンビを出現させる
 
-//      Day19：敵の種類によって手に入る点数が異なること
+
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
