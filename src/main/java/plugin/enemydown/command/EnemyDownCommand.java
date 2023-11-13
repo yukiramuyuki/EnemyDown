@@ -53,17 +53,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 //ゾンビを出現させる
 
 //      Day20：敵消滅
-//      cancelの後
-//      spawnEntityはentityがかえってくる
-//      変数の導入をするとentity情報がとれる
-//      addなどと同じような使い方ができる
-//      そのリストの中身を削除するようにするとプレイヤーの周囲を判断しなくても実装できる
-
-//      今回は自分の周囲を使いたいからしない
-//      実装としては自分の出現させたエンティティ情報を保存しておいて、
-//      ゲームが終わったら削除のほうがキレイ
-
-
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
@@ -71,8 +60,14 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
           player.sendTitle("ゲームが終了しました。",
               nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
               0, 30, 0);
-
           nowPlayer.setScore(0);
+
+          List<Entity> nearbyEntities = player.getNearbyEntities(50, 0, 50);
+//        ①  player.getNearbyEntities(50,0,50);
+//              ()座標をいれるテキストでは長さ100くらい。100とってもいい。
+//          高さはいらない。空に出現する場合指定しても
+//          ②getNearbyEntities変数の導入
+          
 
           return;
 
@@ -95,7 +90,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 /**
  * 敵を倒すと点数が手に入ること
  */
-
 
   public void onEnemyDeath(EntityDeathEvent e) {
 
