@@ -52,7 +52,13 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //ゾンビを出現させる
 
-//      Day19：敵の種類によって手に入る点数が異なること
+//      Day20：敵削除
+//      時間制限が来たらエリア内の敵は消滅すること
+//      →仕組みがあるから簡単！！
+//      プレイヤーの周囲にいるエンティティの情報を取得してきて、そのエンティティを削除する。
+//      全て。家やペットも削除されてしまう！！扱い注意！！
+//      削除対象のエンティティは出現させた敵に限定すること。
+//      前提条件として、室内で行うことを想定しているので、敵を削除すれば問題は発生しない想定。
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
