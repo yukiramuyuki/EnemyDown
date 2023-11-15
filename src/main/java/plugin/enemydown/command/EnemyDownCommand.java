@@ -35,19 +35,8 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
     this.main = main;
 
   }
-//  onCommandをリファクタリングこれをキレイにするというよりは
-//  if (sender instanceof Player player) {をなくしたい！！
-//  ifスタート気持ち悪い↓
-//  プレイヤーが実行することを前提。前提条件を隠したい
-//  プレイヤーが実行したときだけ動かしたい。それを今はifでしてるけど、別の
-//  コマンドを実行したときにしたいことではない
-//  やりたいのはifではなくその下のプレイヤー情報を取ってきて・・・のところ
-//  ifの判定をしたいわけではない
-//初めて見る人は何のifか分からない
-//  →spigotの使用上判断しなければならないからしているだけ
-
-  
-//  spigotで用意していないのならば、自分でよういする！！今回ここ
+//  Day21onCommandなくす
+//  ①ベースコマンド作成する
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -64,7 +53,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //ゾンビを出現させる
 
-//      Day20：敵消滅
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
