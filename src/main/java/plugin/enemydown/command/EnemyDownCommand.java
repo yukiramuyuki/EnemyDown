@@ -52,7 +52,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //ゾンビを出現させる
 
-//      Day20：敵消滅
+
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
@@ -68,7 +68,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
             switch (enemy.getType()) {
               case ZOMBIE, SKELETON, WITCH -> enemy.remove();
             }
-
           }
 
           return;
