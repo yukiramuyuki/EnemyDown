@@ -25,7 +25,8 @@ import org.bukkit.inventory.PlayerInventory;
 import plugin.enemydown.Main;
 import plugin.enemydown.data.PlayerScore;
 
-public class EnemyDownCommand implements CommandExecutor, Listener {
+public class EnemyDownCommand extends BaseCommand implements Listener {
+
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -34,55 +35,55 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
   public EnemyDownCommand(Main main) {
     this.main = main;
 
+
   }
+//  Day21onCommandなくす
+//  継承
 
 
   @Override
-  public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+  public boolean onExecutePlayerCommand(Player player) {
 
-    if (sender instanceof Player player) {
-      PlayerScore nowPlayer = getPlayerScore(player);
+    PlayerScore nowPlayer = getPlayerScore(player);
 
-      nowPlayer.setGameTime(20);
+    nowPlayer.setGameTime(20);
 
-      World world = player.getWorld();
+    World world = player.getWorld();
 
-//装備など設定
-      initPlayerStatus(player);
+    initPlayerStatus(player);
 
-//ゾンビを出現させる
+    Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
+      if (nowPlayer.getGameTime() <= 0) {
+        Runnable.cancel();
+        player.sendTitle("ゲームが終了しました。",
+            nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
+            0, 60, 0);
+        nowPlayer.setScore(0);
 
-
-
-      Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-        if (nowPlayer.getGameTime() <= 0) {
-          Runnable.cancel();
-          player.sendTitle("ゲームが終了しました。",
-              nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
-              0, 60, 0);
-          nowPlayer.setScore(0);
-
-          List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-//          entitiesをenemiesに名前変える
-          for (Entity enemy : nearbyEnemies) {
-            switch (enemy.getType()) {
-              case ZOMBIE, SKELETON, WITCH -> enemy.remove();
-            }
+        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+        for (Entity enemy : nearbyEnemies) {
+          switch (enemy.getType()) {
+            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
           }
-
-          return;
 
         }
 
-        world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-        nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
+        return;
+
+      }
+
+      world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+      nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
 
 
-      }, 0, 5 * 20);
+    }, 0, 5 * 20);
+    return true;
 
 
-    }
+  }
 
+  @Override
+  public boolean onExecuteNPCCommand(CommandSender sender) {
     return false;
   }
 
