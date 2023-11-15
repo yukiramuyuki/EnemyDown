@@ -42,7 +42,50 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   @Override
   public boolean onExecutePlayerCommand(Player player) {
-    return false;
+//  この中に消したifの中身をいれて終わり
+    PlayerScore nowPlayer = getPlayerScore(player);
+
+    nowPlayer.setGameTime(20);
+
+    World world = player.getWorld();
+
+//装備など設定
+    initPlayerStatus(player);
+
+//ゾンビを出現させる
+
+
+    Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
+      if (nowPlayer.getGameTime() <= 0) {
+        Runnable.cancel();
+        player.sendTitle("ゲームが終了しました。",
+            nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
+            0, 60, 0);
+        nowPlayer.setScore(0);
+
+        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+//          entitiesをenemiesに名前変える
+        for (Entity enemy : nearbyEnemies) {
+          switch (enemy.getType()) {
+            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
+          }
+
+        }
+
+        return;
+
+      }
+
+      world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+      nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
+
+
+    }, 0, 5 * 20);
+    return true;
+//    return false;
+
+
+
   }
 
   @Override
@@ -50,56 +93,34 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     return false;
   }
 
-//  削除してもエラーにならない継承元のBaseCommandでonCommandで実装しているから
+
+
+
+
+
+//  onCommandいらない
 
 //  @Override
 //  public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 //
 //    if (sender instanceof Player player) {
-//      PlayerScore nowPlayer = getPlayerScore(player);
 //
-//      nowPlayer.setGameTime(20);
-//
-//      World world = player.getWorld();
-//
-////装備など設定
-//      initPlayerStatus(player);
-//
-////ゾンビを出現させる
-//
-//
-//      Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-//        if (nowPlayer.getGameTime() <= 0) {
-//          Runnable.cancel();
-//          player.sendTitle("ゲームが終了しました。",
-//              nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
-//              0, 60, 0);
-//          nowPlayer.setScore(0);
-//
-//          List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-////          entitiesをenemiesに名前変える
-//          for (Entity enemy : nearbyEnemies) {
-//            switch (enemy.getType()) {
-//              case ZOMBIE, SKELETON, WITCH -> enemy.remove();
-//            }
-//
-//          }
-//
-//          return;
-//
-//        }
-//
-//        world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-//        nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
-//
-//
-//      }, 0, 5 * 20);
 //
 //
 //    }
 //
 //    return false;
 //  }
+
+
+//  冒頭でやってた部分を継承のクラスにもたせることによって
+//  本当にやりたいことだけを実装することができる！！
+
+//  Listenerの機能を持たせたいからimplementsにListenerを
+
+//  BaseCommandにListenerを持たせると
+//  イベントハンドリングしたくないコマンド（コマンドを実行するだけでいい）場合に、
+//  リスナーがあると余計な処理が実装できるようになってしまう。余計なバグを生まないように
 
 
 
