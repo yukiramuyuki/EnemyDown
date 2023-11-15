@@ -11,22 +11,40 @@ import org.bukkit.entity.Player;
 /**
  * コマンドを実行して動かすプログイン処理の基底クラスです。
  */
-public class BaseCommand implements CommandExecutor {
-  //?implements CommandExecutorコピーしてきて貼り付け
-//onCommand実装する
-//  コマンドは実装せず、ifをコピーで持ってきて持ってきてreturn true;
+public abstract class BaseCommand implements CommandExecutor {
+//  public class BaseCommand implements CommandExecutor {
+
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
-      return true;
+     return onExecutePlayerCommand(player);
+//  onExecutePlayerCommand(player)をしたら、存在しないので作成するか聞かれて、作成することができる
+
+
+//      return true;
     }else {
-      return true;
+      return onExecuteNPCCommand(sender);
     }
 
-//    return false;
+
   }
+
+
+  public abstract boolean onExecutePlayerCommand(Player player) ;
+  public abstract boolean onExecuteNPCCommand(CommandSender sender) ;
+
+//    private void onExecutePlayerCommand(Player player) {
+//    privateにすると動かない
+
 }
-//コマンドを実行
-//senderがプレイヤーなら処理をしてかえす
-//そうでないならその処理をしてかえす。
+
+//boolean処理を行ったかどうか
+
+//abstract(クラスにも必要）
+//抽象クラスと呼ばれるもの。抽象的なのでこれだけでは動かない
+//これをエクステンズ（継承）したら
+//継承したonExecutePlayerCommandを実装することによって意味がでる
+
+//onCommandの中で振る舞いを提示する
+//（プレイヤーだったらonExecutePlayerCommandを実装する。）
