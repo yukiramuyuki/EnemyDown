@@ -59,38 +59,17 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
           Runnable.cancel();
           player.sendTitle("ゲームが終了しました。",
               nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
-              0, 30, 0);
+              0, 60, 0);
           nowPlayer.setScore(0);
 
           List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
 //          entitiesをenemiesに名前変える
-          for (Entity enemy:nearbyEnemies){
+          for (Entity enemy : nearbyEnemies) {
             switch (enemy.getType()) {
               case ZOMBIE, SKELETON, WITCH -> enemy.remove();
             }
 
           }
-
-
-
-//          for (Entity enemy:nearbyEnemies){
-//            if (enemy.getType().equals(EntityType.ZOMBIE)){
-//              enemy.remove();
-//            } else if (enemy.getType().equals(EntityType.SKELETON)) {
-//              enemy.remove();
-//            }else if (enemy.getType().equals(EntityType.WITCH)){
-//              enemy.remove();
-//            }
-//
-//          }
-//          自分の周囲にいるentityをとってきてそれはenemyである
-//          実際にはすべてとってきてる
-
-//          ifではスイッチと同じようなことをする
-//          もしもゾンビならremove削除する。
-//         ifをマージする
-
-
 
           return;
 
