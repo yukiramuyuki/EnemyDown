@@ -36,63 +36,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public EnemyDownCommand(Main main) {
     this.main = main;
 
+
   }
 //  Day21onCommandなくす
-
-
-  @Override
-  public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-    if (sender instanceof Player player) {
-      PlayerScore nowPlayer = getPlayerScore(player);
-
-      nowPlayer.setGameTime(20);
-
-      World world = player.getWorld();
-
-//装備など設定
-      initPlayerStatus(player);
-
-//ゾンビを出現させる
-
-
-      Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-        if (nowPlayer.getGameTime() <= 0) {
-          Runnable.cancel();
-          player.sendTitle("ゲームが終了しました。",
-              nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
-              0, 60, 0);
-          nowPlayer.setScore(0);
-
-          List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-//          entitiesをenemiesに名前変える
-          for (Entity enemy : nearbyEnemies) {
-            switch (enemy.getType()) {
-              case ZOMBIE, SKELETON, WITCH -> enemy.remove();
-            }
-
-          }
-
-          return;
-
-        }
-
-        world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
-        nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
-
-
-      }, 0, 5 * 20);
-
-
-    }
-
-    return false;
-  }
-//  Overrideで作成される
-//  今までOnCommandを実装。いらない
-
-//  継承して(extents)BaseCommandを持っている
-//  onCommandできる。BaseCommandを上書きする
 
   @Override
   public boolean onExecutePlayerCommand(Player player) {
@@ -103,6 +49,59 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecuteNPCCommand(CommandSender sender) {
     return false;
   }
+
+//  削除してもエラーにならない継承元のBaseCommandでonCommandで実装しているから
+
+//  @Override
+//  public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+//
+//    if (sender instanceof Player player) {
+//      PlayerScore nowPlayer = getPlayerScore(player);
+//
+//      nowPlayer.setGameTime(20);
+//
+//      World world = player.getWorld();
+//
+////装備など設定
+//      initPlayerStatus(player);
+//
+////ゾンビを出現させる
+//
+//
+//      Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
+//        if (nowPlayer.getGameTime() <= 0) {
+//          Runnable.cancel();
+//          player.sendTitle("ゲームが終了しました。",
+//              nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
+//              0, 60, 0);
+//          nowPlayer.setScore(0);
+//
+//          List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+////          entitiesをenemiesに名前変える
+//          for (Entity enemy : nearbyEnemies) {
+//            switch (enemy.getType()) {
+//              case ZOMBIE, SKELETON, WITCH -> enemy.remove();
+//            }
+//
+//          }
+//
+//          return;
+//
+//        }
+//
+//        world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+//        nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
+//
+//
+//      }, 0, 5 * 20);
+//
+//
+//    }
+//
+//    return false;
+//  }
+
+
 
 
   @EventHandler

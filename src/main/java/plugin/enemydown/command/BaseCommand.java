@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
  * コマンドを実行して動かすプログイン処理の基底クラスです。
  */
 public abstract class BaseCommand implements CommandExecutor {
-//この基底をEnemyDownCommandに継承する
+
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
