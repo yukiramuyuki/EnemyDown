@@ -25,8 +25,10 @@ import org.bukkit.inventory.PlayerInventory;
 import plugin.enemydown.Main;
 import plugin.enemydown.data.PlayerScore;
 
-public class EnemyDownCommand implements CommandExecutor, Listener {
-
+public class EnemyDownCommand extends BaseCommand implements Listener {
+//implements CommandExecutorいらない
+//  extents BaseCommandにする
+//  →メゾットの実装
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
@@ -36,7 +38,7 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
   }
 //  Day21onCommandなくす
-//  ①ベースコマンド作成する
+
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -84,6 +86,21 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
     }
 
+    return false;
+  }
+//  Overrideで作成される
+//  今までOnCommandを実装。いらない
+
+//  継承して(extents)BaseCommandを持っている
+//  onCommandできる。BaseCommandを上書きする
+
+  @Override
+  public boolean onExecutePlayerCommand(Player player) {
+    return false;
+  }
+
+  @Override
+  public boolean onExecuteNPCCommand(CommandSender sender) {
     return false;
   }
 
