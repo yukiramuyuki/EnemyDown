@@ -52,16 +52,24 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 
 //ゾンビを出現させる
 
-
+//      Day20：敵消滅
 
       Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
         if (nowPlayer.getGameTime() <= 0) {
           Runnable.cancel();
           player.sendTitle("ゲームが終了しました。",
               nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
-              0, 30, 0);
-
+              0, 60, 0);
           nowPlayer.setScore(0);
+
+          List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+//          entitiesをenemiesに名前変える
+          for (Entity enemy : nearbyEnemies) {
+            switch (enemy.getType()) {
+              case ZOMBIE, SKELETON, WITCH -> enemy.remove();
+            }
+
+          }
 
           return;
 
@@ -84,7 +92,6 @@ public class EnemyDownCommand implements CommandExecutor, Listener {
 /**
  * 敵を倒すと点数が手に入ること
  */
-
 
   public void onEnemyDeath(EntityDeathEvent e) {
 
