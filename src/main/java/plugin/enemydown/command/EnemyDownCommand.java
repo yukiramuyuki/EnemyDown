@@ -26,9 +26,8 @@ import plugin.enemydown.Main;
 import plugin.enemydown.data.PlayerScore;
 
 public class EnemyDownCommand extends BaseCommand implements Listener {
-//implements CommandExecutorいらない
-//  extents BaseCommandにする
-//  →メゾットの実装
+
+
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
@@ -39,6 +38,15 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   }
 //  Day21onCommandなくす
+//  継承
+
+
+
+
+//  EnemySpawnCommand作成plugin.yml更新
+
+//  コマンド実行時if書かなくていい。便利になる
+//  ただし、ベースになんでもいれない。ゴミ箱になってしまう！！
 
   @Override
   public boolean onExecutePlayerCommand(Player player) {
@@ -49,11 +57,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     World world = player.getWorld();
 
-//装備など設定
     initPlayerStatus(player);
-
-//ゾンビを出現させる
-
 
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayer.getGameTime() <= 0) {
@@ -64,7 +68,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         nowPlayer.setScore(0);
 
         List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-//          entitiesをenemiesに名前変える
         for (Entity enemy : nearbyEnemies) {
           switch (enemy.getType()) {
             case ZOMBIE, SKELETON, WITCH -> enemy.remove();
@@ -82,8 +85,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     }, 0, 5 * 20);
     return true;
-//    return false;
-
 
 
   }
@@ -92,37 +93,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecuteNPCCommand(CommandSender sender) {
     return false;
   }
-
-
-
-
-
-
-//  onCommandいらない
-
-//  @Override
-//  public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-//
-//    if (sender instanceof Player player) {
-//
-//
-//
-//    }
-//
-//    return false;
-//  }
-
-
-//  冒頭でやってた部分を継承のクラスにもたせることによって
-//  本当にやりたいことだけを実装することができる！！
-
-//  Listenerの機能を持たせたいからimplementsにListenerを
-
-//  BaseCommandにListenerを持たせると
-//  イベントハンドリングしたくないコマンド（コマンドを実行するだけでいい）場合に、
-//  リスナーがあると余計な処理が実装できるようになってしまう。余計なバグを生まないように
-
-
 
 
   @EventHandler

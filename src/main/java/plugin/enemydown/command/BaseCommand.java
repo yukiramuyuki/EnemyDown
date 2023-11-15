@@ -1,5 +1,5 @@
 package plugin.enemydown.command;
-//  Day21onCommand‚È‚­‚·
+//  Day21onCommandãªãã™
 
 
 
@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * ƒRƒ}ƒ“ƒh‚ðŽÀs‚µ‚Ä“®‚©‚·ƒvƒƒOƒCƒ“ˆ—‚ÌŠî’êƒNƒ‰ƒX‚Å‚·B
+ * ã‚³ãƒžãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¦å‹•ã‹ã™ãƒ—ãƒ­ã‚°ã‚¤ãƒ³å‡¦ç†ã®åŸºåº•ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
  */
 public abstract class BaseCommand implements CommandExecutor {
 
@@ -27,17 +27,17 @@ public abstract class BaseCommand implements CommandExecutor {
   }
 
   /**
-   * ƒRƒ}ƒ“ƒhŽÀsŽÒ‚ªƒvƒŒƒCƒ„[‚¾‚Á‚½ê‡‚ÉŽÀs‚µ‚Ü‚·B
-   * @param player ƒRƒ}ƒ“ƒh‚ðŽÀs‚µ‚½ƒvƒŒƒCƒ„[
-   * @return ˆ—‚ÌŽÀs—L–³
+   * ã‚³ãƒžãƒ³ãƒ‰å®Ÿè¡Œè€…ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã ã£ãŸå ´åˆã«å®Ÿè¡Œã—ã¾ã™ã€‚
+   * @param player ã‚³ãƒžãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+   * @return å‡¦ç†ã®å®Ÿè¡Œæœ‰ç„¡
    */
 
   public abstract boolean onExecutePlayerCommand(Player player) ;
 
   /**
-   * ƒRƒ}ƒ“ƒh‚ÌŽÀsŽÒ‚ªƒvƒŒƒCƒ„[ˆÓŠO‚¾‚Á‚½ê‡‚ÉŽÀs‚µ‚Ü‚·B
-   * @param sender ƒRƒ}ƒ“ƒhŽÀsŽÒ
-   * @return ˆ—‚ÌŽÀs—L–³
+   * ã‚³ãƒžãƒ³ãƒ‰ã®å®Ÿè¡Œè€…ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ„å¤–ã ã£ãŸå ´åˆã«å®Ÿè¡Œã—ã¾ã™ã€‚
+   * @param sender ã‚³ãƒžãƒ³ãƒ‰å®Ÿè¡Œè€…
+   * @return å‡¦ç†ã®å®Ÿè¡Œæœ‰ç„¡
    */
   public abstract boolean onExecuteNPCCommand(CommandSender sender) ;
 
