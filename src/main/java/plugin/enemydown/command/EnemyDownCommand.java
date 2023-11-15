@@ -41,16 +41,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 //  継承
 
 
-
-
-//  EnemySpawnCommand作成plugin.yml更新
-
-//  コマンド実行時if書かなくていい。便利になる
-//  ただし、ベースになんでもいれない。ゴミ箱になってしまう！！
-
   @Override
   public boolean onExecutePlayerCommand(Player player) {
-//  この中に消したifの中身をいれて終わり
+
     PlayerScore nowPlayer = getPlayerScore(player);
 
     nowPlayer.setGameTime(20);
