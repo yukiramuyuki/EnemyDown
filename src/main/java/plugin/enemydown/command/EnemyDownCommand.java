@@ -29,6 +29,8 @@ import plugin.enemydown.data.PlayerScore;
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
 
+  public static final int GAME_TIME = 20;
+//  ③定数の導入
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
@@ -38,25 +40,36 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   }
 //  Day22 StreamAPI
 
-//  Overrideはコメント書かない
-//  ベースコマンドにあるのでOverrideのとこにカーソルを置くと説明が入る
-//  中でやっていることの説明をいれたいなら、コメントを入れてもOK.
+
 
   @Override
   public boolean onExecutePlayerCommand(Player player) {
 
     PlayerScore nowPlayer = getPlayerScore(player);
 
-    nowPlayer.setGameTime(20);
+//    ④ゲーム時間同じなら、getPlayerScoreのなかで値を取るときに設定していればすむ！！
+    nowPlayer.setGameTime(GAME_TIME);
 
-//プレイヤーのステータスを初期化する
-//    ↑をした場合したの分と同じ意味。英語か日本語かだけ。コメントとしては微妙。
-//    詳細のjavadogに書いているからそっちをみればいい。
+//    nowPlayer.setGameTime(20);
+    //  ②  この中でここ違和感。なんで毎回設定している？
+//    設定する時間必要か？常に同じ
+//    固定値ではなく定数。
+
+
     initPlayerStatus(player);
 
     gamePlay(player, nowPlayer);
 
     return true;
+//①名前を付けるだけでも見やすくなった
+
+//    プレイヤースコアをとってきて
+//    スコア情報にゲーム時間を設定して
+//    初期化を行って
+//    ゲームプレイをする
+
+
+
 
 
   }
