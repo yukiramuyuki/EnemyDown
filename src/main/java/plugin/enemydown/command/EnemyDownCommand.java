@@ -102,40 +102,28 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return addNewPlayer(player);
     } else {
       for (PlayerScore playerScore : playerScoreList) {
-//       ① ifelseをはてなに置換
-//        三項演算子を使っている
-        return !playerScore.getPlayerName().equals(player.getName())
-//            条件を書く（プレイヤー名をとってきて、実行したプレイヤーの名前が一致したら
-            ? addNewPlayer(player)
-//            一致しなかったら新規プレイヤー
-            : playerScore;
-//        一致したらプレイスコア。既存のプレイヤーで返す。
-//        ？はtrueだったら　：ちがったら　を1行で書ける。
 
-//        ifで書かないから便利！？：特徴的な書き方1行で書くから見栄えが悪い。コードが読み取りにくい
-//        分かりやすいときはいいが、今回のように！で反転させている分かりにくかったりする
+        //             ！playerで？を反転
+        return playerScore.getPlayerName().equals(player.getName())
+            ? playerScore
+            : addNewPlayer(player);
+//        一致したら存在したプレイヤースコアを返す
+//        そうでないなら新規プレイヤーになる
 
-
-
+//        ifを消せたからforを消す
 
       }
     }
     return null;
   }
 
-//      return addNewPlayer(player);
-//    } else {
-//      for (PlayerScore playerScore : playerScoreList) {
-  //       ① ifelseをはてなに置換
-//        if (!playerScore.getPlayerName().equals(player.getName())) {
-//          return addNewPlayer(player);
-//        } else {
-//          return playerScore;
-//        }
-//      }
-//    }
-//    return null;
-//  }
+//        for (PlayerScore playerScore : playerScoreList) {
+//
+//    return !playerScore.getPlayerName().equals(player.getName())
+////             ！playerで？を反転
+//        ? addNewPlayer(player)
+//        : playerScore;
+
 
 
   /**
