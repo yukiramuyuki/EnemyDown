@@ -40,83 +40,18 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     PlayerScore nowPlayer = getPlayerScore(player);
 
     nowPlayer.setGameTime(20);
-//    onExecutePlayerCommandの中身がはんざつのため名前付け対比するためにメゾット抽出を
 
 
     initPlayerStatus(player);
 
     gamePlay(player, nowPlayer);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
-//    Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-//      if (nowPlayer.getGameTime() <= 0) {
-//        Runnable.cancel();
-//        player.sendTitle("ゲームが終了しました。",
-//            nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
-//            0, 60, 0);
-//        nowPlayer.setScore(0);
-//
-//        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-//        for (Entity enemy : nearbyEnemies) {
-//          switch (enemy.getType()) {
-//            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
-//          }
-//
-//        }
-//
-//        return;
-//
-//      }
-//
-//      player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
-//      nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
-//
-//
-//    }, 0, 5 * 20);
     return true;
 
 
   }
 
-  private void gamePlay(Player player, PlayerScore nowPlayer) {
-    Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-      if (nowPlayer.getGameTime() <= 0) {
-        Runnable.cancel();
-        player.sendTitle("ゲームが終了しました。",
-            nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
-            0, 60, 0);
-        nowPlayer.setScore(0);
 
-        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-        for (Entity enemy : nearbyEnemies) {
-          switch (enemy.getType()) {
-            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
-          }
-
-        }
-
-        return;
-
-      }
-
-      player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
-      nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
-
-
-    }, 0, 5 * 20);
-  }
 
   @Override
   public boolean onExecuteNPCCommand(CommandSender sender) {
@@ -202,6 +137,42 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     inventory.setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
     inventory.setBoots(new ItemStack(Material.NETHERITE_BOOTS));
     inventory.setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+  }
+
+  /**
+   * ゲームを実行します。基底の時間内に敵を倒すとスコアが加算されます。合計スコアを時間経過後に表示します
+   * @param player コマンドを実行したプレイヤー
+   * @param nowPlayer プレイヤースコア情報
+   */
+//  中身ごちゃついているが今はこのまま。
+//  これに名前を付けたかったからメゾット抽出作業をした。
+
+  private void gamePlay(Player player, PlayerScore nowPlayer) {
+    Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
+      if (nowPlayer.getGameTime() <= 0) {
+        Runnable.cancel();
+        player.sendTitle("ゲームが終了しました。",
+            nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
+            0, 60, 0);
+        nowPlayer.setScore(0);
+
+        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+        for (Entity enemy : nearbyEnemies) {
+          switch (enemy.getType()) {
+            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
+          }
+
+        }
+
+        return;
+
+      }
+
+      player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
+      nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
+
+
+    }, 0, 5 * 20);
   }
 
   /**
