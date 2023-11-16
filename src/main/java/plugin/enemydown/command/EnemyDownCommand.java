@@ -44,16 +44,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player) {
 
     PlayerScore nowPlayerScore = getPlayerScore(player);
-//    今から実行されるスコアの情報（今の）
 
     initPlayerStatus(player);
-//    プレイヤーの状態が消化されて
 
     gamePlay(player, nowPlayerScore);
-//    ゲームプレイには、両方の情報が入る
 
     return true;
-//    実行したらtrueで返す
 
   }
 
@@ -97,14 +93,18 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @return 現在進行しているプレイヤーのスコア情報
    */
   private PlayerScore getPlayerScore(Player player) {
-    PlayerScore playerScore = new PlayerScore();
+    PlayerScore playerScore = new PlayerScore(player.getName());
+//    ④赤波。プレイヤー引数にいるのでいれる
+//   ⑤ 今実行したプレイヤー名をとってきてプレイヤースコア作ってプレイヤースコアの中に何が入るか
 
     if (playerScoreList.isEmpty()) {
+      playerScore=addNewPlayer(player);
+
 
     } else {
-
-      playerScore = playerScoreList.stream().findFirst().map(ps
-          -> ps.getPlayerName().equals(player.getName())
+      playerScore = playerScoreList.stream()
+          .findFirst().
+          map(ps -> ps.getPlayerName().equals(player.getName())
           ? ps
           : addNewPlayer(player)).orElse(playerScore);
     }
@@ -124,8 +124,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
   private PlayerScore addNewPlayer(Player player) {
-    PlayerScore newPlayer = new PlayerScore();
-    newPlayer.setPlayerName(player.getName());
+    PlayerScore newPlayer = new PlayerScore(player.getName());
+//    newPlayer.setPlayerName();
+//    ②player.getName移動、削除コンストラクタ―作成
+
+
+
+//    PlayerScore newPlayer = new PlayerScore();
+//    newPlayer.setPlayerName(player.getName());
+//    ここでかならずプレイヤー名セットしている.getName
+//   ① PlayerScoreをつくる上で必要
     playerScoreList.add(newPlayer);
     return newPlayer;
   }
