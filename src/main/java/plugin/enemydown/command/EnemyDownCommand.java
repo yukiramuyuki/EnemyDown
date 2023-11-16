@@ -47,7 +47,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 //    ゲーム時間同じなら、getPlayerScoreのなかで値を取るときに設定していればすむ！！
 //    少ないのであればインライン化では？
-    nowPlayer.setGameTime(GAME_TIME);
+//    nowPlayer.setGameTime(GAME_TIME);
+
+//    ⑨いらなくなる
 
     initPlayerStatus(player);
 
@@ -97,45 +99,61 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @return 現在進行しているプレイヤーのスコア情報
    */
   private PlayerScore getPlayerScore(Player player) {
+        PlayerScore playerScore = new PlayerScore();
+
+//    PlayerScore playerScore;
+//   ⑥ イニャライザーの除去newPlayerScore
+//    消すとバグる可能性あるとなっていた
 
     if (playerScoreList.isEmpty()) {
-      return addNewPlayer(player);
+      playerScore = addNewPlayer(player);
+//       ②名前をコピーでもってくる
+
+//      PlayerScore playerScore1 = addNewPlayer(player);
+      //    ①リターンではなく一時変数
+//    変数の導入の時この変数だけ
+
+      //      ②リターン変える
     } else {
-      //        findfirstに置換
-      //        ifを消せたからforを消す
-      return playerScoreList.stream().findFirst().map(playerScore
-          -> playerScore.getPlayerName().equals(player.getName())
-              ? playerScore
-              : addNewPlayer(player)).orElse(null);
-//      for分のリストplayerScoreListをストリーム化して一番最初の要素をとってくる
-//      一番最初の要素に対してplayerScore -> playerScoreをしたときに
-//      一致したらそれを返す、違うならニュー。
+//       ③playerScore = playerScoreList.stream().findFirst().map(playerScore
+//      ⑤名前同じだから赤波に名前かえるプレイヤースコアの略にps
+      playerScore = playerScoreList.stream().findFirst().map(ps
 
-//      そもそも、findFirstしたときに要素が見つからない
-//      （playerScore.getPlayerName().equals(player.getName()）の部分
-//      のであればヌルを返す
-//      return null消えている
-
-//      三項式にしたことで何をしているか分かりにくくなっている複雑になっている。
-//      これがいいのかは？？
-//      ifやforがなくなったことでなんとなく見た目キレイに
-//      読み解かなくてはいけない。複雑化になっている？見慣れているのであれば問題ないかな？
+          -> ps.getPlayerName().equals(player.getName())
+          ? ps
+//          : addNewPlayer(player)).orElse(null);
+                : addNewPlayer(player)).orElse(playerScore);
+//      ⑦⑥をせずにnullの部分にplayerScoreでも
+//      条件に入らなかったらnewを
     }
+    //⑧リターンをする前に
+    playerScore.setGameTime(GAME_TIME);
+//    getPlayerScoreをするときは必ずゲーム時間を設定されてから返す
+//    上のnowPlayer.setGameTime(GAME_TIME);いらない
+
+
+    return playerScore;
+//    ④両方同じplayerScore→if共有部分を抽出
+
+//    変数で受けて返す
   }
 
+//      if (playerScoreList.isEmpty()) {
+//    return addNewPlayer(player);
+  //   ①addNewPlayer リターンではなく一時変数
+//    変数の導入の時この変数だけ
+//  } else {
+//    return playerScoreList.stream().findFirst().map(playerScore
+//  ③playerScoreList変数の導入（範囲は全て）
 
-//        findfirstに置換
-//        for (PlayerScore playerScore : playerScoreList) {
-//    return playerScore.getPlayerName().equals(player.getName())
+//        -> playerScore.getPlayerName().equals(player.getName())
 //        ? playerScore
-//        : addNewPlayer(player);
+//        : addNewPlayer(player)).orElse(null);
+//  }
 //}
-//}
-//return null;
-//    }
 
-
-
+//  新規の場合もあればそうではない場合もある。どこかで共通でゲームタイムを入れたい
+//  ヌルは動かないものとして考える→新しくつくるかプレイヤーを返すかなので
 
 
   /**
