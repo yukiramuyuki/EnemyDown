@@ -19,11 +19,10 @@ public class PlayerScore {
 
   public PlayerScore(String playerName) {
     this.playerName = playerName;
-//    ③
 
   }
 
-//
+
 
   public int getGameTime() {
     return gameTime;

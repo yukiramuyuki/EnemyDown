@@ -94,12 +94,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
   private PlayerScore getPlayerScore(Player player) {
     PlayerScore playerScore = new PlayerScore(player.getName());
-//    ④赤波。プレイヤー引数にいるのでいれる
-//   ⑤ 今実行したプレイヤー名をとってきてプレイヤースコア作ってプレイヤースコアの中に何が入るか
+//   ① 今実行したプレイヤー名をとってきてプレイヤースコア作ってプレイヤースコアの中に何が入るか
 
     if (playerScoreList.isEmpty()) {
       playerScore=addNewPlayer(player);
-
+//     ② addNewPlayerだったら
 
     } else {
       playerScore = playerScoreList.stream()
@@ -125,17 +124,10 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private PlayerScore addNewPlayer(Player player) {
     PlayerScore newPlayer = new PlayerScore(player.getName());
-//    newPlayer.setPlayerName();
-//    ②player.getName移動、削除コンストラクタ―作成
-
-
-
-//    PlayerScore newPlayer = new PlayerScore();
-//    newPlayer.setPlayerName(player.getName());
-//    ここでかならずプレイヤー名セットしている.getName
-//   ① PlayerScoreをつくる上で必要
     playerScoreList.add(newPlayer);
+    //    ③プレイヤースコアリストに追加して
     return newPlayer;
+//    ④newPlayerを返す
   }
 
   /**
