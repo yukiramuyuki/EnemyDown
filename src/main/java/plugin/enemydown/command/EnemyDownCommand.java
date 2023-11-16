@@ -43,19 +43,17 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   @Override
   public boolean onExecutePlayerCommand(Player player) {
 
-    PlayerScore nowPlayer = getPlayerScore(player);
-
-//    ゲーム時間同じなら、getPlayerScoreのなかで値を取るときに設定していればすむ！！
-//    少ないのであればインライン化では？
-//    nowPlayer.setGameTime(GAME_TIME);
-
-//    ⑨いらなくなる
+    PlayerScore nowPlayerScore = getPlayerScore(player);
+//    今から実行されるスコアの情報（今の）
 
     initPlayerStatus(player);
+//    プレイヤーの状態が消化されて
 
-    gamePlay(player, nowPlayer);
+    gamePlay(player, nowPlayerScore);
+//    ゲームプレイには、両方の情報が入る
 
     return true;
+//    実行したらtrueで返す
 
   }
 
@@ -99,61 +97,23 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @return 現在進行しているプレイヤーのスコア情報
    */
   private PlayerScore getPlayerScore(Player player) {
-        PlayerScore playerScore = new PlayerScore();
-
-//    PlayerScore playerScore;
-//   ⑥ イニャライザーの除去newPlayerScore
-//    消すとバグる可能性あるとなっていた
+    PlayerScore playerScore = new PlayerScore();
 
     if (playerScoreList.isEmpty()) {
-      playerScore = addNewPlayer(player);
-//       ②名前をコピーでもってくる
 
-//      PlayerScore playerScore1 = addNewPlayer(player);
-      //    ①リターンではなく一時変数
-//    変数の導入の時この変数だけ
-
-      //      ②リターン変える
     } else {
-//       ③playerScore = playerScoreList.stream().findFirst().map(playerScore
-//      ⑤名前同じだから赤波に名前かえるプレイヤースコアの略にps
-      playerScore = playerScoreList.stream().findFirst().map(ps
 
+      playerScore = playerScoreList.stream().findFirst().map(ps
           -> ps.getPlayerName().equals(player.getName())
           ? ps
-//          : addNewPlayer(player)).orElse(null);
-                : addNewPlayer(player)).orElse(playerScore);
-//      ⑦⑥をせずにnullの部分にplayerScoreでも
-//      条件に入らなかったらnewを
+          : addNewPlayer(player)).orElse(playerScore);
     }
-    //⑧リターンをする前に
-    playerScore.setGameTime(GAME_TIME);
-//    getPlayerScoreをするときは必ずゲーム時間を設定されてから返す
-//    上のnowPlayer.setGameTime(GAME_TIME);いらない
 
+    playerScore.setGameTime(GAME_TIME);
 
     return playerScore;
-//    ④両方同じplayerScore→if共有部分を抽出
 
-//    変数で受けて返す
   }
-
-//      if (playerScoreList.isEmpty()) {
-//    return addNewPlayer(player);
-  //   ①addNewPlayer リターンではなく一時変数
-//    変数の導入の時この変数だけ
-//  } else {
-//    return playerScoreList.stream().findFirst().map(playerScore
-//  ③playerScoreList変数の導入（範囲は全て）
-
-//        -> playerScore.getPlayerName().equals(player.getName())
-//        ? playerScore
-//        : addNewPlayer(player)).orElse(null);
-//  }
-//}
-
-//  新規の場合もあればそうではない場合もある。どこかで共通でゲームタイムを入れたい
-//  ヌルは動かないものとして考える→新しくつくるかプレイヤーを返すかなので
 
 
   /**
