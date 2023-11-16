@@ -94,23 +94,37 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
   private PlayerScore getPlayerScore(Player player) {
     PlayerScore playerScore = new PlayerScore(player.getName());
-//   ① 今実行したプレイヤー名をとってきてプレイヤースコア作ってプレイヤースコアの中に何が入るか
+    //    →③ここでのインスタンスをやめる？
+    //    そうなるとsetGameTimeやりにくい
+//    この現状から設計が悪い！！
+//    使いまわしにくいコード書きにくい
+//    あーでもない。こーでもない・・・。何かおかしい
+//    細かいとこではなくふかんして物事を見る！！
+//    なんかへん。なんか気持ち悪い。この感覚大事！！これでいいで慣れない！！
+
+
+//   ① PlayerScore作成二度手間
+
 
     if (playerScoreList.isEmpty()) {
-      playerScore=addNewPlayer(player);
-//     ② addNewPlayerだったら
+      playerScore = addNewPlayer(player);
+
 
     } else {
       playerScore = playerScoreList.stream()
           .findFirst().
           map(ps -> ps.getPlayerName().equals(player.getName())
-          ? ps
-          : addNewPlayer(player)).orElse(playerScore);
+              ? ps
+              : addNewPlayer(player)).orElse(playerScore);
     }
 
     playerScore.setGameTime(GAME_TIME);
 
     return playerScore;
+//    ② プレイヤースコアしてaddすればいい→常にaddすることになる
+//   → 空の時とかにしたい
+
+
 
   }
 
@@ -124,10 +138,14 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private PlayerScore addNewPlayer(Player player) {
     PlayerScore newPlayer = new PlayerScore(player.getName());
+//    PlayerScore作成二度手間
+
+//    プレイヤースコアしてaddすればいい→常にaddすることになる
+
     playerScoreList.add(newPlayer);
-    //    ③プレイヤースコアリストに追加して
     return newPlayer;
-//    ④newPlayerを返す
+
+
   }
 
   /**
