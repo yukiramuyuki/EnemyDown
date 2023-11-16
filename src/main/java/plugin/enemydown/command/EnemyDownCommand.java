@@ -8,7 +8,6 @@ import java.util.SplittableRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -41,26 +40,57 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     PlayerScore nowPlayer = getPlayerScore(player);
 
     nowPlayer.setGameTime(20);
+//    onExecutePlayerCommandの中身がはんざつのため名前付け対比するためにメゾット抽出を
 
-//    World world = player.getWorld();
-//    ①この1行浮いている
-//    ワールド情報とってきている→spanEntityで2か所のみ（敵の出現の範囲）
-//    ロケーション設定のときに必要だから
-
-    //⑤world1ヵ所のみ。インライン化する
-//    worldの場所が     player.getWorld()にできるためにワールド情報消える
-
-//    初期値やワールド情報などは使うたびに何度も呼び出す
-//    →何度も使うなら変数として持っていたら？となる（リファクタリングの一つ）
-//    1ヵ所のみ、使う箇所が少ない場合変数として持っている方が持っている必要ない。となる
-//    なぜ？他でも使うのか？1つしかないけど？と疑問を生むことになる
-
-//    コードは書く回数よりも読む回数のほうが多い
-//    読みやすい、可読性が高いことはプログラムにおいてとても大事！！
-//    意図がわからない、説明できないコードは減らすなくす
 
     initPlayerStatus(player);
 
+    gamePlay(player, nowPlayer);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+//    Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
+//      if (nowPlayer.getGameTime() <= 0) {
+//        Runnable.cancel();
+//        player.sendTitle("ゲームが終了しました。",
+//            nowPlayer.getPlayerName() + " 合計" + nowPlayer.getScore() + "点！",
+//            0, 60, 0);
+//        nowPlayer.setScore(0);
+//
+//        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+//        for (Entity enemy : nearbyEnemies) {
+//          switch (enemy.getType()) {
+//            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
+//          }
+//
+//        }
+//
+//        return;
+//
+//      }
+//
+//      player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
+//      nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
+//
+//
+//    }, 0, 5 * 20);
+    return true;
+
+
+  }
+
+  private void gamePlay(Player player, PlayerScore nowPlayer) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayer.getGameTime() <= 0) {
         Runnable.cancel();
@@ -80,15 +110,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         return;
 
       }
-//④player,worldのworldが消えている！！→world1か所だけ
+
       player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
       nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
 
 
     }, 0, 5 * 20);
-    return true;
-
-
   }
 
   @Override
@@ -184,8 +211,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @return 敵の出現場所
    */
 
-//  private Location getEnemySpanLocation(Player player, World world) {
-//  ③worldいらないworld上で表示される安全な削除をする
   private Location getEnemySpanLocation(Player player) {
     Location playerLocation = player.getLocation();
     int randomX = new SplittableRandom().nextInt(20) - 10;
@@ -194,11 +219,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     double x = playerLocation.getX() + randomX;
     double y = playerLocation.getY();
     double z = playerLocation.getZ() + randomZ;
-//   ② ロケーション設定のときに必要だから
-//    →player.getWorldですむ。
-//    →worldいらない
+
     return new Location(player.getWorld(), x, y, z);
-//    return new Location(world, x, y, z);
+
 
   }
 
