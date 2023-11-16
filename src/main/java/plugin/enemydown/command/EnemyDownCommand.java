@@ -23,14 +23,13 @@ import plugin.enemydown.data.PlayerScore;
 
 
 /**
- * 制限時間内にランダムで出現する敵を倒してスコアを獲得するゲームを起動するコマンドです。
- * スコアは敵によって変わり、倒せた敵に合計によってスコアが変動します。
+ * 制限時間内にランダムで出現する敵を倒してスコアを獲得するゲームを起動するコマンドです。 スコアは敵によって変わり、倒せた敵に合計によってスコアが変動します。
  * 結果はプレイヤー名、点数、日時などで保存されます。
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
 
   public static final int GAME_TIME = 20;
-//  ③定数の導入
+
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
@@ -41,39 +40,22 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 //  Day22 StreamAPI
 
 
-
   @Override
   public boolean onExecutePlayerCommand(Player player) {
 
     PlayerScore nowPlayer = getPlayerScore(player);
 
-//    ④ゲーム時間同じなら、getPlayerScoreのなかで値を取るときに設定していればすむ！！
+//    ゲーム時間同じなら、getPlayerScoreのなかで値を取るときに設定していればすむ！！
+//    少ないのであればインライン化では？
     nowPlayer.setGameTime(GAME_TIME);
-
-//    nowPlayer.setGameTime(20);
-    //  ②  この中でここ違和感。なんで毎回設定している？
-//    設定する時間必要か？常に同じ
-//    固定値ではなく定数。
-
 
     initPlayerStatus(player);
 
     gamePlay(player, nowPlayer);
 
     return true;
-//①名前を付けるだけでも見やすくなった
-
-//    プレイヤースコアをとってきて
-//    スコア情報にゲーム時間を設定して
-//    初期化を行って
-//    ゲームプレイをする
-
-
-
-
 
   }
-
 
 
   @Override
@@ -120,15 +102,40 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return addNewPlayer(player);
     } else {
       for (PlayerScore playerScore : playerScoreList) {
-        if (!playerScore.getPlayerName().equals(player.getName())) {
-          return addNewPlayer(player);
-        } else {
-          return playerScore;
-        }
+//       ① ifelseをはてなに置換
+//        三項演算子を使っている
+        return !playerScore.getPlayerName().equals(player.getName())
+//            条件を書く（プレイヤー名をとってきて、実行したプレイヤーの名前が一致したら
+            ? addNewPlayer(player)
+//            一致しなかったら新規プレイヤー
+            : playerScore;
+//        一致したらプレイスコア。既存のプレイヤーで返す。
+//        ？はtrueだったら　：ちがったら　を1行で書ける。
+
+//        ifで書かないから便利！？：特徴的な書き方1行で書くから見栄えが悪い。コードが読み取りにくい
+//        分かりやすいときはいいが、今回のように！で反転させている分かりにくかったりする
+
+
+
+
       }
     }
     return null;
   }
+
+//      return addNewPlayer(player);
+//    } else {
+//      for (PlayerScore playerScore : playerScoreList) {
+  //       ① ifelseをはてなに置換
+//        if (!playerScore.getPlayerName().equals(player.getName())) {
+//          return addNewPlayer(player);
+//        } else {
+//          return playerScore;
+//        }
+//      }
+//    }
+//    return null;
+//  }
 
 
   /**
@@ -164,7 +171,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   /**
    * ゲームを実行します。基底の時間内に敵を倒すとスコアが加算されます。合計スコアを時間経過後に表示します
-   * @param player コマンドを実行したプレイヤー
+   *
+   * @param player    コマンドを実行したプレイヤー
    * @param nowPlayer プレイヤースコア情報
    */
 
