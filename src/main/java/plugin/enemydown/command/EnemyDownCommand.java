@@ -37,8 +37,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   }
-//  Day21onCommandなくす
-//  継承
+
 
 
   @Override
