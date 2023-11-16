@@ -101,28 +101,40 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     if (playerScoreList.isEmpty()) {
       return addNewPlayer(player);
     } else {
-      for (PlayerScore playerScore : playerScoreList) {
+      //        findfirstに置換
+      //        ifを消せたからforを消す
+      return playerScoreList.stream().findFirst().map(playerScore
+          -> playerScore.getPlayerName().equals(player.getName())
+              ? playerScore
+              : addNewPlayer(player)).orElse(null);
+//      for分のリストplayerScoreListをストリーム化して一番最初の要素をとってくる
+//      一番最初の要素に対してplayerScore -> playerScoreをしたときに
+//      一致したらそれを返す、違うならニュー。
 
-        //             ！playerで？を反転
-        return playerScore.getPlayerName().equals(player.getName())
-            ? playerScore
-            : addNewPlayer(player);
-//        一致したら存在したプレイヤースコアを返す
-//        そうでないなら新規プレイヤーになる
+//      そもそも、findFirstしたときに要素が見つからない
+//      （playerScore.getPlayerName().equals(player.getName()）の部分
+//      のであればヌルを返す
+//      return null消えている
 
-//        ifを消せたからforを消す
-
-      }
+//      三項式にしたことで何をしているか分かりにくくなっている複雑になっている。
+//      これがいいのかは？？
+//      ifやforがなくなったことでなんとなく見た目キレイに
+//      読み解かなくてはいけない。複雑化になっている？見慣れているのであれば問題ないかな？
     }
-    return null;
   }
 
+
+//        findfirstに置換
 //        for (PlayerScore playerScore : playerScoreList) {
-//
-//    return !playerScore.getPlayerName().equals(player.getName())
-////             ！playerで？を反転
-//        ? addNewPlayer(player)
-//        : playerScore;
+//    return playerScore.getPlayerName().equals(player.getName())
+//        ? playerScore
+//        : addNewPlayer(player);
+//}
+//}
+//return null;
+//    }
+
+
 
 
 
