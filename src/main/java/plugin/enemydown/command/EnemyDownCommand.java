@@ -21,8 +21,13 @@ import org.bukkit.inventory.PlayerInventory;
 import plugin.enemydown.Main;
 import plugin.enemydown.data.PlayerScore;
 
-public class EnemyDownCommand extends BaseCommand implements Listener {
 
+/**
+ * 制限時間内にランダムで出現する敵を倒してスコアを獲得するゲームを起動するコマンドです。
+ * スコアは敵によって変わり、倒せた敵に合計によってスコアが変動します。
+ * 結果はプレイヤー名、点数、日時などで保存されます。
+ */
+public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -33,6 +38,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   }
 //  Day22 StreamAPI
 
+//  Overrideはコメント書かない
+//  ベースコマンドにあるのでOverrideのとこにカーソルを置くと説明が入る
+//  中でやっていることの説明をいれたいなら、コメントを入れてもOK.
 
   @Override
   public boolean onExecutePlayerCommand(Player player) {
@@ -41,7 +49,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     nowPlayer.setGameTime(20);
 
-
+//プレイヤーのステータスを初期化する
+//    ↑をした場合したの分と同じ意味。英語か日本語かだけ。コメントとしては微妙。
+//    詳細のjavadogに書いているからそっちをみればいい。
     initPlayerStatus(player);
 
     gamePlay(player, nowPlayer);
@@ -144,8 +154,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @param player コマンドを実行したプレイヤー
    * @param nowPlayer プレイヤースコア情報
    */
-//  中身ごちゃついているが今はこのまま。
-//  これに名前を付けたかったからメゾット抽出作業をした。
+
 
   private void gamePlay(Player player, PlayerScore nowPlayer) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
