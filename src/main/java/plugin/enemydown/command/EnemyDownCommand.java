@@ -31,14 +31,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
 
-
   public EnemyDownCommand(Main main) {
     this.main = main;
 
-
   }
-//  Day21onCommandなくす
-//  継承
+//  Day22 StreamAPI
+
 
 
   @Override
@@ -135,6 +133,14 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     }
     return null;
   }
+//  ifやforでめちゃめちゃ！この状態でどうキレイに・・・
+//  これをみてよりよくは難しい・・・。
+
+//  とりあえずifやforを１つずつなくしたりコンパクトにしてキレイにするとこうできる！とひらめくことも
+//  コードをきれいにしていくことで見通しができる。全体が見やすく、考えやすくなる
+//  汚い状態で全体は考えてもいいものにならなかったりする
+//  一気にリファクタリングすると不安になったりする。これ動くのか？
+
 
   /**
    * 新規のプレイヤー情報をリストに追加します
