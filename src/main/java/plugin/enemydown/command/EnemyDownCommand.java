@@ -3,15 +3,12 @@ package plugin.enemydown.command;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.SplittableRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -38,7 +35,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 //  Day22 StreamAPI
 
 
-
   @Override
   public boolean onExecutePlayerCommand(Player player) {
 
@@ -46,7 +42,22 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     nowPlayer.setGameTime(20);
 
-    World world = player.getWorld();
+//    World world = player.getWorld();
+//    ①この1行浮いている
+//    ワールド情報とってきている→spanEntityで2か所のみ（敵の出現の範囲）
+//    ロケーション設定のときに必要だから
+
+    //⑤world1ヵ所のみ。インライン化する
+//    worldの場所が     player.getWorld()にできるためにワールド情報消える
+
+//    初期値やワールド情報などは使うたびに何度も呼び出す
+//    →何度も使うなら変数として持っていたら？となる（リファクタリングの一つ）
+//    1ヵ所のみ、使う箇所が少ない場合変数として持っている方が持っている必要ない。となる
+//    なぜ？他でも使うのか？1つしかないけど？と疑問を生むことになる
+
+//    コードは書く回数よりも読む回数のほうが多い
+//    読みやすい、可読性が高いことはプログラムにおいてとても大事！！
+//    意図がわからない、説明できないコードは減らすなくす
 
     initPlayerStatus(player);
 
@@ -69,8 +80,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         return;
 
       }
-
-      world.spawnEntity(getEnemySpanLocation(player, world), getEnemy());
+//④player,worldのworldが消えている！！→world1か所だけ
+      player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
       nowPlayer.setGameTime(nowPlayer.getGameTime() - 5);
 
 
@@ -133,13 +144,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     }
     return null;
   }
-//  ifやforでめちゃめちゃ！この状態でどうキレイに・・・
-//  これをみてよりよくは難しい・・・。
-
-//  とりあえずifやforを１つずつなくしたりコンパクトにしてキレイにするとこうできる！とひらめくことも
-//  コードをきれいにしていくことで見通しができる。全体が見やすく、考えやすくなる
-//  汚い状態で全体は考えてもいいものにならなかったりする
-//  一気にリファクタリングすると不安になったりする。これ動くのか？
 
 
   /**
@@ -177,11 +181,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * 敵の出現場所を取得します 出現エリアにX軸とZ軸は自分の位置からプラスランダムで、－10～９の値が設定されます。 Y軸はプレイヤーと同じ位置になります。
    *
    * @param player 　コマンドを実行したプレイヤー
-   * @param world  　コマンドを実行したプレイヤーが所属するワールド
    * @return 敵の出現場所
    */
 
-  private Location getEnemySpanLocation(Player player, World world) {
+//  private Location getEnemySpanLocation(Player player, World world) {
+//  ③worldいらないworld上で表示される安全な削除をする
+  private Location getEnemySpanLocation(Player player) {
     Location playerLocation = player.getLocation();
     int randomX = new SplittableRandom().nextInt(20) - 10;
     int randomZ = new SplittableRandom().nextInt(20) - 10;
@@ -189,8 +194,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     double x = playerLocation.getX() + randomX;
     double y = playerLocation.getY();
     double z = playerLocation.getZ() + randomZ;
-
-    return new Location(world, x, y, z);
+//   ② ロケーション設定のときに必要だから
+//    →player.getWorldですむ。
+//    →worldいらない
+    return new Location(player.getWorld(), x, y, z);
+//    return new Location(world, x, y, z);
 
   }
 
