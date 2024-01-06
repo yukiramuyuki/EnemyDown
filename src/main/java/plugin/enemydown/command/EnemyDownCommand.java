@@ -96,15 +96,19 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     PlayerScore playerScore = new PlayerScore(player.getName());
 //ここのリファクタリングができたらな・・・。
 
+//    ①player赤波になっている
     if (playerScoreList.isEmpty()) {
-      playerScore = addNewPlayer(player);
+      playerScore = addNewPlayer(playerScore);
 
     } else {
+      PlayerScore finalPlayerScore = playerScore;
       playerScore = playerScoreList.stream()
           .findFirst().
           map(ps -> ps.getPlayerName().equals(player.getName())
               ? ps
-              : addNewPlayer(player)).orElse(playerScore);
+              : addNewPlayer(finalPlayerScore)).orElse(playerScore);
+//      ②変えても赤波に変えても赤波で注釈がはいる
+//      finalにしないとダメだよ。ラムダ式は制限が入ったりする
     }
 
     playerScore.setGameTime(GAME_TIME);
@@ -123,15 +127,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
   private PlayerScore addNewPlayer(PlayerScore playerScore) {
-//    ②引数にPlayerScoreを
-
-//    PlayerScore newPlayer = new PlayerScore(player.getName());
-//    ①消す
-
     playerScoreList.add(playerScore);
-//    ②
     return playerScore;
-//②
 
   }
 
