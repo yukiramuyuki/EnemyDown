@@ -94,11 +94,13 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
   private PlayerScore getPlayerScore(Player player) {
     PlayerScore playerScore = new PlayerScore(player.getName());
-
+//ここのリファクタリングができたらな・・・。
 
 
     if (playerScoreList.isEmpty()) {
       playerScore = addNewPlayer(player);
+//      Q：addNewPlayerは何がしたいのか？
+
 
 
     } else {
@@ -132,6 +134,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     playerScoreList.add(newPlayer);
     return newPlayer;
+//    A：PlayerScoreListに新しく追加したい。
 
 
   }
