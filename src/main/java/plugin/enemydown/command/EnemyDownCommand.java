@@ -96,12 +96,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     PlayerScore playerScore = new PlayerScore(player.getName());
 //ここのリファクタリングができたらな・・・。
 
-
     if (playerScoreList.isEmpty()) {
       playerScore = addNewPlayer(player);
-//      Q：addNewPlayerは何がしたいのか？
-
-
 
     } else {
       playerScore = playerScoreList.stream()
@@ -116,26 +112,26 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     return playerScore;
 
 
-
-
   }
 
 
   /**
-   * 新規のプレイヤー情報をリストに追加します
-   *
-   * @param player 　コマンドを実行したプレイヤー
-   * @return 新規プレイヤー
+   * 新規のプレイヤースコア情報をリストに追加します
+   *③説明を変える
+   * @param playerScore 　新規プレイヤー情報
+   * @return 新規プレイヤー情報
    */
 
-  private PlayerScore addNewPlayer(Player player) {
-    PlayerScore newPlayer = new PlayerScore(player.getName());
+  private PlayerScore addNewPlayer(PlayerScore playerScore) {
+//    ②引数にPlayerScoreを
 
+//    PlayerScore newPlayer = new PlayerScore(player.getName());
+//    ①消す
 
-    playerScoreList.add(newPlayer);
-    return newPlayer;
-//    A：PlayerScoreListに新しく追加したい。
-
+    playerScoreList.add(playerScore);
+//    ②
+    return playerScore;
+//②
 
   }
 
