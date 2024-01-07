@@ -32,9 +32,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
-//  消すためのリスト（いれもの）をつくる
   private List<Entity> spawnEntityList =new ArrayList<>();
-//  spawnEntityListに.spawnEntity・・・addする。
 
   public EnemyDownCommand(Main main) {
     this.main = main;
@@ -175,9 +173,15 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         }
         return;
       }
-//作ったListにadd
-//      作ったspawnは常にここに
-      spawnEntityList.add(player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy()));
+
+//      .addと同時にspawnをしているためプレイヤー出現する。でも、コードてきには・・・。
+
+//      addしているのは何か？（player.get・・・・)
+//      entity追加・敵を出現が一緒になっている。あまりよろしくない。１つにしたほうがわかりやすい。
+//      →変数の導入
+//      2段構えの方が見やすい
+      Entity spawnEntity = player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
+      spawnEntityList.add(spawnEntity);
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
 
 
