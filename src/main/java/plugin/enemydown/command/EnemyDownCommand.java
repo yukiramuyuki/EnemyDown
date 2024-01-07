@@ -106,9 +106,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     }
 
     playerScore.setGameTime(GAME_TIME);
-//    時間設定している（20）
     playerScore.setScore(0);
-    //    ①スコアを０に設定する。
 
     return playerScore;
 
@@ -153,7 +151,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @param nowPlayerScore プレイヤースコア情報
    */
 
-
+//今回のとこは他の倒しても点入る？？と思っていたところ。
 
   private void gamePlay(Player player, PlayerScore nowPlayerScore) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
@@ -164,12 +162,13 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
             0, 60, 0);
 
-//        nowPlayerScore.setScore(0);
-//        上でしたのでいらない
-//        同じことをしても場所によってバグが発生する
-
 
         List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+//        プレイヤーの近くの敵を消滅させるもの
+//        近くである必要はない。出現させた敵であればいい。
+//              player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
+//        をリストで保存して、それを消せばいい。
+
         for (Entity enemy : nearbyEnemies) {
           switch (enemy.getType()) {
             case ZOMBIE, SKELETON, WITCH -> enemy.remove();
