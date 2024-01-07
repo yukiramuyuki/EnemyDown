@@ -163,22 +163,19 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
             0, 60, 0);
 //リストを消す前に・・・。
-        for(Entity entity:spawnEntityList){
-          entity.remove();
-//          タイプ判断はいらない。出現させたentityを全て消すため。
-//          電球マーク付いている（色んな形でまとめられるforeachに
+        spawnEntityList.forEach(Entity::remove);
+//        ：：remove　メゾット参照　第1引数を省略
 
-        }
+//上での処理と同じため
+//下のリストを消す。
 
-
-//リストを消す。
-        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-
-        for (Entity enemy : nearbyEnemies) {
-          switch (enemy.getType()) {
-            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
-          }
-        }
+//        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
+//
+//        for (Entity enemy : nearbyEnemies) {
+//          switch (enemy.getType()) {
+//            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
+//          }
+//        }
         return;
       }
 
