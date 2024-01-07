@@ -106,6 +106,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     }
 
     playerScore.setGameTime(GAME_TIME);
+//    時間設定している（20）
+    playerScore.setScore(0);
+    //    ①スコアを０に設定する。
 
     return playerScore;
 
@@ -150,7 +153,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @param nowPlayerScore プレイヤースコア情報
    */
 
-//*nowPlayer名前変える
 
 
   private void gamePlay(Player player, PlayerScore nowPlayerScore) {
@@ -158,16 +160,13 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       if (nowPlayerScore.getGameTime() <= 0) {
         Runnable.cancel();
 
-//        ここは長くて複雑にみえるけど、タイトル、サブタイトルのシンプルなもの。見栄え改行の工夫。
         player.sendTitle("ゲームが終了しました。",
             nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
             0, 60, 0);
 
-//        いじった方がいい
-        nowPlayerScore.setScore(0);
-//自分が出した敵以外でも点が入る。敵の種類での判断のみのため。
-//        不正ができる（バグが発生している）
-//        getPlayerScoreの時点でスコアを０にするべき
+//        nowPlayerScore.setScore(0);
+//        上でしたのでいらない
+//        同じことをしても場所によってバグが発生する
 
 
         List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
