@@ -162,8 +162,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         player.sendTitle("ゲームが終了しました。",
             nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
             0, 60, 0);
+//リストを消す前に・・・。
+        for(Entity entity:spawnEntityList){
+          entity.remove();
+//          タイプ判断はいらない。出現させたentityを全て消すため。
+//          電球マーク付いている（色んな形でまとめられるforeachに
+
+        }
 
 
+//リストを消す。
         List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
 
         for (Entity enemy : nearbyEnemies) {
@@ -174,12 +182,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         return;
       }
 
-//      .addと同時にspawnをしているためプレイヤー出現する。でも、コードてきには・・・。
-
-//      addしているのは何か？（player.get・・・・)
-//      entity追加・敵を出現が一緒になっている。あまりよろしくない。１つにしたほうがわかりやすい。
-//      →変数の導入
-//      2段構えの方が見やすい
       Entity spawnEntity = player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
       spawnEntityList.add(spawnEntity);
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
