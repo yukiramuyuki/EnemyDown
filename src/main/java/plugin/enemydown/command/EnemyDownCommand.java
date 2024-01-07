@@ -95,8 +95,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   private PlayerScore getPlayerScore(Player player) {
     PlayerScore playerScore = new PlayerScore(player.getName());
 
-
-
     if (playerScoreList.isEmpty()) {
       playerScore = addNewPlayer(player);
 
@@ -114,8 +112,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     return playerScore;
 
 
-
-
   }
 
 
@@ -128,7 +124,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private PlayerScore addNewPlayer(Player player) {
     PlayerScore newPlayer = new PlayerScore(player.getName());
-
 
     playerScoreList.add(newPlayer);
     return newPlayer;
