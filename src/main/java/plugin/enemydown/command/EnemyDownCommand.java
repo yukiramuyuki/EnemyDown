@@ -32,6 +32,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
+//  消すためのリスト（いれもの）をつくる
+  private List<Entity> spawnEntityList =new ArrayList<>();
+//  spawnEntityListに.spawnEntity・・・addする。
 
   public EnemyDownCommand(Main main) {
     this.main = main;
@@ -164,10 +167,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
         List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-//        プレイヤーの近くの敵を消滅させるもの
-//        近くである必要はない。出現させた敵であればいい。
-//              player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
-//        をリストで保存して、それを消せばいい。
 
         for (Entity enemy : nearbyEnemies) {
           switch (enemy.getType()) {
@@ -176,8 +175,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         }
         return;
       }
-
-      player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
+//作ったListにadd
+//      作ったspawnは常にここに
+      spawnEntityList.add(player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy()));
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
 
 
