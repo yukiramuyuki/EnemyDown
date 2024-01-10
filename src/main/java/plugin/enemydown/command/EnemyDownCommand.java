@@ -32,7 +32,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
-  private List<Entity> spawnEntityList =new ArrayList<>();
+  private List<Entity> spawnEntityList = new ArrayList<>();
 
   public EnemyDownCommand(Main main) {
     this.main = main;
@@ -108,7 +108,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     playerScore.setGameTime(GAME_TIME);
     playerScore.setScore(0);
-
+//スコア０になっているけど、他の敵倒しても追加のバグはアリ
     return playerScore;
 
 
@@ -148,12 +148,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   /**
    * ゲームを実行します。基底の時間内に敵を倒すとスコアが加算されます。合計スコアを時間経過後に表示します
    *
-   * @param player    コマンドを実行したプレイヤー
+   * @param player         コマンドを実行したプレイヤー
    * @param nowPlayerScore プレイヤースコア情報
    */
 
 //今回のとこは他の倒しても点入る？？と思っていたところ。
-
   private void gamePlay(Player player, PlayerScore nowPlayerScore) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
@@ -162,20 +161,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         player.sendTitle("ゲームが終了しました。",
             nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
             0, 60, 0);
-//リストを消す前に・・・。
+
         spawnEntityList.forEach(Entity::remove);
-//        ：：remove　メゾット参照　第1引数を省略
-
-//上での処理と同じため
-//下のリストを消す。
-
-//        List<Entity> nearbyEnemies = player.getNearbyEntities(50, 0, 50);
-//
-//        for (Entity enemy : nearbyEnemies) {
-//          switch (enemy.getType()) {
-//            case ZOMBIE, SKELETON, WITCH -> enemy.remove();
-//          }
-//        }
         return;
       }
 
