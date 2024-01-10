@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -71,12 +72,19 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
 
+
+
     if (Objects.isNull(player) || playerScoreList.isEmpty()) {
       return;
     }
+//リファクタリングしてたなぜ？？
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
-        int point = getPoint(enemy);
+        int point = switch ((enemy.getType())) {
+          case ZOMBIE -> 10;
+          case SKELETON, WITCH -> 20;
+          default -> 0;
+        };
 
         playerScore.setScore(playerScore.getScore() + point);
         player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
@@ -108,7 +116,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     playerScore.setGameTime(GAME_TIME);
     playerScore.setScore(0);
-//スコア０になっているけど、他の敵倒しても追加のバグはアリ
     return playerScore;
 
 
@@ -206,21 +213,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
   }
-
-  /**
-   * 敵の種類ごとに取得するスコアを変える
-   *
-   * @param enemy
-   * @return
-   */
-  private static int getPoint(LivingEntity enemy) {
-    int point = switch (enemy.getType()) {
-      case ZOMBIE -> 10;
-      case SKELETON, WITCH -> 20;
-      default -> 0;
-    };
-    return point;
-  }
 }
+
 
 
