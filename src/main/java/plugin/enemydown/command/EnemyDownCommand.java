@@ -79,32 +79,34 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return;
     }
 
-//    optionalは積極的に使うものではない。使わないのならそのほうがいい！！
-    Optional<PlayerScore> first = playerScoreList.stream()
-//            Optional<PlayerScore> first =を消す
+playerScoreList.stream()
         .filter(p -> p.getPlayerName().equals(player.getName()))
+//    ここではフィルターの中で一時変数名としているだけ
         .findFirst()
+//    上下のpは別もの
+    .ifPresent(p ->{
+//      ここでのp別の名前でもOK
+      int point = switch ((enemy.getType())) {
+        case ZOMBIE -> 10;
+        case SKELETON, WITCH -> 20;
+        default -> 0;
+      };
 
-//    新規ユーザーが敵を倒したらフィルターに一致しないかも（複数ユーザーが一度で）
-//    Aは終わっているリストに入っているけどBはまだプレイしていないけど敵を倒した
-//    ヌル起きる可能性
-
-//    対策としてヌルの時は何もしない
-    .ifPresent(p ->);
-//   この中に値が入っていた時に処理をするoptionalのオプション。
-//   したいのは下の点数を入れることintから->0
+//      playerScore変数でとってpにしているp->となっている
+      p.setScore(p.getScore() + point);
+      player.sendMessage("敵をたおした！現在のスコアは" + p.getScore() + "点！");
 
 
+    });
+//    複数行の場合{}必要
+
+
+
+//    forひつようない
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
-        int point = switch ((enemy.getType())) {
-          case ZOMBIE -> 10;
-          case SKELETON, WITCH -> 20;
-          default -> 0;
-        };
 
-        playerScore.setScore(playerScore.getScore() + point);
-        player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
+
 
       }
     }
