@@ -79,23 +79,20 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return;
     }
 
-//    変数するとオプショナル(Optional）？？初めてみる
-//    簡単にいうとNullを扱えるオブジェクト
-
-//    リストに対してフィルターをかけている。ヌルの可能性がある＝要素が見つからない
-//    それに対してfirstに対して何か処理したらエラーになる
+//    optionalは積極的に使うものではない。使わないのならそのほうがいい！！
     Optional<PlayerScore> first = playerScoreList.stream()
+//            Optional<PlayerScore> first =を消す
         .filter(p -> p.getPlayerName().equals(player.getName()))
-        .findFirst();
-//エラーになるときのためにif必要になる
-//    if(first!=null){
-//
-//    }
+        .findFirst()
 
-//    1つならいいかもだけど、色んなところの先頭に書くことになる
-//    引数の要素がヌルか（e！＝null）など
-//    ヌルになると止まる＝バグ。とりあえずヌルチェック。
+//    新規ユーザーが敵を倒したらフィルターに一致しないかも（複数ユーザーが一度で）
+//    Aは終わっているリストに入っているけどBはまだプレイしていないけど敵を倒した
+//    ヌル起きる可能性
 
+//    対策としてヌルの時は何もしない
+    .ifPresent(p ->);
+//   この中に値が入っていた時に処理をするoptionalのオプション。
+//   したいのは下の点数を入れることintから->0
 
 
     for (PlayerScore playerScore : playerScoreList) {
