@@ -68,6 +68,10 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
  */
 
   public void onEnemyDeath(EntityDeathEvent e) {
+//    現在バグっているのはここ
+//    ゲームが終わって敵を倒しても点数が入る
+//    getPlayerScoreで時間とスコア設定しているからゲーム自体に問題はない
+//    ゲームが終わった後の事後処理がバグっている
 
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
