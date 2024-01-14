@@ -78,12 +78,15 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return;
     }
 
-//    ループしている
-//    プレイヤースコアリストの中にあるプレイヤースコアととonEnemyDeath（敵を倒した）
-//    をしたときのプレイヤーネームが一致したらスコアを加算。メッセージを送る
+//    ループは連続した要素を連続でさせたいからする
+//    今回はループさせた要素のなかに特定の要素を見つける（ifの部分）
+//    1人を特定できたら後側の処理は必要ない。
+//    ループだからリストの数だけする＝無駄な処理
+//    その対象を見つけたらその対象にだけ処理をする
 
-//    ループしたいのではなく加算とメッセージをおくる。それが誰か分からないからループしている
-//    リストのなかにifの条件分岐に一致するものがあるかみたい。そこをリファクタリング（きれいにする）
+//    キレイにするだけならforeachに置換→やっていること同じ
+//    コードを書かなければいけない
+
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
         int point = switch ((enemy.getType())) {
