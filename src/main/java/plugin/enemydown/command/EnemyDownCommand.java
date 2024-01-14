@@ -69,9 +69,15 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
  */
 
   public void onEnemyDeath(EntityDeathEvent e) {
-
+//ここのenemyがリストと一致しているか見ればいい。
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
+
+    spawnEntityList.stream()
+        .anyMatch()
+//        マッチするものが一つでもあればtrueかfellを返す
+//    annyMatchはtrueを返す
+//    allMatchは全てが一致しないと返さない
 
 
 
@@ -79,37 +85,19 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return;
     }
 
-playerScoreList.stream()
+    playerScoreList.stream()
         .filter(p -> p.getPlayerName().equals(player.getName()))
-//    ここではフィルターの中で一時変数名としているだけ
         .findFirst()
-//    上下のpは別もの
-    .ifPresent(p ->{
-//      ここでのp別の名前でもOK
-      int point = switch ((enemy.getType())) {
-        case ZOMBIE -> 10;
-        case SKELETON, WITCH -> 20;
-        default -> 0;
-      };
+        .ifPresent(p -> {
+          int point = switch ((enemy.getType())) {
+            case ZOMBIE -> 10;
+            case SKELETON, WITCH -> 20;
+            default -> 0;
+          };
+          p.setScore(p.getScore() + point);
+          player.sendMessage("敵をたおした！現在のスコアは" + p.getScore() + "点！");
+        });
 
-//      playerScore変数でとってpにしているp->となっている
-      p.setScore(p.getScore() + point);
-      player.sendMessage("敵をたおした！現在のスコアは" + p.getScore() + "点！");
-
-
-    });
-//    複数行の場合{}必要
-
-
-
-//    forひつようない
-    for (PlayerScore playerScore : playerScoreList) {
-      if (playerScore.getPlayerName().equals(player.getName())) {
-
-
-
-      }
-    }
 
   }
 
