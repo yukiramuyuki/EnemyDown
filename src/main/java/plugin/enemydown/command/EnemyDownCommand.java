@@ -4,6 +4,7 @@ package plugin.enemydown.command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.SplittableRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -78,13 +79,24 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return;
     }
 
-    playerScoreList.stream()
-        .filter(p ->p.getPlayerName().equals(player.getName()))
-//        重複がない前提
-//    フィルターに引っ掛かったら固定。
-//        findFirstで最初のを持ってくる
+//    変数するとオプショナル(Optional）？？初めてみる
+//    簡単にいうとNullを扱えるオブジェクト
+
+//    リストに対してフィルターをかけている。ヌルの可能性がある＝要素が見つからない
+//    それに対してfirstに対して何か処理したらエラーになる
+    Optional<PlayerScore> first = playerScoreList.stream()
+        .filter(p -> p.getPlayerName().equals(player.getName()))
         .findFirst();
-//    変数で
+//エラーになるときのためにif必要になる
+//    if(first!=null){
+//
+//    }
+
+//    1つならいいかもだけど、色んなところの先頭に書くことになる
+//    引数の要素がヌルか（e！＝null）など
+//    ヌルになると止まる＝バグ。とりあえずヌルチェック。
+
+
 
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
