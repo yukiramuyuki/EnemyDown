@@ -77,25 +77,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     if (Objects.isNull(player) || playerScoreList.isEmpty()) {
       return;
     }
-//ここがバグになったまま
-//    機能要件の大略や空腹ゲージは最大化の部分が
-//    witchを食らうと毒のようになる状態異常の解除は設定していない
 
-//   特殊効果や状態異常はゲーム開始時に無効化されること
-//    ゲーム終了後にも無効化されること
-//    を機能要件に追加する
-
-//    こういった追加がお客さんからくる
-//    要件を固めるのは難しい。作っていきながら改善。作っていきながら改善…。
-//    作っていきながら改善、追加されることを前提に組み立てていく。
-
-//    現場だと気軽に追加はできない。納期ずれる相談や、追加全てサービスというわけにはいかない。
-
-//    お客さんからすると、こうなる予定ではないの？私はそうなる予定だったけど、あなたがいれてないだけよね
-//    最初から入れる予定ではなかった。認識のずれがおきる
-//    なので、要件をつめるのとても大事！！
-    
-//    作っていかないとわからない。
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
         int point = switch ((enemy.getType())) {
