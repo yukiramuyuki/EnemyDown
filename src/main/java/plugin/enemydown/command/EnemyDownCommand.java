@@ -75,17 +75,14 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     boolean isSpawnEnemy= spawnEntityList.stream()
         .anyMatch(entity ->entity.equals(enemy));
-//    要素がイコールの時booleanがtrue。
-//    これを使う下のifが少し変わる
+    
 
 
-//誰にもkillされていない可能性があるそのまま
-    if (Objects.isNull(player) || playerScoreList.isEmpty()) {
-//      isEmpty空だったら。いなければリターン。
-//      今回はゲーム内でのイベントisSpawnEnemyにできる
+    if (Objects.isNull(player) || !isSpawnEnemy) {
+//      登場した敵ではなかった場合スコア計算に入れないからリターン
       return;
     }
-
+//isSpawnEnemyがtrueの時だけ動く＝バグ直っている
     playerScoreList.stream()
         .filter(p -> p.getPlayerName().equals(player.getName()))
         .findFirst()
