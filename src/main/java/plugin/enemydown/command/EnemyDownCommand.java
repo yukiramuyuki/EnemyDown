@@ -68,10 +68,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
  */
 
   public void onEnemyDeath(EntityDeathEvent e) {
-//    現在バグっているのはここ
-//    ゲームが終わって敵を倒しても点数が入る
-//    getPlayerScoreで時間とスコア設定しているからゲーム自体に問題はない
-//    ゲームが終わった後の事後処理がバグっている
 
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
@@ -82,6 +78,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return;
     }
 
+//    ループしている
+//    プレイヤースコアリストの中にあるプレイヤースコアととonEnemyDeath（敵を倒した）
+//    をしたときのプレイヤーネームが一致したらスコアを加算。メッセージを送る
+
+//    ループしたいのではなく加算とメッセージをおくる。それが誰か分からないからループしている
+//    リストのなかにifの条件分岐に一致するものがあるかみたい。そこをリファクタリング（きれいにする）
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
         int point = switch ((enemy.getType())) {
