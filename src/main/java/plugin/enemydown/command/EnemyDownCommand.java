@@ -78,14 +78,13 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return;
     }
 
-//    ループは連続した要素を連続でさせたいからする
-//    今回はループさせた要素のなかに特定の要素を見つける（ifの部分）
-//    1人を特定できたら後側の処理は必要ない。
-//    ループだからリストの数だけする＝無駄な処理
-//    その対象を見つけたらその対象にだけ処理をする
-
-//    キレイにするだけならforeachに置換→やっていること同じ
-//    コードを書かなければいけない
+    playerScoreList.stream()
+        .filter(p ->p.getPlayerName().equals(player.getName()))
+//        重複がない前提
+//    フィルターに引っ掛かったら固定。
+//        findFirstで最初のを持ってくる
+        .findFirst();
+//    変数で
 
     for (PlayerScore playerScore : playerScoreList) {
       if (playerScore.getPlayerName().equals(player.getName())) {
