@@ -85,6 +85,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           case SKELETON, WITCH -> 20;
           default -> 0;
         };
+        
 
         playerScore.setScore(playerScore.getScore() + point);
         player.sendMessage("敵をたおした！現在のスコアは" + playerScore.getScore() + "点！");
