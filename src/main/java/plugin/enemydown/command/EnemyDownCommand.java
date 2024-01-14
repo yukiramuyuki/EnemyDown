@@ -73,16 +73,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
 
-    boolean isSpawnEnemy= spawnEntityList.stream()
-        .anyMatch(entity ->entity.equals(enemy));
-    
+//    boolean isSpawnEnemy= spawnEntityList.stream()
+//        .anyMatch(entity ->entity.equals(enemy));
+//    ↓1か所だけでしか使わないので合わせる
 
-
-    if (Objects.isNull(player) || !isSpawnEnemy) {
-//      登場した敵ではなかった場合スコア計算に入れないからリターン
+    if (Objects.isNull(player) || spawnEntityList.stream()
+        .noneMatch(entity ->entity.equals(enemy))) {
+//      anyMatch重複しているから置換noneMatchに。
+//      !ついていると分かりにくいから（要素逆転になっているから）
       return;
     }
-//isSpawnEnemyがtrueの時だけ動く＝バグ直っている
     playerScoreList.stream()
         .filter(p -> p.getPlayerName().equals(player.getName()))
         .findFirst()
