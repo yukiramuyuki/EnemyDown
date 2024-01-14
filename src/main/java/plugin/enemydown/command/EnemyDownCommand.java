@@ -73,15 +73,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
 
-    spawnEntityList.stream()
-        .anyMatch()
-//        マッチするものが一つでもあればtrueかfellを返す
-//    annyMatchはtrueを返す
-//    allMatchは全てが一致しないと返さない
+    boolean isSpawnEnemy= spawnEntityList.stream()
+        .anyMatch(entity ->entity.equals(enemy));
+//    要素がイコールの時booleanがtrue。
+//    これを使う下のifが少し変わる
 
 
-
+//誰にもkillされていない可能性があるそのまま
     if (Objects.isNull(player) || playerScoreList.isEmpty()) {
+//      isEmpty空だったら。いなければリターン。
+//      今回はゲーム内でのイベントisSpawnEnemyにできる
       return;
     }
 
