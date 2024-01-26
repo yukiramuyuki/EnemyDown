@@ -158,7 +158,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @param nowPlayerScore プレイヤースコア情報
    */
 
-//今回のとこは他の倒しても点入る？？と思っていたところ。
+//毒効果まだ解消していない
   private void gamePlay(Player player, PlayerScore nowPlayerScore) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
