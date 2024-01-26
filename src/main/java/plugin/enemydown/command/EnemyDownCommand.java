@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
 import plugin.enemydown.Main;
 import plugin.enemydown.data.PlayerScore;
 
@@ -29,17 +30,7 @@ import plugin.enemydown.data.PlayerScore;
  * 結果はプレイヤー名、点数、日時などで保存されます。
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
-  //機能要件
-//  特殊効果や状態異常はゲーム開始時に無効化されること
-//  ゲーム終了後にも無効化されること
-//  ２つをセットに。同時にする
 
-//  非機能要件
-//  コマンドのオプションでプレイヤーの強さ、敵の種類をある程度コントロールできる
-
-//  機能設計
-//  プレイヤーの有効かされている特殊効果（ポーションエフェクト）を解除する。
-//  ゲームのスタート時と終了時に同じ処理を行う
 
   public static final int GAME_TIME = 20;
 
@@ -126,6 +117,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     playerScore.setGameTime(GAME_TIME);
     playerScore.setScore(0);
+    //    player.getActivePotionEffects();回していくからfor
+    for (PotionEffect effect :player.getActivePotionEffects()){
+      player.removePotionEffect(effect.getType());
+    }
+//effect任意で設定することもできる
+//    強さや難易度をここで設定することも可能
     return playerScore;
 
 
