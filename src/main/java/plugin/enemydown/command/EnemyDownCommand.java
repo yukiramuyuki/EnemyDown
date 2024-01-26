@@ -69,18 +69,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
  */
 
   public void onEnemyDeath(EntityDeathEvent e) {
-//ここのenemyがリストと一致しているか見ればいい。
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
 
-//    boolean isSpawnEnemy= spawnEntityList.stream()
-//        .anyMatch(entity ->entity.equals(enemy));
-//    ↓1か所だけでしか使わないので合わせる
 
     if (Objects.isNull(player) || spawnEntityList.stream()
         .noneMatch(entity ->entity.equals(enemy))) {
-//      anyMatch重複しているから置換noneMatchに。
-//      !ついていると分かりにくいから（要素逆転になっているから）
       return;
     }
     playerScoreList.stream()
@@ -175,6 +169,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             0, 60, 0);
 
         spawnEntityList.forEach(Entity::remove);
+//        リストを空にしているが中にEntityが溜まっている
+        spawnEntityList=new ArrayList<>();
+//        ゲームが終わるとき値を新しいリストに入れて終わる
         return;
       }
 
