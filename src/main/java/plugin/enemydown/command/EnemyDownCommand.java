@@ -29,6 +29,17 @@ import plugin.enemydown.data.PlayerScore;
  * 結果はプレイヤー名、点数、日時などで保存されます。
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
+  //機能要件
+//  特殊効果や状態異常はゲーム開始時に無効化されること
+//  ゲーム終了後にも無効化されること
+//  ２つをセットに。同時にする
+
+//  非機能要件
+//  コマンドのオプションでプレイヤーの強さ、敵の種類をある程度コントロールできる
+
+//  機能設計
+//  プレイヤーの有効かされている特殊効果（ポーションエフェクト）を解除する。
+//  ゲームのスタート時と終了時に同じ処理を行う
 
   public static final int GAME_TIME = 20;
 
@@ -158,7 +169,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @param nowPlayerScore プレイヤースコア情報
    */
 
-//今回のとこは他の倒しても点入る？？と思っていたところ。
+
   private void gamePlay(Player player, PlayerScore nowPlayerScore) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
