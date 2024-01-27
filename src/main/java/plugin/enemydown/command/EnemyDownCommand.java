@@ -117,15 +117,21 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     playerScore.setGameTime(GAME_TIME);
     playerScore.setScore(0);
-    //    player.getActivePotionEffects();回していくからfor
-    for (PotionEffect effect :player.getActivePotionEffects()){
-      player.removePotionEffect(effect.getType());
-    }
-//effect任意で設定することもできる
-//    強さや難易度をここで設定することも可能
+    removePotionEffect(player);
+
+//    player.getActivePotionEffects().stream()
+//        .map(PotionEffect::getType)
+//        .forEach(player::removePotionEffect);
+//    forEachに置換メゾット抽出(removePotionEffect)
     return playerScore;
 
 
+  }
+
+  private static void removePotionEffect(Player player) {
+    player.getActivePotionEffects().stream()
+        .map(PotionEffect::getType)
+        .forEach(player::removePotionEffect);
   }
 
 
