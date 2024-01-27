@@ -42,7 +42,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     this.main = main;
 
   }
-//  Day22 StreamAPI
+
 
 
   @Override
@@ -118,21 +118,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     playerScore.setGameTime(GAME_TIME);
     playerScore.setScore(0);
     removePotionEffect(player);
-
-//    player.getActivePotionEffects().stream()
-//        .map(PotionEffect::getType)
-//        .forEach(player::removePotionEffect);
-//    forEachに置換メゾット抽出(removePotionEffect)
+//    状態異常解消確認！！
     return playerScore;
 
-
   }
 
-  private static void removePotionEffect(Player player) {
-    player.getActivePotionEffects().stream()
-        .map(PotionEffect::getType)
-        .forEach(player::removePotionEffect);
-  }
+
 
 
   /**
@@ -183,9 +174,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             0, 60, 0);
 
         spawnEntityList.forEach(Entity::remove);
-//        リストを空にしているが中にEntityが溜まっている
-        spawnEntityList=new ArrayList<>();
-//        ゲームが終わるとき値を新しいリストに入れて終わる
+        spawnEntityList.clear();
+
+        removePotionEffect(player);
         return;
       }
 
@@ -228,6 +219,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
+  }
+  /**
+   *プレイヤーに設定されている特殊効果を除外します。
+   *
+   * @param player　コマンドを実行したプレイヤー
+   */
+  private  void removePotionEffect(Player player) {
+    player.getActivePotionEffects().stream()
+        .map(PotionEffect::getType)
+        .forEach(player::removePotionEffect);
   }
 }
 
