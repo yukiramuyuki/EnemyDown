@@ -50,14 +50,14 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
 
-    String difficulty = "easy";
-//    標準
+//    ↓difficulty = args[0];は
+//      引数の一つ目をとってきているだけ。内容は指定していない。
 
-    if (args.length == 1) {
-//      if条件反転（見やすい）
+    String difficulty = "easy";
+
+    if (args.length == 1 && "easy".equals(args[0])) {
       difficulty = args[0];
-//      引数Stringいらない
-//      武装に引数difficultyを持つと難易度によって設定できる（今回はgameplayにだけ）
+//      引数の一つ目をとってきているだけ。内容は指定していない。
 
     } else {
       player.sendMessage(
@@ -196,7 +196,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       }
 
       Entity spawnEntity = player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
-//      使うのはgetEnemyの中でctrlクリック。
       spawnEntityList.add(spawnEntity);
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
 
@@ -233,15 +232,13 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
   private EntityType getEnemy(String difficulty) {
-//    difficultyここで
-//    コピペしたほうがいい。スペルミスで動かない。がなくなる
     List<EntityType> enemyList = new ArrayList<>();
     if ("easy".equals(difficulty)) {
       enemyList = List.of(EntityType.ZOMBIE);
     } else if ("normal".equals(difficulty)) {
       enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
     } else if ("hard".equals(difficulty)) {
-      List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH)
+      List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
     }
 
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
