@@ -233,16 +233,15 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private EntityType getEnemy(String difficulty) {
     List<EntityType> enemyList = switch (difficulty) {
-      case EASY -> List.of(EntityType.ZOMBIE);
-//      "easy"リファクタリングの定数+switch置換
       case NORMAL -> List.of(EntityType.ZOMBIE, EntityType.SKELETON);
       case HARD -> List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
       default -> List.of(EntityType.ZOMBIE);
-//      defaultはeasyだからコピペ
     };
+//    easyの分岐を削除
 
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
   }
+
 
   /**
    * プレイヤーに設定されている特殊効果を除外します。
