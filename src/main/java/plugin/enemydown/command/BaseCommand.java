@@ -12,15 +12,19 @@ import org.bukkit.entity.Player;
  * コマンドを実行して動かすプログイン処理の基底クラスです。
  */
 public abstract class BaseCommand implements CommandExecutor {
+  //  コマンドのオプションでプレイヤーの強さ、敵の種類をある程度コントロールできる
+//  難易度を変える（敵の種類を変える）
+//  enemydownに引数を設定できる必要がある
 
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
-     return onExecutePlayerCommand(player);
+     return onExecutePlayerCommand(player,command,label,args);
+//     senderのみある。引数受けられなくなっている。ベースコマンドのバグ。コマンド、ラベル、アーグスをきちんとわたす。
 
     }else {
-      return onExecuteNPCCommand(sender);
+      return onExecuteNPCCommand(sender,command,label,args);
     }
 
 

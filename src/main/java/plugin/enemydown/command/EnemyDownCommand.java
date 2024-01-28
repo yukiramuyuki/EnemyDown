@@ -44,7 +44,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   }
 
 
-
   @Override
   public boolean onExecutePlayerCommand(Player player) {
 
@@ -74,9 +73,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     LivingEntity enemy = e.getEntity();
     Player player = enemy.getKiller();
 
-
     if (Objects.isNull(player) || spawnEntityList.stream()
-        .noneMatch(entity ->entity.equals(enemy))) {
+        .noneMatch(entity -> entity.equals(enemy))) {
       return;
     }
     playerScoreList.stream()
@@ -94,6 +92,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   }
+
 
 
   /**
@@ -118,12 +117,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     playerScore.setGameTime(GAME_TIME);
     playerScore.setScore(0);
     removePotionEffect(player);
-//    状態異常解消確認！！
     return playerScore;
 
   }
-
-
 
 
   /**
@@ -220,12 +216,13 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
   }
+
   /**
-   *プレイヤーに設定されている特殊効果を除外します。
+   * プレイヤーに設定されている特殊効果を除外します。
    *
-   * @param player　コマンドを実行したプレイヤー
+   * @param player 　コマンドを実行したプレイヤー
    */
-  private  void removePotionEffect(Player player) {
+  private void removePotionEffect(Player player) {
     player.getActivePotionEffects().stream()
         .map(PotionEffect::getType)
         .forEach(player::removePotionEffect);
