@@ -2,12 +2,14 @@ package plugin.enemydown.command;
 
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SplittableRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -54,6 +56,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       String[] args) {
 
     String difficulty = getDifficulty(player, args);
+//    string　文字列。難易度を扱いたい文字を扱いたいわけではない。難易度が文字だっただけ
+
+//    名前をつける。クラスをつける大事。オブジェクト思考。より良いコードを書くために
+//    Stringたくさん登場する。メアドや名前も文字列。
+//    難易度を追加したときクラスを作っておけばクラスに処理を追加したら変更に強い
+//    ゲーム、プラグイン、アプリ常に変更していくもの。その変更に強くなる。変更しやすくなる
 
     PlayerScore nowPlayerScore = getPlayerScore(player);
 
@@ -74,7 +82,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
   private String getDifficulty(Player player, String[] args) {
-
     if (args.length == 1 &&
         (EASY.equals(args[0]) || NORMAL.equals(args[0]) || HARD.equals(args[0]))) {
       return args[0];
