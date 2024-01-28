@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.SplittableRandom;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -31,7 +32,6 @@ import plugin.enemydown.data.PlayerScore;
  * 結果はプレイヤー名、点数、日時などで保存されます。
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
-// BaseCommandと引数を合わせる必要がある
 
 
   public static final int GAME_TIME = 20;
@@ -48,7 +48,22 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   @Override
   public boolean onExecutePlayerCommand(Player player, Command command, String label, String[] args) {
-//コピー貼り付け。エラーでてるEnemySpawnで。
+    //引数が受けられるようになった。
+//引数2つ設定されたら動かないようにする
+
+    //  引数が1以外 if(args.length != 1)にすると絶対数を設定しないといけない。絶対に設定するようにする↓（easyなど）
+
+
+    if(args.length != 1){
+      player.sendMessage(ChatColor.RED+"実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
+//    できるだけ詳しく。どんな難易度があるかなど。イージー。ノーマル。ハード設定できます。みたいに。
+    }else {
+      String difficulty = args[0];
+
+    }
+//１つなら処理を継続していく。難易度を取得することになる.args[0];ローカル変数の導入を。
+
+
     PlayerScore nowPlayerScore = getPlayerScore(player);
 
     initPlayerStatus(player);
