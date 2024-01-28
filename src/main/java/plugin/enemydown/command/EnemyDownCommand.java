@@ -53,9 +53,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
 
-    String difficulty = "easy";
+    String difficulty = EASY;
+//    定数に変える
 
-    if (args.length == 1 && ("easy".equals(args[0]) || "normal".equals(args[0]) || "hard".equals(
+    if (args.length == 1 &&
+        (EASY.equals(args[0]) || NORMAL.equals(args[0]) || HARD.equals(
         args[0]))) {
       difficulty = args[0];
 
@@ -63,12 +65,13 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       player.sendMessage(
           ChatColor.RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
     }
+//メゾットへ
 
     PlayerScore nowPlayerScore = getPlayerScore(player);
 
     initPlayerStatus(player);
 
-    gamePlay(player, nowPlayerScore);
+    gamePlay(player, nowPlayerScore,difficulty);
 
     return true;
 
@@ -195,7 +198,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         return;
       }
 
-      Entity spawnEntity = player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
+      Entity spawnEntity = player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy(difficulty));
+//      エラーになっている。getEnemyに引数がないから
       spawnEntityList.add(spawnEntity);
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
 
@@ -237,7 +241,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       case HARD -> List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
       default -> List.of(EntityType.ZOMBIE);
     };
-//    easyの分岐を削除
 
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
   }
