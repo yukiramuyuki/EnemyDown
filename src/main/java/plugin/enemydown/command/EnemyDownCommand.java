@@ -47,22 +47,22 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   @Override
-  public boolean onExecutePlayerCommand(Player player, Command command, String label, String[] args) {
-    //引数が受けられるようになった。
-//引数2つ設定されたら動かないようにする
+  public boolean onExecutePlayerCommand(Player player, Command command, String label,
+      String[] args) {
 
-    //  引数が1以外 if(args.length != 1)にすると絶対数を設定しないといけない。絶対に設定するようにする↓（easyなど）
+    String difficulty = "easy";
+//    標準
 
+    if (args.length == 1) {
+//      if条件反転（見やすい）
+      difficulty = args[0];
+//      引数Stringいらない
+//      武装に引数difficultyを持つと難易度によって設定できる（今回はgameplayにだけ）
 
-    if(args.length != 1){
-      player.sendMessage(ChatColor.RED+"実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
-//    できるだけ詳しく。どんな難易度があるかなど。イージー。ノーマル。ハード設定できます。みたいに。
-    }else {
-      String difficulty = args[0];
-
+    } else {
+      player.sendMessage(
+          ChatColor.RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
     }
-//１つなら処理を継続していく。難易度を取得することになる.args[0];ローカル変数の導入を。
-
 
     PlayerScore nowPlayerScore = getPlayerScore(player);
 
@@ -76,7 +76,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   @Override
-  public boolean onExecuteNPCCommand(CommandSender sender, Command command, String label, String[] args) {
+  public boolean onExecuteNPCCommand(CommandSender sender, Command command, String label,
+      String[] args) {
     return false;
   }
 
@@ -109,7 +110,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   }
-
 
 
   /**
@@ -174,10 +174,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    *
    * @param player         コマンドを実行したプレイヤー
    * @param nowPlayerScore プレイヤースコア情報
+   * @param difficulty     難易度
    */
 
 
-  private void gamePlay(Player player, PlayerScore nowPlayerScore) {
+  private void gamePlay(Player player, PlayerScore nowPlayerScore, String difficulty) {
+//    引数追加
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
         Runnable.cancel();
@@ -194,6 +196,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       }
 
       Entity spawnEntity = player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy());
+//      使うのはgetEnemyの中でctrlクリック。
       spawnEntityList.add(spawnEntity);
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
 
@@ -225,12 +228,22 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   /**
    * ランダムで敵を抽出して、その結果の敵を取得します
    *
+   * @param difficulty 難易度
    * @return 敵
    */
 
-  private EntityType getEnemy() {
+  private EntityType getEnemy(String difficulty) {
+//    difficultyここで
+//    コピペしたほうがいい。スペルミスで動かない。がなくなる
+    List<EntityType> enemyList = new ArrayList<>();
+    if ("easy".equals(difficulty)) {
+      enemyList = List.of(EntityType.ZOMBIE);
+    } else if ("normal".equals(difficulty)) {
+      enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
+    } else if ("hard".equals(difficulty)) {
+      List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH)
+    }
 
-    List<EntityType> enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
   }
 
