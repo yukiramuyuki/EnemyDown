@@ -50,14 +50,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
 
-//    ↓difficulty = args[0];は
-//      引数の一つ目をとってきているだけ。内容は指定していない。
-
     String difficulty = "easy";
 
-    if (args.length == 1 && "easy".equals(args[0])) {
+    if (args.length == 1 && ("easy".equals(args[0]) || "normal".equals(args[0]) || "hard".equals(
+        args[0]))) {
+//      ( ||　)複数条件できる
+//      lengthが一つであることかつ、条件どれかを満たしていること
+
+//      ＊この書き方とてもよくない　文字列で確認しているスペルミスが起きたらアウト！マジックナンバーで統一するべき
+//      難易度を取り扱うクラスを作るべき
       difficulty = args[0];
-//      引数の一つ目をとってきているだけ。内容は指定していない。
 
     } else {
       player.sendMessage(
