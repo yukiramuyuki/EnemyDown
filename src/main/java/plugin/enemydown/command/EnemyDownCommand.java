@@ -35,6 +35,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   public static final int GAME_TIME = 20;
+  public static final String EASY = "easy";
+  public static final String NORMAL = "normal";
+  public static final String HARD = "hard";
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -54,11 +57,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
     if (args.length == 1 && ("easy".equals(args[0]) || "normal".equals(args[0]) || "hard".equals(
         args[0]))) {
-//      ( ||　)複数条件できる
-//      lengthが一つであることかつ、条件どれかを満たしていること
-
-//      ＊この書き方とてもよくない　文字列で確認しているスペルミスが起きたらアウト！マジックナンバーで統一するべき
-//      難易度を取り扱うクラスを作るべき
       difficulty = args[0];
 
     } else {
@@ -234,14 +232,14 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
   private EntityType getEnemy(String difficulty) {
-    List<EntityType> enemyList = new ArrayList<>();
-    if ("easy".equals(difficulty)) {
-      enemyList = List.of(EntityType.ZOMBIE);
-    } else if ("normal".equals(difficulty)) {
-      enemyList = List.of(EntityType.ZOMBIE, EntityType.SKELETON);
-    } else if ("hard".equals(difficulty)) {
-      List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
-    }
+    List<EntityType> enemyList = switch (difficulty) {
+      case EASY -> List.of(EntityType.ZOMBIE);
+//      "easy"リファクタリングの定数+switch置換
+      case NORMAL -> List.of(EntityType.ZOMBIE, EntityType.SKELETON);
+      case HARD -> List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.WITCH);
+      default -> List.of(EntityType.ZOMBIE);
+//      defaultはeasyだからコピペ
+    };
 
     return enemyList.get(new SplittableRandom().nextInt(enemyList.size()));
   }
