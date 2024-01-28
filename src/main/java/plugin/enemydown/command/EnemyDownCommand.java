@@ -33,7 +33,7 @@ import plugin.enemydown.data.PlayerScore;
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
 
-
+//定数よりディフィカルトオブジェクトのほうがいい。
   public static final int GAME_TIME = 20;
   public static final String EASY = "easy";
   public static final String NORMAL = "normal";
@@ -53,29 +53,38 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
 
-    String difficulty = EASY;
-//    定数に変える
-
-    if (args.length == 1 &&
-        (EASY.equals(args[0]) || NORMAL.equals(args[0]) || HARD.equals(
-        args[0]))) {
-      difficulty = args[0];
-
-    } else {
-      player.sendMessage(
-          ChatColor.RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
-    }
-//メゾットへ
+    String difficulty = getDifficulty(player, args);
 
     PlayerScore nowPlayerScore = getPlayerScore(player);
 
     initPlayerStatus(player);
 
-    gamePlay(player, nowPlayerScore,difficulty);
+    gamePlay(player, nowPlayerScore, difficulty);
 
     return true;
 
   }
+
+  /**
+   * 難易度をコマンド引数から取得します。
+   *
+   * @param player 　コマンドを実行したプレイヤー
+   * @param args   　コマンド引数
+   * @return 難易度
+   */
+
+  private String getDifficulty(Player player, String[] args) {
+
+    if (args.length == 1 &&
+        (EASY.equals(args[0]) || NORMAL.equals(args[0]) || HARD.equals(args[0]))) {
+      return args[0];
+    }
+    player.sendMessage(
+        ChatColor.RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
+    return EASY;
+  }
+//  一時変数である必要ない削除。difficultyにreturn.EASYを返す。
+//  条件に合うとき必ずリターンするならelseいらない
 
 
   @Override
@@ -198,7 +207,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         return;
       }
 
-      Entity spawnEntity = player.getWorld().spawnEntity(getEnemySpanLocation(player), getEnemy(difficulty));
+      Entity spawnEntity = player.getWorld()
+          .spawnEntity(getEnemySpanLocation(player), getEnemy(difficulty));
 //      エラーになっている。getEnemyに引数がないから
       spawnEntityList.add(spawnEntity);
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
