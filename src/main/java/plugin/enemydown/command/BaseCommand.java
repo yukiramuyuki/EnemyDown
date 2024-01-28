@@ -1,5 +1,4 @@
 package plugin.enemydown.command;
-//  Day21onCommandなくす
 
 
 import org.bukkit.command.Command;
@@ -17,7 +16,6 @@ public abstract class BaseCommand implements CommandExecutor {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
       return onExecutePlayerCommand(player, command, label, args);
-//     赤波ベースコマンドにメゾットonExecutePlayerCommandを作成とでるがonExecutePlayerCommandを変更する
 
     } else {
       return onExecuteNPCCommand(sender, command, label, args);
@@ -38,7 +36,7 @@ public abstract class BaseCommand implements CommandExecutor {
 
   public abstract boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args);
-//  コピーして貼り付け
+//  エラー出てるEnemyDownがぐちゃぐちゃになってる。
 
   /**
    * コマンドの実行者がプレイヤー意外だった場合に実行します。
@@ -48,7 +46,6 @@ public abstract class BaseCommand implements CommandExecutor {
    */
   public abstract boolean onExecuteNPCCommand(CommandSender sender, Command command, String label,
       String[] args);
-//コピーして貼り付け
 
 }
 

@@ -9,6 +9,7 @@ import java.util.SplittableRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -30,6 +31,7 @@ import plugin.enemydown.data.PlayerScore;
  * 結果はプレイヤー名、点数、日時などで保存されます。
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
+// BaseCommandと引数を合わせる必要がある
 
 
   public static final int GAME_TIME = 20;
@@ -45,8 +47,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   @Override
-  public boolean onExecutePlayerCommand(Player player) {
-
+  public boolean onExecutePlayerCommand(Player player, Command command, String label, String[] args) {
+//コピー貼り付け。エラーでてるEnemySpawnで。
     PlayerScore nowPlayerScore = getPlayerScore(player);
 
     initPlayerStatus(player);
@@ -59,7 +61,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   @Override
-  public boolean onExecuteNPCCommand(CommandSender sender) {
+  public boolean onExecuteNPCCommand(CommandSender sender, Command command, String label, String[] args) {
     return false;
   }
 
