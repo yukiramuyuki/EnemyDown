@@ -51,11 +51,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     this.main = main;
 
   }
-//  確認
-//  引数なしでエラーになるか
-//  選択肢以外を選択したらどうなるか
-//  難易度それぞれ
-//  エラー発生している
 
 
 
@@ -66,8 +61,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     String difficulty = getDifficulty(player, args);
     if (difficulty.equals(NONE)){
       return false;
-//     ② false=実行してない。
-//      後側の処理を実行しない。
     }
 
     PlayerScore nowPlayerScore = getPlayerScore(player);
@@ -98,9 +91,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     return NONE;
   }
 
-//  ①エラーの理由elseを消したから
-//  returnにEasyかえしたらだめ
-//  一旦終わらせる。elseあってもエラーになってた
 
 
   @Override
