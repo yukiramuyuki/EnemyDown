@@ -40,6 +40,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public static final String EASY = "easy";
   public static final String NORMAL = "normal";
   public static final String HARD = "hard";
+  public static final String NONE = "none";
+
 
   private Main main;
   private List<PlayerScore> playerScoreList = new ArrayList<>();
@@ -49,6 +51,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     this.main = main;
 
   }
+//  確認
+//  引数なしでエラーになるか
+//  選択肢以外を選択したらどうなるか
+//  難易度それぞれ
+//  エラー発生している
+
 
 
   @Override
@@ -56,12 +64,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       String[] args) {
 
     String difficulty = getDifficulty(player, args);
-//    string　文字列。難易度を扱いたい文字を扱いたいわけではない。難易度が文字だっただけ
-
-//    名前をつける。クラスをつける大事。オブジェクト思考。より良いコードを書くために
-//    Stringたくさん登場する。メアドや名前も文字列。
-//    難易度を追加したときクラスを作っておけばクラスに処理を追加したら変更に強い
-//    ゲーム、プラグイン、アプリ常に変更していくもの。その変更に強くなる。変更しやすくなる
+    if (difficulty.equals(NONE)){
+      return false;
+//     ② false=実行してない。
+//      後側の処理を実行しない。
+    }
 
     PlayerScore nowPlayerScore = getPlayerScore(player);
 
@@ -88,10 +95,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     }
     player.sendMessage(
         ChatColor.RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
-    return EASY;
+    return NONE;
   }
-//  一時変数である必要ない削除。difficultyにreturn.EASYを返す。
-//  条件に合うとき必ずリターンするならelseいらない
+
+//  ①エラーの理由elseを消したから
+//  returnにEasyかえしたらだめ
+//  一旦終わらせる。elseあってもエラーになってた
 
 
   @Override
