@@ -41,6 +41,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public static final String NORMAL = "normal";
   public static final String HARD = "hard";
   public static final String NONE = "none";
+//  2リスト作成
+public static final String LIST = "none";
 
 
   private Main main;
@@ -57,6 +59,14 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   @Override
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
+    if (args.length == 1 &&
+        (EASY.equals(args[0]) || NORMAL.equals(args[0]) || HARD.equals(args[0]))) {
+      return args[0];
+    }
+//   1 コピーしてもってくる
+    
+
+
 
     String difficulty = getDifficulty(player, args);
     if (difficulty.equals(NONE)){
@@ -87,7 +97,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return args[0];
     }
     player.sendMessage(
-        ChatColor.RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
+        ChatColor.DARK_RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
     return NONE;
   }
 
