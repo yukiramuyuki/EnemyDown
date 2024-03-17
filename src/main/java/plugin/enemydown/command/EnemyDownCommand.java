@@ -41,7 +41,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public static final String NORMAL = "normal";
   public static final String HARD = "hard";
   public static final String NONE = "none";
-//  2リスト作成
+
 public static final String LIST = "none";
 
 
@@ -60,11 +60,18 @@ public static final String LIST = "none";
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
     if (args.length == 1 &&
-        (EASY.equals(args[0]) || NORMAL.equals(args[0]) || HARD.equals(args[0]))) {
-      return args[0];
+        LIST.equals(args[0])){
+
+  return false;
+
     }
-//   1 コピーしてもってくる
-    
+//   リストに置き換える。残りをいらないから消す
+//    returnない（その中にかくから）
+
+//    接続するためのドライバーがデーターベースに必要になる（sqlならmysql)
+//    spigotのなかにコネクターがある（古い）
+//    ネットで調べるとデータードライバーをダウンロードとあるけど必要ない。
+
 
 
 
