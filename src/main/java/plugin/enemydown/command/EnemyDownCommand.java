@@ -156,6 +156,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   }
 
+  
 
   /**
    * 新規のプレイヤー情報をリストに追加します
