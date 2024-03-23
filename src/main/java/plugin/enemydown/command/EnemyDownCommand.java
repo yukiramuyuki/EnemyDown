@@ -67,18 +67,19 @@ public static final String LIST = "none";
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
     if (args.length == 1 && LIST.equals(args[0])){
-      String url="jdbc:mysql://localhost:3306/spigot_server";
-      String user="root";
-      String password="rg2q35";
+//      String url="jdbc:mysql://localhost:3306/spigot_server";
+//      String user="root";
+//      String password="rg2q35";
 
-      String sql="select *from player_score;";
-      //        try-with-resources文
-//        tryの中はopenしたときに勝手に処理が終わるとcloseする
-      try(Connection con = DriverManager.getConnection(url, user, password);
-//         url,user,passwordで接続する
+
+      try(Connection con = DriverManager.getConnection(
+          "jdbc:mysql://localhost:3306/spigot_server",
+          "root",
+          "rg2q35");
+//          上のをを直接はる
           Statement statement =con.createStatement();
-//          statementはstと略されることもある。この行は作法。（決まった文）
-          ResultSet resultset = statement.executeQuery(sql)){
+          ResultSet resultset = statement.executeQuery("select * from player_score;")){
+//        発行した結果を受け取る。select文をそのままはりつけ
 
         while (resultset.next()){
           int id =resultset.getInt("id");
@@ -86,8 +87,10 @@ public static final String LIST = "none";
           int score =resultset.getInt("score");
           String difficulty =resultset.getString("difficulty");
           LocalDateTime date =LocalDateTime.parse(resultset.getString("registered_at"),
-              DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss"));
-          player.sendMessage(id +" | "+ score + " | "+ difficulty+ "|"+ date.format(DateTimeFormatter));
+              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//          日付を文字列でとってきて、for文に
+//          基本date型は使わない。が、resultsetはDate型しか取れない。日付が抜けてしまうから文字列で
+          player.sendMessage(id +" | "+ score + " | "+ difficulty+ "|"+ date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
       }catch (SQLException e){
         e.printStackTrace();
