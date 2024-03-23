@@ -1,6 +1,13 @@
 package plugin.enemydown.command;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -59,18 +66,38 @@ public static final String LIST = "none";
   @Override
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
-    if (args.length == 1 &&
-        LIST.equals(args[0])){
+    if (args.length == 1 && LIST.equals(args[0])){
+      String url="jdbc:mysql://localhost:3306/spigot_server";
+      String user="root";
+      String password="rg2q35";
+
+      String sql="select *from player_score;";
+      //        try-with-resources文
+//        tryの中はopenしたときに勝手に処理が終わるとcloseする
+      try(Connection con = DriverManager.getConnection(url, user, password);
+//         url,user,passwordで接続する
+          Statement statement =con.createStatement();
+//          statementはstと略されることもある。この行は作法。（決まった文）
+          ResultSet resultset = statement.executeQuery(sql)){
+
+        while (resultset.next()){
+          int id =resultset.getInt("id");
+          String name =resultset.getString("player_name");
+          int score =resultset.getInt("score");
+          String difficulty =resultset.getString("difficulty");
+          LocalDateTime date =LocalDateTime.parse(resultset.getString("registered_at"),
+              DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss"));
+          player.sendMessage(id +" | "+ score + " | "+ difficulty+ "|"+ date.format(DateTimeFormatter));
+        }
+      }catch (SQLException e){
+        e.printStackTrace();
+      }
+
 
   return false;
 
     }
-//   リストに置き換える。残りをいらないから消す
-//    returnない（その中にかくから）
 
-//    接続するためのドライバーがデーターベースに必要になる（sqlならmysql)
-//    spigotのなかにコネクターがある（古い）
-//    ネットで調べるとデータードライバーをダウンロードとあるけど必要ない。
 
 
 
