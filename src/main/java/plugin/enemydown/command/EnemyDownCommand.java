@@ -42,14 +42,14 @@ import plugin.enemydown.data.PlayerScore;
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
 
-//定数よりディフィカルトオブジェクトのほうがいい。
+  //定数よりディフィカルトオブジェクトのほうがいい。
   public static final int GAME_TIME = 20;
   public static final String EASY = "easy";
   public static final String NORMAL = "normal";
   public static final String HARD = "hard";
   public static final String NONE = "none";
 
-public static final String LIST = "none";
+  public static final String LIST = "list";
 
 
   private Main main;
@@ -62,51 +62,43 @@ public static final String LIST = "none";
   }
 
 
-
   @Override
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
-    if (args.length == 1 && LIST.equals(args[0])){
+    if (args.length == 1 && LIST.equals(args[0])) {
 //      String url="jdbc:mysql://localhost:3306/spigot_server";
 //      String user="root";
 //      String password="rg2q35";
 
-
-      try(Connection con = DriverManager.getConnection(
+      try (Connection con = DriverManager.getConnection(
           "jdbc:mysql://localhost:3306/spigot_server",
           "root",
           "rg2q35");
-//          上のをを直接はる
-          Statement statement =con.createStatement();
-          ResultSet resultset = statement.executeQuery("select * from player_score;")){
-//        発行した結果を受け取る。select文をそのままはりつけ
+          Statement statement = con.createStatement();
+          ResultSet resultset = statement.executeQuery("select * from player_score;")) {
 
-        while (resultset.next()){
-          int id =resultset.getInt("id");
-          String name =resultset.getString("player_name");
-          int score =resultset.getInt("score");
-          String difficulty =resultset.getString("difficulty");
-          LocalDateTime date =LocalDateTime.parse(resultset.getString("registered_at"),
-              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//          日付を文字列でとってきて、for文に
-//          基本date型は使わない。が、resultsetはDate型しか取れない。日付が抜けてしまうから文字列で
-          player.sendMessage(id +" | "+ score + " | "+ difficulty+ "|"+ date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        while (resultset.next()) {
+          int id = resultset.getInt("id");
+          String name = resultset.getString("player_name");
+          int score = resultset.getInt("score");
+          String difficulty = resultset.getString("difficulty");
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//          変数の導入（formatter)
+          LocalDateTime date = LocalDateTime.parse(resultset.getString("registered_at"),
+              formatter);
+          player.sendMessage(
+              id + " | " + score + " | " + difficulty + "|" + date.format(formatter));
         }
-      }catch (SQLException e){
+      } catch (SQLException e) {
         e.printStackTrace();
       }
 
-
-  return false;
+      return false;
 
     }
 
-
-
-
-
     String difficulty = getDifficulty(player, args);
-    if (difficulty.equals(NONE)){
+    if (difficulty.equals(NONE)) {
       return false;
     }
 
@@ -137,7 +129,6 @@ public static final String LIST = "none";
         ChatColor.DARK_RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
     return NONE;
   }
-
 
 
   @Override
