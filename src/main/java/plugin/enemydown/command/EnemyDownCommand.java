@@ -1,6 +1,13 @@
 package plugin.enemydown.command;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -35,12 +42,14 @@ import plugin.enemydown.data.PlayerScore;
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
 
-//定数よりディフィカルトオブジェクトのほうがいい。
+  //定数よりディフィカルトオブジェクトのほうがいい。
   public static final int GAME_TIME = 20;
   public static final String EASY = "easy";
   public static final String NORMAL = "normal";
   public static final String HARD = "hard";
   public static final String NONE = "none";
+
+  public static final String LIST = "list";
 
 
   private Main main;
@@ -53,13 +62,40 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   }
 
 
-
   @Override
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
+    if (args.length == 1 && LIST.equals(args[0])) {
+
+      try (Connection con = DriverManager.getConnection(
+          "jdbc:mysql://localhost:3306/spigot_server",
+          "root",
+          "rg2q35");
+          Statement statement = con.createStatement();
+          ResultSet resultset = statement.executeQuery("select * from player_score;")) {
+
+        while (resultset.next()) {
+          int id = resultset.getInt("id");
+          String name = resultset.getString("player_name");
+          int score = resultset.getInt("score");
+          String difficulty = resultset.getString("difficulty");
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+          LocalDateTime date = LocalDateTime.parse(resultset.getString("registered_at"),
+              formatter);
+          player.sendMessage(
+              id + " | " + score + " | " + difficulty + "|" + date.format(formatter));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+
+      return false;
+
+    }
 
     String difficulty = getDifficulty(player, args);
-    if (difficulty.equals(NONE)){
+    if (difficulty.equals(NONE)) {
       return false;
     }
 
@@ -87,10 +123,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return args[0];
     }
     player.sendMessage(
-        ChatColor.RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
+        ChatColor.DARK_RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
     return NONE;
   }
-
 
 
   @Override
