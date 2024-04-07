@@ -66,9 +66,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
     if (args.length == 1 && LIST.equals(args[0])) {
-//      String url="jdbc:mysql://localhost:3306/spigot_server";
-//      String user="root";
-//      String password="rg2q35";
 
       try (Connection con = DriverManager.getConnection(
           "jdbc:mysql://localhost:3306/spigot_server",
@@ -83,7 +80,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           int score = resultset.getInt("score");
           String difficulty = resultset.getString("difficulty");
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//          変数の導入（formatter)
+
           LocalDateTime date = LocalDateTime.parse(resultset.getString("registered_at"),
               formatter);
           player.sendMessage(
