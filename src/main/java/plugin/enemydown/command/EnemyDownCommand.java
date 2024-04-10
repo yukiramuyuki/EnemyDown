@@ -42,7 +42,6 @@ import plugin.enemydown.data.PlayerScore;
  */
 public class EnemyDownCommand extends BaseCommand implements Listener {
 
-  //定数よりディフィカルトオブジェクトのほうがいい。
   public static final int GAME_TIME = 20;
   public static final String EASY = "easy";
   public static final String NORMAL = "normal";
@@ -251,7 +250,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
       Entity spawnEntity = player.getWorld()
           .spawnEntity(getEnemySpanLocation(player), getEnemy(difficulty));
-//      エラーになっている。getEnemyに引数がないから
       spawnEntityList.add(spawnEntity);
       nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
 
