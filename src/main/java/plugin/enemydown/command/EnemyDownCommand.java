@@ -191,7 +191,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   }
 
-  
 
   /**
    * 新規のプレイヤー情報をリストに追加します
@@ -242,26 +241,30 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
             0, 60, 0);
 
-//        ゲーム終了後にデーターベースに接続してデーターベースに登録
         try (Connection con = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/spigot_server",
             "root",
             "rg2q35");
-            Statement statement = con.createStatement()){
-//          登録なので結果かえってこない.
+            Statement statement = con.createStatement()) {
 
-            statement.executeUpdate(
-//                登録なのでupdate.前回はquery
-                "insert player_score(player_name,score,difficulty,reqistered_dt)"
-                + "values('" + nowPlayerScore.getPlayerName() + "'," + nowPlayerScore.getScore() + ",'"+ difficulty + ", now());");
-//       tryの中に直接入れたらエラーになる。実行した結果が決まっている？からできる。updateはそれに対応していない。
+          statement.executeUpdate(
+//                表示する中身insert文に
+//                更新処理はexecuteUpdateを使う。今回はその中のinsert
+              "insert player_score(player_name, score, difficulty, registered_dt)"
+//                    idがない。データーベースのテーブルにplayerscoreにオートインクレメントを追加している。
+//                    オートインクレメントはidに１がなかったら１にいれる。次データが入ったら２，３，４，と順番に入っていくmySQLの中でカウントしてくれている。
+//                    ２ばんのデータをけしたら、次は２ではなく３になる。オートインクレメントなので追加。間が抜けてもそこには入らない。そのためidは必要ない。
+                  + "values('" + nowPlayerScore.getPlayerName() + "'," + nowPlayerScore.getScore()+ ",'"
+                  + difficulty + ", now());");
+//            values順番通りに名前、スコア、難易度。時間はnow()
+//          now()はメゾットではなくnow関数。mySQLがもっている関数をそのまま使っている。サーバーが動いている今の時間。他のデーターベースだと使えないこともある。
 
-//        catchのさきはおなじ
-        }  catch (SQLException e){
+//          SQLの中で文字列がどうか判断は’で囲まれているかどうか。ないと文字列かどうか分からない。playernameは文字列なので数値型を入れるとエラーになる。
+//          ’の入れ忘れはよく起きる。
+
+        } catch (SQLException e) {
           e.printStackTrace();
         }
-
-
 
         spawnEntityList.forEach(Entity::remove);
         spawnEntityList.clear();
