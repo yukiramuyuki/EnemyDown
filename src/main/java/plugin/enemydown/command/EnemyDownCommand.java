@@ -231,8 +231,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
 
+
   private void gamePlay(Player player, PlayerScore nowPlayerScore, String difficulty) {
-//    引数追加
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
         Runnable.cancel();
@@ -248,19 +248,9 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             Statement statement = con.createStatement()) {
 
           statement.executeUpdate(
-//                表示する中身insert文に
-//                更新処理はexecuteUpdateを使う。今回はその中のinsert
-              "insert player_score(player_name, score, difficulty, registered_dt)"
-//                    idがない。データーベースのテーブルにplayerscoreにオートインクレメントを追加している。
-//                    オートインクレメントはidに１がなかったら１にいれる。次データが入ったら２，３，４，と順番に入っていくmySQLの中でカウントしてくれている。
-//                    ２ばんのデータをけしたら、次は２ではなく３になる。オートインクレメントなので追加。間が抜けてもそこには入らない。そのためidは必要ない。
-                  + "values('" + nowPlayerScore.getPlayerName() + "'," + nowPlayerScore.getScore()+ ",'"
-                  + difficulty + ", now());");
-//            values順番通りに名前、スコア、難易度。時間はnow()
-//          now()はメゾットではなくnow関数。mySQLがもっている関数をそのまま使っている。サーバーが動いている今の時間。他のデーターベースだと使えないこともある。
-
-//          SQLの中で文字列がどうか判断は’で囲まれているかどうか。ないと文字列かどうか分からない。playernameは文字列なので数値型を入れるとエラーになる。
-//          ’の入れ忘れはよく起きる。
+              " insert  player_score(player_name, score, difficulty, registered_dt)"
+                  + "values('" + nowPlayerScore.getPlayerName() + "'" + nowPlayerScore.getScore()
+                  + ",'" + difficulty + "',now());");
 
         } catch (SQLException e) {
           e.printStackTrace();
