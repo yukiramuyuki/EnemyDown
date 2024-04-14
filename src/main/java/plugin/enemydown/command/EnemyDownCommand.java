@@ -85,6 +85,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
               formatter);
           player.sendMessage(
               id + " | " + score + " | " + difficulty + "|" + date.format(formatter));
+
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -125,7 +126,10 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     player.sendMessage(
         ChatColor.DARK_RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
     return NONE;
+
   }
+
+
 
 
   @Override
@@ -248,9 +252,12 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             Statement statement = con.createStatement()) {
 
           statement.executeUpdate(
-              " insert  player_score(player_name, score, difficulty, registered_dt)"
+              " insert  player_score(player_name, score, difficulty, registered_at)"
+
                   + "values('" + nowPlayerScore.getPlayerName() + "'" + nowPlayerScore.getScore()
                   + ",'" + difficulty + "',now());");
+
+
 
         } catch (SQLException e) {
           e.printStackTrace();
