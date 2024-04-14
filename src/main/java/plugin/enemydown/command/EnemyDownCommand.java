@@ -84,7 +84,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           LocalDateTime date = LocalDateTime.parse(resultset.getString("registered_at"),
               formatter);
           player.sendMessage(
-              id + " | " + score + " | " + difficulty + "|" + date.format(formatter));
+              id + " | "+name +"|" + score + " | " + difficulty + "|" + date.format(formatter));
 
         }
       } catch (SQLException e) {
