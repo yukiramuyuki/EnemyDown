@@ -252,12 +252,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
             Statement statement = con.createStatement()) {
 
           statement.executeUpdate(
-              " insert  player_score(player_name, score, difficulty, registered_at)"
+              " insert player_score(player_name, score, difficulty, registered_at)"
 
-                  + "values('" + nowPlayerScore.getPlayerName() + "'" + nowPlayerScore.getScore()
+                  + "values('" + nowPlayerScore.getPlayerName() + "'," + nowPlayerScore.getScore()
                   + ",'" + difficulty + "',now());");
-
-
+          
 
         } catch (SQLException e) {
           e.printStackTrace();
