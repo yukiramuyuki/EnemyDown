@@ -83,7 +83,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           LocalDateTime date = LocalDateTime.parse(resultset.getString("registered_at"),
               formatter);
           player.sendMessage(
-              id + " | " + score + " | " + difficulty + "|" + date.format(formatter));
+              id + " | "+name +"|" + score + " | " + difficulty + "|" + date.format(formatter));
+
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -124,7 +125,10 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     player.sendMessage(
         ChatColor.DARK_RED + "実行できません。コマンド引数の1つ目に難易度指定が必要です。[easy,normal,hard]");
     return NONE;
+
   }
+
+
 
 
   @Override
@@ -190,7 +194,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   }
 
-  
 
   /**
    * 新規のプレイヤー情報をリストに追加します
@@ -231,8 +234,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
 
+
   private void gamePlay(Player player, PlayerScore nowPlayerScore, String difficulty) {
-//    引数追加
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
         Runnable.cancel();
@@ -240,6 +243,23 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         player.sendTitle("ゲームが終了しました。",
             nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
             0, 60, 0);
+
+        try (Connection con = DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/spigot_server",
+            "root",
+            "rg2q35");
+            Statement statement = con.createStatement()) {
+
+          statement.executeUpdate(
+              " insert player_score(player_name, score, difficulty, registered_at)"
+
+                  + "values('" + nowPlayerScore.getPlayerName() + "'," + nowPlayerScore.getScore()
+                  + ",'" + difficulty + "',now());");
+          
+
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
 
         spawnEntityList.forEach(Entity::remove);
         spawnEntityList.clear();
