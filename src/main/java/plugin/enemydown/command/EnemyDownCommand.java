@@ -1,6 +1,7 @@
 package plugin.enemydown.command;
 
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -67,10 +68,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   @Override
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
-      String[] args){
+      String[] args) throws IOException {
     if (args.length == 1 && LIST.equals(args[0])) {
 
       InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+//      赤波。メゾッドシグネチャーに例外追加
       SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
 
