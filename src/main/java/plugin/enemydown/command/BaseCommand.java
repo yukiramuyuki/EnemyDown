@@ -35,7 +35,7 @@ public abstract class BaseCommand implements CommandExecutor {
    */
 
   public abstract boolean onExecutePlayerCommand(Player player, Command command, String label,
-      String[] args);
+      String[] args) throws Exception;
 
   /**
    * コマンドの実行者がプレイヤー意外だった場合に実行します。
