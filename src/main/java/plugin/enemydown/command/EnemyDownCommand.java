@@ -69,12 +69,10 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
     if (args.length == 1 && LIST.equals(args[0])) {
-//      String resource = "mybatis-config.xml";④消す
-//      ① String resource = "org/mybatis/example/mybatis-config.xml";
-//      ②ファイルのある場所。org/mybatis・・・の中にファイルを作ってないから消す。
 
       InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-      //      ③他のとこで使わないからべた書き
+//      赤波。例外が発生する。
+//      BaseCommandを継承して作っている。OnExecuteの方に追加しないといけない。
       SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
 
