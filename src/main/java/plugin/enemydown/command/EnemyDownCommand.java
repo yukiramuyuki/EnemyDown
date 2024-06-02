@@ -1,6 +1,7 @@
 package plugin.enemydown.command;
 
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,6 +15,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SplittableRandom;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
@@ -65,6 +69,15 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
     if (args.length == 1 && LIST.equals(args[0])) {
+//      String resource = "mybatis-config.xml";④消す
+//      ① String resource = "org/mybatis/example/mybatis-config.xml";
+//      ②ファイルのある場所。org/mybatis・・・の中にファイルを作ってないから消す。
+
+      InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+      //      ③他のとこで使わないからべた書き
+      SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+
 
       try (Connection con = DriverManager.getConnection(
           "jdbc:mysql://localhost:3306/spigot_server",

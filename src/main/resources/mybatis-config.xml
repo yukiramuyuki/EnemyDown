@@ -7,16 +7,10 @@
     <environment id="development">
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
-        <!--      {の部分は環境変数。パスから情報を取ってくる。べた書きする。-->
-        <!--      MyBatis使い方メモを参考に-->
-
         <property name="driver" value="com.mysql.jdbc.Driver"/>
-<!--        サイトからコピペする-->
         <property name="url" value="jdbc:mysql://localhost:3306/spigot_server"/>
-
         <property name="username" value="root"/>
         <property name="password" value="rg2q35"/>
-<!--        url;username;passwordはmysqlの部分からコピペ-->
       </dataSource>
 
 
