@@ -73,9 +73,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           Statement statement = con.createStatement();
           ResultSet resultset = statement.executeQuery("select * from player_score;")) {
 
-//        xml形式のファイルをいれる
-//        上の部分出たままだと見た目微妙・・・。設定ファイルを別に作ってそこを読み込む。
-//        resourcesの場所にファイルを作成
+
 
         while (resultset.next()) {
           int id = resultset.getInt("id");
