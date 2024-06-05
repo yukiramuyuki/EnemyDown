@@ -60,14 +60,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   private List<PlayerScore> playerScoreList = new ArrayList<>();
   private List<Entity> spawnEntityList = new ArrayList<>();
 
+  private SqlSessionFactory sqlSessionFactory;
+//  最初は空newも何もしない。this.に生成されたものをもつ
+//  生成された時に作られて終わり。それ以降は作らない
+
   public EnemyDownCommand(Main main) {
     this.main = main;
 
     try {
       InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-//      getResourceAsStreamをtry/catchで囲む。
-      SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//↑外にあった（赤文字）ものをtryの中にいれる
+     this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
