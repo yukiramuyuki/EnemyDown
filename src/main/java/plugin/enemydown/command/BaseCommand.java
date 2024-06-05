@@ -1,6 +1,7 @@
 package plugin.enemydown.command;
 
 
+import java.io.IOException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,8 +18,8 @@ public abstract class BaseCommand implements CommandExecutor {
     if (sender instanceof Player player) {
 //      try/catchで囲む
 //      それか例外Streamが発生しないようにする
-        return onExecutePlayerCommand(player, command, label, args);
 
+        return onExecutePlayerCommand(player, command, label, args);
     } else {
       return onExecuteNPCCommand(sender, command, label, args);
     }
