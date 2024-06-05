@@ -22,6 +22,7 @@ dependencies {
     compileOnly 'org.mybatis:mybatis:3.5.16'
 
 
+//    @Getter&Setter‚ğ‚·‚ég—p‚·‚éB
 //    compileOnly 'org.projectlombok:lombok:1.18.26'
 //    annotationProcessor 'org.projectlombok:lombok:1.18.26'
 //
