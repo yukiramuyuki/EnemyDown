@@ -1,14 +1,16 @@
 package plugin.enemydown.data;
 
-import org.bukkit.entity.Player;
-
 
 /**
- * EnemyDownのゲームを実行する際のスコア情報を扱うオブジェクト。 プレイヤー名、合計点数、日時などの情報をもつ。
+ * EnemyDownのゲームを実行する際のプレイヤー情報を扱うオブジェクト。 プレイヤー名、合計点数、日時などの情報をもつ。
  */
+//新しく作るオブジェクトをPlayerScoreにするか迷う。
+//  その時に、その名前にどちらがふさわしいか考える。
 
+//PlayerScoreからExecutingPlayerに変更
+//  PlayerScoreと言いながら、playerName,scoreなど実行中のプレイヤー情報
 
-public class PlayerScore {
+public class ExecutingPlayer {
 
 
   private String playerName;
@@ -17,7 +19,7 @@ public class PlayerScore {
 
   private int gameTime;
 
-  public PlayerScore(String playerName) {
+  public ExecutingPlayer(String playerName) {
     this.playerName = playerName;
 
   }

@@ -11,10 +11,8 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.SplittableRandom;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -22,7 +20,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -31,7 +28,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -39,7 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import plugin.enemydown.Main;
-import plugin.enemydown.data.PlayerScore;
+import plugin.enemydown.data.ExecutingPlayer;
 
 
 /**
@@ -58,7 +54,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   private Main main;
-  private List<PlayerScore> playerScoreList = new ArrayList<>();
+  private List<ExecutingPlayer> playerScoreList = new ArrayList<>();
   private List<Entity> spawnEntityList = new ArrayList<>();
 
   private SqlSessionFactory sqlSessionFactory;
@@ -82,11 +78,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       try(SqlSession session =sqlSessionFactory.openSession()){
 
       }
-//      MyBatisの利点。使いたいオブジェクトを使えるようになる。今回はプレイヤースコア。
-//      サイトではBlogとなっている。
-//      下のtryの部分でのgetIntとかしたくないからオブジェクトとDBの項目のマッピングをしてほしい。
-//      作るためにDBでのプレイヤースコアの項目が必要になる
-//      作ったうえでSQL発行していく部分（マッパー）を作っていく。
+
 
       try (Connection con = DriverManager.getConnection(
           "jdbc:mysql://localhost:3306/spigot_server",
@@ -121,7 +113,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return false;
     }
 
-    PlayerScore nowPlayerScore = getPlayerScore(player);
+    ExecutingPlayer nowPlayerScore = getPlayerScore(player);
 
     initPlayerStatus(player);
 
@@ -194,8 +186,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @param player コマンドを実行したプレイヤー
    * @return 現在進行しているプレイヤーのスコア情報
    */
-  private PlayerScore getPlayerScore(Player player) {
-    PlayerScore playerScore = new PlayerScore(player.getName());
+  private ExecutingPlayer getPlayerScore(Player player) {
+    ExecutingPlayer playerScore = new ExecutingPlayer(player.getName());
     if (playerScoreList.isEmpty()) {
       playerScore = addNewPlayer(player);
 
@@ -222,8 +214,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @return 新規プレイヤー
    */
 
-  private PlayerScore addNewPlayer(Player player) {
-    PlayerScore newPlayer = new PlayerScore(player.getName());
+  private ExecutingPlayer addNewPlayer(Player player) {
+    ExecutingPlayer newPlayer = new ExecutingPlayer(player.getName());
     playerScoreList.add(newPlayer);
     return newPlayer;
   }
@@ -254,7 +246,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
 
-  private void gamePlay(Player player, PlayerScore nowPlayerScore, String difficulty) {
+  private void gamePlay(Player player, ExecutingPlayer nowPlayerScore, String difficulty) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
         Runnable.cancel();

@@ -6,6 +6,6 @@
     <file url="file://$PROJECT_DIR$/src/main/java/plugin/enemydown/command/BaseCommand.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/plugin/enemydown/command/EnemyDownCommand.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/plugin/enemydown/command/EnemySpawnCommand.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/plugin/enemydown/data/PlayerScore.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/plugin/enemydown/data/ExecutingPlayer.java" charset="UTF-8" />
   </component>
 </project>
