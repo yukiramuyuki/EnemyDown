@@ -15,10 +15,9 @@ public abstract class BaseCommand implements CommandExecutor {
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (sender instanceof Player player) {
-      return onExecutePlayerCommand(player, command, label, args);
-//      赤波外すためにtry/catchを外したい。けど、できない。
-//      onCommandは例外を想定していないからできない。
-//      try/catchして例外外す。
+//      try/catchで囲む
+//      それか例外Streamが発生しないようにする
+        return onExecutePlayerCommand(player, command, label, args);
 
     } else {
       return onExecuteNPCCommand(sender, command, label, args);
