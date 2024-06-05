@@ -1,6 +1,7 @@
 package plugin.enemydown.command;
 
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -59,14 +60,18 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   private List<PlayerScore> playerScoreList = new ArrayList<>();
   private List<Entity> spawnEntityList = new ArrayList<>();
 
-  public EnemyDownCommand(Main main) throws Exception{
+  public EnemyDownCommand(Main main) {
     this.main = main;
 
-    //  読み込まれた時点で必ずすることだからここにする
-    InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+    try {
+      InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+//      getResourceAsStreamをtry/catchで囲む。
+      SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+//↑外にあった（赤文字）ものをtryの中にいれる
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
 
-//EnemyDownCommandに戻ってくるため赤文字が出る
   }
 
 
