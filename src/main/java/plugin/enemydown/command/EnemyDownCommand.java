@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.SplittableRandom;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.bukkit.Bukkit;
@@ -61,19 +62,16 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   private List<Entity> spawnEntityList = new ArrayList<>();
 
   private SqlSessionFactory sqlSessionFactory;
-//  最初は空newも何もしない。this.に生成されたものをもつ
-//  生成された時に作られて終わり。それ以降は作らない
 
   public EnemyDownCommand(Main main) {
     this.main = main;
 
     try {
       InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-     this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+      this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
   }
 
 
@@ -81,9 +79,14 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
   public boolean onExecutePlayerCommand(Player player, Command command, String label,
       String[] args) {
     if (args.length == 1 && LIST.equals(args[0])) {
+      try(SqlSession session =sqlSessionFactory.openSession()){
 
-
-
+      }
+//      MyBatisの利点。使いたいオブジェクトを使えるようになる。今回はプレイヤースコア。
+//      サイトではBlogとなっている。
+//      下のtryの部分でのgetIntとかしたくないからオブジェクトとDBの項目のマッピングをしてほしい。
+//      作るためにDBでのプレイヤースコアの項目が必要になる
+//      作ったうえでSQL発行していく部分（マッパー）を作っていく。
 
       try (Connection con = DriverManager.getConnection(
           "jdbc:mysql://localhost:3306/spigot_server",
@@ -91,8 +94,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           "rg2q35");
           Statement statement = con.createStatement();
           ResultSet resultset = statement.executeQuery("select * from player_score;")) {
-
-
 
         while (resultset.next()) {
           int id = resultset.getInt("id");
@@ -104,7 +105,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           LocalDateTime date = LocalDateTime.parse(resultset.getString("registered_at"),
               formatter);
           player.sendMessage(
-              id + " | "+name +"|" + score + " | " + difficulty + "|" + date.format(formatter));
+              id + " | " + name + "|" + score + " | " + difficulty + "|" + date.format(formatter));
 
         }
       } catch (SQLException e) {
@@ -148,8 +149,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
     return NONE;
 
   }
-
-
 
 
   @Override
@@ -255,7 +254,6 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    */
 
 
-
   private void gamePlay(Player player, PlayerScore nowPlayerScore, String difficulty) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
       if (nowPlayerScore.getGameTime() <= 0) {
@@ -276,7 +274,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
                   + "values('" + nowPlayerScore.getPlayerName() + "'," + nowPlayerScore.getScore()
                   + ",'" + difficulty + "',now());");
-          
+
 
         } catch (SQLException e) {
           e.printStackTrace();
