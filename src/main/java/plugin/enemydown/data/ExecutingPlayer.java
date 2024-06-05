@@ -4,11 +4,6 @@ package plugin.enemydown.data;
 /**
  * EnemyDownのゲームを実行する際のプレイヤー情報を扱うオブジェクト。 プレイヤー名、合計点数、日時などの情報をもつ。
  */
-//新しく作るオブジェクトをPlayerScoreにするか迷う。
-//  その時に、その名前にどちらがふさわしいか考える。
-
-//PlayerScoreからExecutingPlayerに変更
-//  PlayerScoreと言いながら、playerName,scoreなど実行中のプレイヤー情報
 
 public class ExecutingPlayer {
 

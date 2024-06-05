@@ -54,7 +54,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
 
   private Main main;
-  private List<ExecutingPlayer> playerScoreList = new ArrayList<>();
+  private List<ExecutingPlayer> executingPlayerList = new ArrayList<>();
   private List<Entity> spawnEntityList = new ArrayList<>();
 
   private SqlSessionFactory sqlSessionFactory;
@@ -92,8 +92,8 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           String name = resultset.getString("player_name");
           int score = resultset.getInt("score");
           String difficulty = resultset.getString("difficulty");
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
           LocalDateTime date = LocalDateTime.parse(resultset.getString("registered_at"),
               formatter);
           player.sendMessage(
@@ -113,11 +113,11 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       return false;
     }
 
-    ExecutingPlayer nowPlayerScore = getPlayerScore(player);
+    ExecutingPlayer nowExecutingPlayer = getPlayerScore(player);
 
     initPlayerStatus(player);
 
-    gamePlay(player, nowPlayerScore, difficulty);
+    gamePlay(player, nowExecutingPlayer, difficulty);
 
     return true;
 
@@ -163,7 +163,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
         .noneMatch(entity -> entity.equals(enemy))) {
       return;
     }
-    playerScoreList.stream()
+    executingPlayerList.stream()
         .filter(p -> p.getPlayerName().equals(player.getName()))
         .findFirst()
         .ifPresent(p -> {
@@ -187,22 +187,22 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * @return 現在進行しているプレイヤーのスコア情報
    */
   private ExecutingPlayer getPlayerScore(Player player) {
-    ExecutingPlayer playerScore = new ExecutingPlayer(player.getName());
-    if (playerScoreList.isEmpty()) {
-      playerScore = addNewPlayer(player);
+    ExecutingPlayer executingPlayer = new ExecutingPlayer(player.getName());
+    if (executingPlayerList.isEmpty()) {
+      executingPlayer = addNewPlayer(player);
 
     } else {
-      playerScore = playerScoreList.stream()
+      executingPlayer = executingPlayerList.stream()
           .findFirst().
           map(ps -> ps.getPlayerName().equals(player.getName())
               ? ps
-              : addNewPlayer(player)).orElse(playerScore);
+              : addNewPlayer(player)).orElse(executingPlayer);
     }
 
-    playerScore.setGameTime(GAME_TIME);
-    playerScore.setScore(0);
+    executingPlayer.setGameTime(GAME_TIME);
+    executingPlayer.setScore(0);
     removePotionEffect(player);
-    return playerScore;
+    return executingPlayer;
 
   }
 
@@ -216,7 +216,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
 
   private ExecutingPlayer addNewPlayer(Player player) {
     ExecutingPlayer newPlayer = new ExecutingPlayer(player.getName());
-    playerScoreList.add(newPlayer);
+    executingPlayerList.add(newPlayer);
     return newPlayer;
   }
 
@@ -241,18 +241,19 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
    * ゲームを実行します。基底の時間内に敵を倒すとスコアが加算されます。合計スコアを時間経過後に表示します
    *
    * @param player         コマンドを実行したプレイヤー
-   * @param nowPlayerScore プレイヤースコア情報
+   * @param nowExecutingPlayer プレイヤースコア情報
    * @param difficulty     難易度
    */
 
 
-  private void gamePlay(Player player, ExecutingPlayer nowPlayerScore, String difficulty) {
+  private void gamePlay(Player player, ExecutingPlayer nowExecutingPlayer, String difficulty) {
     Bukkit.getScheduler().runTaskTimer(main, Runnable -> {
-      if (nowPlayerScore.getGameTime() <= 0) {
+      if (nowExecutingPlayer.getGameTime() <= 0) {
+
         Runnable.cancel();
 
         player.sendTitle("ゲームが終了しました。",
-            nowPlayerScore.getPlayerName() + " 合計" + nowPlayerScore.getScore() + "点！",
+            nowExecutingPlayer.getPlayerName() + " 合計" + nowExecutingPlayer.getScore() + "点！",
             0, 60, 0);
 
         try (Connection con = DriverManager.getConnection(
@@ -264,7 +265,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
           statement.executeUpdate(
               " insert player_score(player_name, score, difficulty, registered_at)"
 
-                  + "values('" + nowPlayerScore.getPlayerName() + "'," + nowPlayerScore.getScore()
+                  + "values('" + nowExecutingPlayer.getPlayerName() + "'," + nowExecutingPlayer.getScore()
                   + ",'" + difficulty + "',now());");
 
 
@@ -282,7 +283,7 @@ public class EnemyDownCommand extends BaseCommand implements Listener {
       Entity spawnEntity = player.getWorld()
           .spawnEntity(getEnemySpanLocation(player), getEnemy(difficulty));
       spawnEntityList.add(spawnEntity);
-      nowPlayerScore.setGameTime(nowPlayerScore.getGameTime() - 5);
+      nowExecutingPlayer.setGameTime(nowExecutingPlayer.getGameTime() - 5);
 
 
     }, 0, 5 * 20);
